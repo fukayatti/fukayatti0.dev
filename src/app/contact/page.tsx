@@ -158,7 +158,7 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-gray-900 to-black">
+    <div className="min-h-screen relative overflow-hidden">
       <Background width={width} height={height} />
       <canvas
         ref={canvasRef}

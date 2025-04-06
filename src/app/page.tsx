@@ -224,8 +224,8 @@ export default function AboutMePage() {
                 </h3>
                 <p className="text-gray-300 mb-6">
                   I'm a student at National Institue of Technology, Ibaraki
-                  College in the International Creative Engineering Department,
-                  focusing on Electrical/Electronics. Beyond academics, I'm an
+                  College in the Department of Industrial Enginerring, focusing
+                  on Electrical/Electronics. Beyond academics, I'm an
                   enthusiastic technologist who loves exploring the cutting edge
                   of software development.
                 </p>
