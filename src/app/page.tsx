@@ -1,3 +1,7 @@
+import defaultMetadata from './metadata';
+
+export const metadata = defaultMetadata;
+
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
@@ -49,6 +53,10 @@ export default function AboutMePage() {
   // ブラウザサイズを管理するステート
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
+  // タブの状態: "frontEnd" または "electronic"
+  const [activeTab, setActiveTab] = useState<'frontEnd' | 'electronic'>(
+    'frontEnd'
+  );
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -216,53 +224,122 @@ export default function AboutMePage() {
               <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-transparent"></span>
             </span>
           </h2>
+
+          {/* タブ切り替えボタン */}
+          <div className="flex justify-center mb-6 space-x-4">
+            <button
+              onClick={() => setActiveTab('frontEnd')}
+              className={`px-4 py-2 text-lg font-medium transition border-b-2 ${
+                activeTab === 'frontEnd'
+                  ? 'border-indigo-500 text-white'
+                  : 'border-transparent text-gray-400'
+              }`}
+            >
+              As A Front End Engineer
+            </button>
+            <button
+              onClick={() => setActiveTab('electronic')}
+              className={`px-4 py-2 text-lg font-medium transition border-b-2 ${
+                activeTab === 'electronic'
+                  ? 'border-indigo-500 text-white'
+                  : 'border-transparent text-gray-400'
+              }`}
+            >
+              As A Electronic Engineer
+            </button>
+          </div>
+
           <div className="bg-gray-800/60 backdrop-blur-xl rounded-xl p-6 border border-gray-700/50 shadow-xl">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* 左側：タブの内容 */}
               <div>
-                <h3 className="text-xl font-semibold mb-4 text-indigo-300">
-                  Who I Am
-                </h3>
-                <p className="text-gray-300 mb-6">
-                  I'm a student at National Institue of Technology, Ibaraki
-                  College in the Department of Industrial Enginerring, focusing
-                  on Electrical/Electronics. Beyond academics, I'm an
-                  enthusiastic technologist who loves exploring the cutting edge
-                  of software development.
-                </p>
-                <h3 className="text-xl font-semibold mb-4 text-indigo-300">
-                  Technical Passions
-                </h3>
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <span className="text-indigo-400 mr-2">▹</span>
-                    <span>
-                      Building high-performance applications with{' '}
-                      <span className="text-indigo-300">Rust</span> and{' '}
-                      <span className="text-indigo-300">WebAssembly</span>
-                    </span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-indigo-400 mr-2">▹</span>
-                    <span>
-                      Developing full-stack web applications with modern
-                      frameworks
-                    </span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-indigo-400 mr-2">▹</span>
-                    <span>
-                      Contributing to Open Source Software and tech communities
-                    </span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-indigo-400 mr-2">▹</span>
-                    <span>
-                      Exploring Machine Learning and Computer Vision
-                      applications
-                    </span>
-                  </li>
-                </ul>
+                {activeTab === 'frontEnd' && (
+                  <>
+                    <h3 className="text-xl font-semibold mb-4 text-indigo-300">
+                      Who I Am - Front End Engineer
+                    </h3>
+                    <p className="text-gray-300 mb-6">
+                      I specialize in building interactive and responsive web
+                      interfaces using the latest frontend technologies. I have
+                      a strong passion for designing seamless user experiences
+                      and clean, maintainable code.
+                    </p>
+                    <h3 className="text-xl font-semibold mb-4 text-indigo-300">
+                      Technical Passions
+                    </h3>
+                    <ul className="space-y-3">
+                      <li className="flex items-start">
+                        <span className="text-indigo-400 mr-2">▹</span>
+                        <span>
+                          Crafting pixel-perfect UIs with React, Next.js, and
+                          TailwindCSS
+                        </span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-indigo-400 mr-2">▹</span>
+                        <span>
+                          Optimizing web performance and accessibility
+                        </span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-indigo-400 mr-2">▹</span>
+                        <span>
+                          Implementing modern design systems and responsive
+                          layouts
+                        </span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-indigo-400 mr-2">▹</span>
+                        <span>
+                          Contributing to open-source frontend projects
+                        </span>
+                      </li>
+                    </ul>
+                  </>
+                )}
+                {activeTab === 'electronic' && (
+                  <>
+                    <h3 className="text-xl font-semibold mb-4 text-indigo-300">
+                      Who I Am - Electronic Engineer
+                    </h3>
+                    <p className="text-gray-300 mb-6">
+                      I have a deep-rooted passion for electronics and circuit
+                      design. My background in electrical engineering drives my
+                      innovation in developing hardware solutions that
+                      seamlessly integrate with software systems.
+                    </p>
+                    <h3 className="text-xl font-semibold mb-4 text-indigo-300">
+                      Technical Passions
+                    </h3>
+                    <ul className="space-y-3">
+                      <li className="flex items-start">
+                        <span className="text-indigo-400 mr-2">▹</span>
+                        <span>
+                          Designing and prototyping electronic circuits and PCBs
+                        </span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-indigo-400 mr-2">▹</span>
+                        <span>
+                          Working with microcontrollers and embedded systems
+                        </span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-indigo-400 mr-2">▹</span>
+                        <span>Integrating hardware with IoT solutions</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-indigo-400 mr-2">▹</span>
+                        <span>
+                          Exploring the intersection of electronics and software
+                          innovation
+                        </span>
+                      </li>
+                    </ul>
+                  </>
+                )}
               </div>
+              {/* 右側：コードスニペット（固定） */}
               <div className="font-mono text-sm rounded-lg bg-gray-900/80 p-4 border border-gray-700">
                 <div className="flex items-center mb-4 pb-2 border-b border-gray-700">
                   <div className="w-3 h-3 rounded-full bg-red-500 mr-2"></div>

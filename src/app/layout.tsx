@@ -5,6 +5,9 @@ import './globals.css';
 import Background from '../components/Background';
 import { useState, useEffect } from 'react';
 
+// クライアントコンポーネントでMetadataを直接exportできないため
+// メタデータはmetadata.tsから生成されます
+
 export default function RootLayout({
   children,
 }: {
@@ -38,7 +41,7 @@ export default function RootLayout({
   }, []);
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="ja" suppressHydrationWarning>
       <body>
         <ThemeProvider
           attribute="class"
