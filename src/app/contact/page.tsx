@@ -11,9 +11,6 @@ import {
   SiQiita,
   SiGmail,
 } from '@icons-pack/react-simple-icons';
-import contactMetadata from './metadata';
-
-export const metadata = contactMetadata;
 
 // コンテナ・子要素のアニメーションバリアント
 const containerVariants = {

@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://example.com';
 
-export const defaultMetadata: Metadata = {
+export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
     default: 'ポートフォリオ',
@@ -37,6 +37,4 @@ export const defaultMetadata: Metadata = {
       'max-image-preview': 'large',
     },
   },
-};
-
-export default defaultMetadata; 
+}; 

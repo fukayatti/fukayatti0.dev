@@ -1,8 +1,6 @@
-import defaultMetadata from './metadata';
-
-export const metadata = defaultMetadata;
-
 'use client';
+
+// import defaultMetadata from './metadata';
 
 import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
