@@ -47,18 +47,7 @@ const techUniverseItems = [
   { icon: SiWebassembly, label: 'WebAssembly' },
 ];
 
-// OGP画像の内容をここで指定（必要に応じてページごとにカスタマイズ可能）
-export const ogImageParams = {
-  title: 'ポートフォリオ',
-  subtitle: 'クリエイティブ開発者のためのウェブサイト',
-  icon: '🦄',
-  accentColor: '#ff6ec4',
-  bgFrom: '#0f2027',
-  bgTo: '#2c5364',
-  textFrom: '#fff',
-  textTo: '#ffb347',
-  path: '',
-};
+// OGP画像の内容指定constを削除（lib/og-image-presetsで一元管理するため）
 
 export default function AboutMePage() {
   // ブラウザサイズを管理するステート
