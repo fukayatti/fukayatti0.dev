@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import Background from './Background';
+import Background from './background';
 
 export default function ClientLayout({
   children,

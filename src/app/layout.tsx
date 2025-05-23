@@ -1,5 +1,5 @@
-import { ThemeProvider } from '../components/Provider';
-import Header from '../components/Header';
+import { ThemeProvider } from '../components/provider';
+import Header from '../components/header';
 import './globals.css';
 import ClientLayout from '../components/ClientLayout';
 import { defaultMetadata } from '../lib/metadata-common';

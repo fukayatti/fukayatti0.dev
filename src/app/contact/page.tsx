@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import Background from '@/components/Background';
+import Background from '@/components/background';
 import {
   SiInstagram,
   SiX,
