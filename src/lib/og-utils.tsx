@@ -71,7 +71,8 @@ export const generateOgImage = async (
             left: '-20%',
             width: '100%',
             height: '250%',
-            background: `conic-gradient(from 90deg at 40% 40%, #3b82f6, #8b5cf6, ${accentColor}, #3b82f6)`,
+            // conic-gradient を radial-gradient に変更
+            background: `radial-gradient(circle at 40% 40%, #3b82f6 0%, #8b5cf6 40%, ${accentColor} 70%, #3b82f6 100%)`,
             opacity: 0.1,
             transform: 'rotate(-15deg)',
             borderRadius: '50%',
@@ -84,7 +85,8 @@ export const generateOgImage = async (
             right: '-20%',
             width: '100%',
             height: '250%',
-            background: `conic-gradient(from 270deg at 60% 60%, #3b82f6, #8b5cf6, ${accentColor}, #3b82f6)`,
+            // conic-gradient を radial-gradient に変更
+            background: `radial-gradient(circle at 60% 60%, #3b82f6 0%, #8b5cf6 40%, ${accentColor} 70%, #3b82f6 100%)`,
             opacity: 0.1,
             transform: 'rotate(15deg)',
             borderRadius: '50%',
