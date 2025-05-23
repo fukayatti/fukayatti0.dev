@@ -1,7 +1,7 @@
-import { ThemeProvider } from '../components/provider';
-import Header from '../components/header';
+import { ThemeProvider } from '../components/Provider';
+import Header from '../components/Header';
 import './globals.css';
-import ClientLayout from './client-layout';
+import ClientLayout from '../components/ClientLayout';
 import { defaultMetadata } from '../lib/metadata-common';
 
 export const metadata = defaultMetadata;
