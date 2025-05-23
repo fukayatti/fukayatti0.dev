@@ -2,19 +2,19 @@ import { OgImageParams } from './og-utils';
 
 export const ogImagePresets: Record<string, OgImageParams> = {
   top: {
-    title: 'ポートフォリオ',
-    subtitle: 'クリエイティブ開発者のためのウェブサイト',
-    icon: '🦄',
-    accentColor: '#ff6ec4',
-    bgFrom: '#0f2027',
-    bgTo: '#2c5364',
+    title: 'fukayatti0',
+    subtitle: '16-year-old Tech Explorer & Engineer',
+    icon: '🚀',
+    accentColor: '#4F46E5',
+    bgFrom: '#0f1419',
+    bgTo: '#1a1b3a',
     textFrom: '#fff',
-    textTo: '#ffb347',
+    textTo: '#a855f7',
     path: '',
   },
   contact: {
-    title: 'お問い合わせ',
-    subtitle: 'ご質問やお仕事のご依頼はこちらから',
+    title: 'Contact',
+    subtitle: "Let's build something amazing together",
     icon: '✉️',
     accentColor: '#00c3ff',
     bgFrom: '#232526',

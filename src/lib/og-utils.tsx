@@ -28,16 +28,16 @@ export const generateOgImage = async (
   params: OgImageParams = defaultParams,
   size = { width: 1200, height: 630 }
 ) => {
-  const { 
-    title, 
-    subtitle, 
-    bgFrom, 
-    bgTo, 
-    textFrom, 
-    textTo, 
-    icon, 
+  const {
+    title,
+    subtitle,
+    bgFrom,
+    bgTo,
+    textFrom,
+    textTo,
+    icon,
     path,
-    accentColor 
+    accentColor,
   } = {
     ...defaultParams,
     ...params,
@@ -59,7 +59,8 @@ export const generateOgImage = async (
           padding: '4rem',
           position: 'relative',
           overflow: 'hidden',
-          fontFamily: 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+          fontFamily:
+            'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
         }}
       >
         {/* 装飾的な背景要素 */}
@@ -89,7 +90,7 @@ export const generateOgImage = async (
             borderRadius: '50%',
           }}
         />
-        
+
         {/* 波紋装飾 */}
         {Array.from({ length: 3 }).map((_, i) => (
           <div
@@ -106,17 +107,17 @@ export const generateOgImage = async (
             }}
           />
         ))}
-        
+
         {/* ランダム幾何学模様の装飾 - 実行時に生成 */}
         {Array.from({ length: 8 }).map((_, i) => (
           <div
             key={`shape-${i}`}
             style={{
               position: 'absolute',
-              top: `${(i * 10) + 5}%`,
-              left: `${(i * 10) + 5}%`,
-              width: `${20 + (i * 5)}px`,
-              height: `${20 + (i * 5)}px`,
+              top: `${i * 10 + 5}%`,
+              left: `${i * 10 + 5}%`,
+              width: `${20 + i * 5}px`,
+              height: `${20 + i * 5}px`,
               background: 'rgba(255, 255, 255, 0.05)',
               borderRadius: i % 2 === 0 ? '50%' : '8px',
               boxShadow: '0 0 20px rgba(99, 102, 241, 0.15)',
@@ -124,7 +125,7 @@ export const generateOgImage = async (
             }}
           />
         ))}
-        
+
         {/* カード風のコンテンツコンテナ */}
         <div
           style={{
@@ -136,7 +137,8 @@ export const generateOgImage = async (
             backdropFilter: 'blur(20px)',
             borderRadius: '24px',
             padding: '3rem 4rem',
-            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1) inset',
+            boxShadow:
+              '0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1) inset',
             border: '1px solid rgba(255, 255, 255, 0.1)',
             maxWidth: '80%',
             zIndex: 10,
@@ -170,7 +172,7 @@ export const generateOgImage = async (
               {icon}
             </div>
           </div>
-          
+
           <h1
             style={{
               fontSize: '60px',
@@ -186,7 +188,7 @@ export const generateOgImage = async (
           >
             {title}
           </h1>
-          
+
           <div
             style={{
               width: '80px',
@@ -196,7 +198,7 @@ export const generateOgImage = async (
               borderRadius: '2px',
             }}
           />
-          
+
           <p
             style={{
               fontSize: '28px',
@@ -209,7 +211,7 @@ export const generateOgImage = async (
             {subtitle}
           </p>
         </div>
-        
+
         {/* 右下のタグ */}
         {path && (
           <div
@@ -233,11 +235,11 @@ export const generateOgImage = async (
                 marginRight: '4px',
               }}
             />
-            fukayatti0.dev{path ? `/${path}` : ''}
+            fukayatti0.com{path ? `/${path}` : ''}
           </div>
         )}
       </div>
     ),
     size
   );
-}; 
+};

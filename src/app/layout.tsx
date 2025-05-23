@@ -1,47 +1,18 @@
-'use client';
 import { ThemeProvider } from '../components/provider';
 import Header from '../components/header';
 import './globals.css';
-import Background from '../components/Background';
-import { useState, useEffect } from 'react';
+import ClientLayout from './client-layout.tsx';
+import { defaultMetadata } from '../lib/metadata-common';
 
-// クライアントコンポーネントでMetadataを直接exportできないため
-// メタデータはmetadata.tsから生成されます
+export const metadata = defaultMetadata;
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [windowSize, setWindowSize] = useState({
-    width: 0,
-    height: 0,
-  });
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-
-      const handleResize = () => {
-        setWindowSize({
-          width: window.innerWidth,
-          height: window.innerHeight,
-        });
-      };
-
-      window.addEventListener('resize', handleResize);
-
-      return () => {
-        window.removeEventListener('resize', handleResize);
-      };
-    }
-  }, []);
-
   return (
-    <html lang="ja" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body>
         <ThemeProvider
           attribute="class"
@@ -49,9 +20,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Background width={windowSize.width} height={windowSize.height} />
-          <Header />
-          {children}
+          <ClientLayout>
+            <Header />
+            {children}
+          </ClientLayout>
         </ThemeProvider>
       </body>
     </html>
