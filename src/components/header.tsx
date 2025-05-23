@@ -20,6 +20,7 @@ const navLinks = [
 const Header = () => {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
+  const isDark = theme === 'dark';
   const [randomValue, setRandomValue] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
@@ -86,7 +87,10 @@ const Header = () => {
                   </div>
                 </div>
               </Link>
-              <Link href="/" className="text-gray-800 dark:text-white">
+              <Link
+                href="/"
+                className={`${isDark ? 'text-white' : 'text-gray-900'} font-bold text-lg`}
+              >
                 fukayatti0.dev
               </Link>
             </div>
@@ -100,7 +104,7 @@ const Header = () => {
                     <Link
                       key={href}
                       href={href}
-                      className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white flex items-center" // Added flex
+                      className={`${isDark ? 'text-gray-200 hover:text-green-400' : 'text-gray-700 hover:text-green-600'} flex items-center transition-colors duration-150`}
                     >
                       <Icon className="mr-1 w-5 h-5" /> {/* Render Icon */}
                       {label}
@@ -115,7 +119,7 @@ const Header = () => {
                   className="outline-none mobile-menu-button"
                 >
                   <svg
-                    className="w-6 h-6 text-gray-500 hover:text-green-500 dark:text-gray-300 dark:hover:text-green-500"
+                    className={`w-6 h-6 ${isDark ? 'text-gray-200 hover:text-green-400' : 'text-gray-700 hover:text-green-600'} transition-colors duration-150`}
                     fill="none"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -131,7 +135,7 @@ const Header = () => {
           </motion.div>
           {/* Mobile Menu */}
           <div
-            className={`md:hidden absolute top-16 right-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-md shadow-md p-4 ${
+            className={`md:hidden absolute top-16 right-0 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-md shadow-md p-4 ${
               isOpen ? 'block' : 'hidden'
             }`}
             ref={menuRef}
@@ -143,7 +147,7 @@ const Header = () => {
                 <Link
                   key={href}
                   href={href}
-                  className="py-2 px-4 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white flex items-center" // Added flex
+                  className={`py-2 px-4 text-base ${isDark ? 'text-gray-200 hover:text-green-400' : 'text-gray-700 hover:text-green-600'} flex items-center transition-colors duration-150`}
                 >
                   <Icon className="mr-1 w-4 h-4" /> {/* Render Icon */}
                   {label}
