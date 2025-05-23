@@ -1,7 +1,7 @@
 import { ThemeProvider } from '../components/provider';
 import Header from '../components/header';
 import './globals.css';
-import ClientLayout from './client-layout.tsx';
+import ClientLayout from './client-layout';
 import { defaultMetadata } from '../lib/metadata-common';
 
 export const metadata = defaultMetadata;
