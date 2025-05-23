@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://example.com';
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://fukayatti0.dev';
 
 export const defaultMetadata: Metadata = {
   metadataBase: new URL(baseUrl),
