@@ -47,6 +47,19 @@ const techUniverseItems = [
   { icon: SiWebassembly, label: 'WebAssembly' },
 ];
 
+// OGP画像の内容をここで指定（必要に応じてページごとにカスタマイズ可能）
+export const ogImageParams = {
+  title: 'ポートフォリオ',
+  subtitle: 'クリエイティブ開発者のためのウェブサイト',
+  icon: '🦄',
+  accentColor: '#ff6ec4',
+  bgFrom: '#0f2027',
+  bgTo: '#2c5364',
+  textFrom: '#fff',
+  textTo: '#ffb347',
+  path: '',
+};
+
 export default function AboutMePage() {
   // ブラウザサイズを管理するステート
   const [width, setWidth] = useState(0);
