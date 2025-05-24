@@ -34,7 +34,7 @@ export default function HeaderSection() {
 
       {/* Left side: Profile image with enhanced effects */}
       <motion.div
-        className="relative flex-shrink-0 flex flex-col items-center lg:items-start lg:flex-1"
+        className="relative flex-shrink-0 flex flex-col items-center lg:items-start lg:flex-1 ml-8 lg:ml-12"
         variants={slideUp}
         transition={{ delay: 0.2, duration: 0.8 }}
       >

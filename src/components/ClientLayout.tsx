@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import Background from './background';
 
 export default function ClientLayout({
@@ -7,10 +7,9 @@ export default function ClientLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [windowSize, setWindowSize] = useState({
-    width: 0,
-    height: 0,
-  });
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+  const [headerHeight, setHeaderHeight] = useState(0);
+  const headerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -34,10 +33,20 @@ export default function ClientLayout({
     }
   }, []);
 
+  useLayoutEffect(() => {
+    if (headerRef.current) {
+      setHeaderHeight(headerRef.current.offsetHeight);
+    }
+  }, [windowSize]);
+
   return (
     <>
       <Background width={windowSize.width} height={windowSize.height} />
-      {children}
+      <div ref={headerRef}>
+        {/* ここにHeaderコンポーネントを配置 */}
+        {/* <Header /> */}
+      </div>
+      <div style={{ marginTop: headerHeight }}>{children}</div>
     </>
   );
 }
