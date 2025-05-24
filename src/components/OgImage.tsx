@@ -1,4 +1,3 @@
-import { ImageResponse } from 'next/og';
 import { generateOgImage, OgImageParams } from '../lib/og-utils';
 
 export const runtime = 'edge';
