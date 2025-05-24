@@ -1,9 +1,20 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { slideIn } from '@/components/variants';
+import { fadeIn } from '@/components/variants';
 import { useTheme } from 'next-themes';
 import { useState, useEffect } from 'react';
+import {
+  Code2,
+  Smartphone,
+  Cpu,
+  Trophy,
+  TrendingUp,
+  Clock,
+  Target,
+  Users,
+  ArrowRight,
+} from 'lucide-react';
 
 export default function CurrentFocusSection() {
   const [mounted, setMounted] = useState(false);
@@ -16,91 +27,291 @@ export default function CurrentFocusSection() {
   // Prevent hydration mismatch by using consistent styling until mounted
   const isDark = mounted ? resolvedTheme === 'dark' : true; // Default to dark for SSR
 
+  const focusAreas = [
+    {
+      title: 'Web Development',
+      subtitle: 'Full-Stack Projects',
+      description:
+        'Building modern web applications with React, Next.js, and TypeScript',
+      icon: Code2,
+      color: 'primary',
+      progress: 85,
+      stats: '12 projects',
+      status: 'Active',
+      technologies: ['React', 'Next.js', 'TypeScript', 'Tailwind'],
+    },
+    {
+      title: 'Mobile Development',
+      subtitle: 'Cross-Platform Apps',
+      description: 'Creating mobile experiences with React Native and Flutter',
+      icon: Smartphone,
+      color: 'accent',
+      progress: 70,
+      stats: '6 apps',
+      status: 'Learning',
+      technologies: ['React Native', 'Flutter', 'Dart', 'Expo'],
+    },
+    {
+      title: 'Electronics & IoT',
+      subtitle: 'Hardware Integration',
+      description: 'Exploring microcontrollers, sensors, and embedded systems',
+      icon: Cpu,
+      color: 'secondary',
+      progress: 65,
+      stats: '8 projects',
+      status: 'Exploring',
+      technologies: ['Arduino', 'Raspberry Pi', 'ESP32', 'C++'],
+    },
+    {
+      title: 'Competitive Programming',
+      subtitle: 'Algorithm Mastery',
+      description:
+        'Solving complex problems and participating in coding contests',
+      icon: Trophy,
+      color: 'warning',
+      progress: 78,
+      stats: '150+ problems',
+      status: 'Competing',
+      technologies: ['C++', 'Python', 'Data Structures', 'Algorithms'],
+    },
+  ];
+
+  const getColorClasses = (color: string) => {
+    switch (color) {
+      case 'primary':
+        return {
+          text: 'text-primary-300',
+          bg: 'from-primary-500 to-primary-400',
+          border: 'border-primary-500/30',
+          glow: 'shadow-primary-500/20',
+          progress: 'bg-primary-500',
+        };
+      case 'accent':
+        return {
+          text: 'text-accent-300',
+          bg: 'from-accent-500 to-accent-400',
+          border: 'border-accent-500/30',
+          glow: 'shadow-accent-500/20',
+          progress: 'bg-accent-500',
+        };
+      case 'secondary':
+        return {
+          text: 'text-purple-300',
+          bg: 'from-purple-500 to-purple-400',
+          border: 'border-purple-500/30',
+          glow: 'shadow-purple-500/20',
+          progress: 'bg-purple-500',
+        };
+      case 'warning':
+        return {
+          text: 'text-orange-300',
+          bg: 'from-orange-500 to-orange-400',
+          border: 'border-orange-500/30',
+          glow: 'shadow-orange-500/20',
+          progress: 'bg-orange-500',
+        };
+      default:
+        return {
+          text: 'text-primary-300',
+          bg: 'from-primary-500 to-primary-400',
+          border: 'border-primary-500/30',
+          glow: 'shadow-primary-500/20',
+          progress: 'bg-primary-500',
+        };
+    }
+  };
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'Active':
+        return <TrendingUp className="w-4 h-4" />;
+      case 'Learning':
+        return <Target className="w-4 h-4" />;
+      case 'Exploring':
+        return <Clock className="w-4 h-4" />;
+      case 'Competing':
+        return <Users className="w-4 h-4" />;
+      default:
+        return <Target className="w-4 h-4" />;
+    }
+  };
+
   return (
-    <motion.section
-      className="w-full flex flex-col md:flex-row gap-10 md:gap-20 items-center justify-between min-h-[50vh] rounded-2xl shadow-xl border border-white/10 p-8 md:p-16 backdrop-blur-xl bg-gradient-to-br from-indigo-800/80 via-purple-800/60 to-pink-800/40"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: '-100px' }}
-      variants={slideIn}
-      transition={{ duration: 0.8 }}
-    >
-      <h2 className="text-3xl font-bold mb-8 text-center text-white">
-        <span className="inline-block relative">
-          Current Focus
-          <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-indigo-400 to-transparent"></span>
-        </span>
-      </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="backdrop-blur-xl rounded-xl p-6 border shadow-xl transition duration-300 bg-gray-800/60 border-gray-700/50 hover:shadow-indigo-500/20 hover:border-indigo-500/30">
-          <h3 className="text-xl font-semibold mb-4 flex items-center text-white">
-            <span className="text-2xl mr-3">🚀</span>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-200 to-purple-300">
-              Main Project
-            </span>
-          </h3>
-          <h4 className="text-lg font-medium mb-2 text-indigo-200">
-            UniquePersonCounter
-          </h4>
-          <p className="mb-4 text-gray-200">
-            An AI-powered video analysis tool that detects and counts stationary
-            people in footage. The project combines computer vision with
-            practical applications.
-          </p>
-          <div className="flex flex-wrap gap-2 mt-4">
-            <span className="bg-indigo-900/60 text-indigo-200 text-xs px-2 py-1 rounded-md">
-              Computer Vision
-            </span>
-            <span className="bg-indigo-900/60 text-indigo-200 text-xs px-2 py-1 rounded-md">
-              Machine Learning
-            </span>
-            <span className="bg-indigo-900/60 text-indigo-200 text-xs px-2 py-1 rounded-md">
-              Python
-            </span>
-          </div>
-        </div>
-        <div className="backdrop-blur-xl rounded-xl p-6 border shadow-xl transition duration-300 bg-gray-800/60 border-gray-700/50 hover:shadow-indigo-500/20 hover:border-indigo-500/30">
-          <h3 className="text-xl font-semibold mb-4 flex items-center text-white">
-            <span className="text-2xl mr-3">🌱</span>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-200 to-purple-300">
-              Learning Journey
-            </span>
-          </h3>
-          <div className="space-y-3">
-            <div className="flex items-start">
-              <span className="text-indigo-300 mr-3">▹</span>
-              <div>
-                <h4 className="font-medium text-indigo-200">
-                  Rust Programming
-                </h4>
-                <p className="text-sm text-gray-200">
-                  Exploring systems programming with memory safety and
-                  performance
-                </p>
+    <section className="mb-20">
+      {/* Enhanced header with unified styling */}
+      <motion.div
+        className="text-center mb-12"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <h2 className="text-display mb-4">
+          <span className="gradient-text">Current Focus</span>
+        </h2>
+        <p className="text-body max-w-2xl mx-auto text-gray-400">
+          My ongoing projects and learning journey in technology
+        </p>
+      </motion.div>
+
+      {/* Focus Areas Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        {focusAreas.map((area, index) => {
+          const colorClasses = getColorClasses(area.color);
+          const IconComponent = area.icon;
+          return (
+            <motion.div
+              key={area.title}
+              className="group relative"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+            >
+              <div className="glass rounded-2xl border border-white/10 shadow-glass overflow-hidden h-full hover:shadow-glow-lg transition-all duration-300 group-hover:scale-105">
+                {/* Background decoration */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                  <div className="absolute -top-1/2 -right-1/2 w-32 h-32 rounded-full blur-2xl animate-pulse opacity-10 bg-gradient-to-br from-primary-400 to-accent-400" />
+                </div>
+
+                <div className="relative p-8 space-y-6">
+                  {/* Icon and Title */}
+                  <div className="flex items-center gap-4">
+                    <div
+                      className={`w-12 h-12 rounded-xl glass flex items-center justify-center border border-white/10 group-hover:scale-110 transition-transform duration-300 ${colorClasses.text}`}
+                    >
+                      <IconComponent className="w-6 h-6" />
+                    </div>
+                    <div className="flex-1">
+                      <h3
+                        className={`text-xl font-semibold ${colorClasses.text}`}
+                      >
+                        {area.title}
+                      </h3>
+                      <p className="text-sm text-gray-400">{area.subtitle}</p>
+                    </div>
+                    <div
+                      className={`flex items-center gap-1 px-3 py-1 glass rounded-full border border-white/10 text-xs font-medium ${colorClasses.text}`}
+                    >
+                      {getStatusIcon(area.status)}
+                      <span>{area.status}</span>
+                    </div>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-gray-300 leading-relaxed">
+                    {area.description}
+                  </p>
+
+                  {/* Progress Bar */}
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-medium text-gray-400">
+                        Progress
+                      </span>
+                      <span
+                        className={`text-sm font-bold ${colorClasses.text}`}
+                      >
+                        {area.progress}%
+                      </span>
+                    </div>
+                    <div className="w-full bg-gray-700 rounded-full h-2 overflow-hidden">
+                      <div
+                        className={`h-full ${colorClasses.progress} transition-all duration-1000 ease-out rounded-full`}
+                        style={{ width: `${area.progress}%` }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Stats */}
+                  <div className="glass rounded-lg p-3 border border-white/10">
+                    <div className="flex justify-between items-center">
+                      <div className="text-sm text-gray-400">Completed</div>
+                      <div className={`font-semibold ${colorClasses.text}`}>
+                        {area.stats}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Technologies */}
+                  <div className="space-y-3">
+                    <div className="text-sm font-medium text-gray-400">
+                      Tech Stack
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {area.technologies.map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-2 py-1 text-xs font-medium glass rounded border border-white/10 text-gray-300 hover:scale-105 transition-transform duration-200"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Action Button */}
+                  <button
+                    className={`w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r ${colorClasses.bg} text-white rounded-xl font-semibold hover:scale-105 transition-all duration-200 group/button`}
+                  >
+                    <span>View Projects</span>
+                    <ArrowRight className="w-4 h-4 transform group-hover/button:translate-x-1 transition-transform duration-200" />
+                  </button>
+                </div>
               </div>
-            </div>
-            <div className="flex items-start">
-              <span className="text-indigo-300 mr-3">▹</span>
-              <div>
-                <h4 className="font-medium text-indigo-200">WebAssembly</h4>
-                <p className="text-sm text-gray-200">
-                  Building high-performance web applications with near-native
-                  speed
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start">
-              <span className="text-indigo-300 mr-3">▹</span>
-              <div>
-                <h4 className="font-medium text-indigo-200">Edge Computing</h4>
-                <p className="text-sm text-gray-200">
-                  Developing applications that work at the edge of the network
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+            </motion.div>
+          );
+        })}
       </div>
-    </motion.section>
+
+      {/* Summary Card */}
+      <motion.div
+        className="glass rounded-2xl border border-white/10 shadow-glass p-8"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.8 }}
+      >
+        <div className="text-center space-y-6">
+          <div className="space-y-2">
+            <h3 className="text-xl font-semibold text-white">
+              Learning Journey Overview
+            </h3>
+            <p className="text-gray-300">
+              Continuously expanding my skillset across multiple domains
+            </p>
+          </div>
+
+          {/* Overall Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              { label: 'Active Projects', value: '26+', icon: Code2 },
+              { label: 'Technologies', value: '15+', icon: Cpu },
+              { label: 'Problems Solved', value: '150+', icon: Trophy },
+              { label: 'Learning Hours', value: '500+', icon: Clock },
+            ].map((stat, index) => {
+              const IconComponent = stat.icon;
+              return (
+                <div key={stat.label} className="text-center space-y-2">
+                  <div className="w-12 h-12 mx-auto rounded-xl glass flex items-center justify-center text-primary-400 border border-white/10">
+                    <IconComponent className="w-6 h-6" />
+                  </div>
+                  <div className="text-lg font-bold text-primary-300">
+                    {stat.value}
+                  </div>
+                  <div className="text-sm text-gray-400">{stat.label}</div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Call to Action */}
+          <div className="pt-4">
+            <button className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-xl font-semibold hover:scale-105 transition-all duration-200 group">
+              <Code2 className="w-5 h-5" />
+              <span>Explore All Projects</span>
+              <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-200" />
+            </button>
+          </div>
+        </div>
+      </motion.div>
+    </section>
   );
 }

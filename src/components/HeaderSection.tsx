@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { fadeIn, slideUp } from '@/components/variants';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
+import { Hand, ArrowRight } from 'lucide-react';
 
 export default function HeaderSection() {
   const { resolvedTheme } = useTheme();
@@ -101,7 +102,7 @@ export default function HeaderSection() {
           variants={slideUp}
           transition={{ delay: 0.1, duration: 0.6 }}
         >
-          <span className="text-2xl animate-bounce-subtle">👋</span>
+          <Hand className="w-6 h-6 text-primary-400 animate-bounce-subtle" />
           <span className="text-lg font-medium text-gray-400">
             Hey there, I'm
           </span>
@@ -180,19 +181,7 @@ export default function HeaderSection() {
 
           <button className="btn-secondary group">
             <span className="relative z-10">Let's Connect</span>
-            <svg
-              className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform duration-200"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
-              />
-            </svg>
+            <ArrowRight className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform duration-200" />
           </button>
         </motion.div>
       </div>

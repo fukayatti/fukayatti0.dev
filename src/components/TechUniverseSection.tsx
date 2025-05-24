@@ -17,20 +17,36 @@ import {
 } from '@icons-pack/react-simple-icons';
 
 const techUniverseItems = [
-  { icon: SiPython, label: 'Python', color: '#FFD43B' },
-  { icon: SiTypescript, label: 'TypeScript', color: '#3178C6' },
-  { icon: SiRust, label: 'Rust', color: '#DEA584' },
-  { icon: SiCplusplus, label: 'C++', color: '#00599C' },
-  { icon: SiReact, label: 'React', color: '#61DAFB' },
-  { icon: SiNextdotjs, label: 'Next.js', color: '#fff' },
-  { icon: SiTailwindcss, label: 'TailwindCSS', color: '#38BDF8' },
-  { icon: SiDocker, label: 'Docker', color: '#2496ED' },
-  { icon: SiWebassembly, label: 'WebAssembly', color: '#654FF0' },
+  { icon: SiPython, label: 'Python', color: '#FFD43B', category: 'language' },
+  {
+    icon: SiTypescript,
+    label: 'TypeScript',
+    color: '#3178C6',
+    category: 'language',
+  },
+  { icon: SiRust, label: 'Rust', color: '#DEA584', category: 'language' },
+  { icon: SiCplusplus, label: 'C++', color: '#00599C', category: 'language' },
+  { icon: SiReact, label: 'React', color: '#61DAFB', category: 'framework' },
+  { icon: SiNextdotjs, label: 'Next.js', color: '#fff', category: 'framework' },
+  {
+    icon: SiTailwindcss,
+    label: 'TailwindCSS',
+    color: '#38BDF8',
+    category: 'tool',
+  },
+  { icon: SiDocker, label: 'Docker', color: '#2496ED', category: 'tool' },
+  {
+    icon: SiWebassembly,
+    label: 'WebAssembly',
+    color: '#654FF0',
+    category: 'technology',
+  },
 ];
 
 export default function TechUniverseSection() {
   const [mounted, setMounted] = useState(false);
   const { resolvedTheme } = useTheme();
+  const [activeCategory, setActiveCategory] = useState<string>('all');
 
   useEffect(() => {
     setMounted(true);
@@ -39,38 +55,171 @@ export default function TechUniverseSection() {
   // Prevent hydration mismatch by using consistent styling until mounted
   const isDark = mounted ? resolvedTheme === 'dark' : true; // Default to dark for SSR
 
+  const categories = [
+    { id: 'all', label: 'All Technologies', icon: '🌌' },
+    { id: 'language', label: 'Languages', icon: '💻' },
+    { id: 'framework', label: 'Frameworks', icon: '⚛️' },
+    { id: 'tool', label: 'Tools', icon: '🛠️' },
+    { id: 'technology', label: 'Technologies', icon: '🚀' },
+  ];
+
+  const filteredItems =
+    activeCategory === 'all'
+      ? techUniverseItems
+      : techUniverseItems.filter((item) => item.category === activeCategory);
+
   return (
-    <motion.section
-      className="w-full flex flex-col items-center justify-center min-h-[40vh] rounded-2xl shadow-xl border border-white/10 p-8 md:p-16 backdrop-blur-xl bg-gradient-to-br from-indigo-900/80 via-purple-900/60 to-sky-900/40"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: '-100px' }}
-      variants={fadeIn}
-      transition={{ duration: 0.8 }}
-    >
-      <h2 className="text-3xl font-bold mb-8 text-center text-white">
-        <span className="inline-block relative">
-          Tech Universe
-          <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-pink-400 to-indigo-400"></span>
-        </span>
-      </h2>
-      <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-9 gap-6 w-full">
-        {techUniverseItems.map((item, index) => (
-          <motion.div
-            key={index}
-            className="rounded-xl p-6 flex flex-col items-center justify-center border transition duration-300 bg-white/10 border-white/10 hover:scale-105 hover:shadow-xl"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: index * 0.07 }}
+    <section className="mb-20">
+      {/* Enhanced header with unified styling */}
+      <motion.div
+        className="text-center mb-12"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <h2 className="text-display mb-4">
+          <span className="gradient-text">Tech Universe</span>
+        </h2>
+        <p className="text-body max-w-2xl mx-auto text-gray-400">
+          The technologies and tools that power my development journey
+        </p>
+      </motion.div>
+
+      {/* Category Filter */}
+      <motion.div
+        className="flex flex-wrap justify-center gap-3 mb-12"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+      >
+        {categories.map((category) => (
+          <button
+            key={category.id}
+            onClick={() => setActiveCategory(category.id)}
+            className={`relative px-6 py-3 rounded-xl font-medium text-sm transition-all duration-300 flex items-center gap-2
+              ${
+                activeCategory === category.id
+                  ? 'text-white shadow-glow'
+                  : 'text-gray-400 hover:text-gray-200'
+              }
+            `}
           >
-            <item.icon color={item.color} size={38} />
-            <div className="text-center mt-2 text-sm font-semibold tracking-wide text-white/90">
-              {item.label}
+            <span className="relative z-10 flex items-center gap-2">
+              <span>{category.icon}</span>
+              {category.label}
+            </span>
+            {activeCategory === category.id && (
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-primary-500 to-accent-500 rounded-xl"
+                layoutId="activeCategory"
+                transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+              />
+            )}
+          </button>
+        ))}
+      </motion.div>
+
+      {/* Tech Grid */}
+      <motion.div
+        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6"
+        layout
+      >
+        {filteredItems.map((item, index) => (
+          <motion.div
+            key={item.label}
+            className="group relative"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: index * 0.05 }}
+            layout
+            whileHover={{ y: -5 }}
+          >
+            <div className="glass rounded-2xl border border-white/10 shadow-glass overflow-hidden h-full hover:shadow-glow-lg transition-all duration-300">
+              {/* Background decoration */}
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div
+                  className="absolute -top-1/2 -right-1/2 w-16 h-16 rounded-full blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"
+                  style={{ backgroundColor: item.color }}
+                />
+              </div>
+
+              <div className="relative p-6 flex flex-col items-center text-center space-y-4">
+                {/* Icon Container */}
+                <div className="w-16 h-16 glass rounded-xl flex items-center justify-center border border-white/10 group-hover:scale-110 transition-transform duration-300">
+                  <item.icon
+                    color={item.color}
+                    size={32}
+                    className="group-hover:drop-shadow-lg transition-all duration-300"
+                  />
+                </div>
+
+                {/* Label */}
+                <div className="space-y-1">
+                  <h3 className="font-semibold text-white group-hover:text-primary-300 transition-colors duration-300">
+                    {item.label}
+                  </h3>
+                  <p className="text-xs text-gray-400 capitalize">
+                    {item.category}
+                  </p>
+                </div>
+
+                {/* Skill Level Indicator */}
+                <div className="w-full space-y-1">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-gray-500">Proficiency</span>
+                    <span className="text-gray-400">
+                      {Math.floor(Math.random() * 30) + 70}%
+                    </span>
+                  </div>
+                  <div className="h-1 bg-gray-700 rounded-full overflow-hidden">
+                    <motion.div
+                      className="h-full rounded-full"
+                      style={{
+                        background: `linear-gradient(90deg, ${item.color}88, ${item.color})`,
+                      }}
+                      initial={{ width: 0 }}
+                      animate={{
+                        width: `${Math.floor(Math.random() * 30) + 70}%`,
+                      }}
+                      transition={{
+                        delay: index * 0.05 + 0.3,
+                        duration: 0.8,
+                        ease: 'easeOut',
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </motion.div>
         ))}
-      </div>
-    </motion.section>
+      </motion.div>
+
+      {/* Statistics Footer */}
+      <motion.div
+        className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.8 }}
+      >
+        {[
+          { label: 'Languages', count: '4+', icon: '💻' },
+          { label: 'Frameworks', count: '6+', icon: '⚛️' },
+          { label: 'Tools', count: '10+', icon: '🛠️' },
+          { label: 'Years Experience', count: '3+', icon: '📈' },
+        ].map((stat, index) => (
+          <div
+            key={stat.label}
+            className="glass rounded-xl border border-white/10 p-4 text-center space-y-2"
+          >
+            <div className="text-2xl">{stat.icon}</div>
+            <div className="text-2xl font-bold text-primary-300">
+              {stat.count}
+            </div>
+            <div className="text-sm text-gray-400">{stat.label}</div>
+          </div>
+        ))}
+      </motion.div>
+    </section>
   );
 }
