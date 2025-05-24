@@ -6,21 +6,20 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Orbitron } from 'next/font/google';
 import ThemeSwitcher from './ThemeSwitcher';
-import { Home, User, Briefcase, Mail } from 'lucide-react'; // Import icons
+import { Home, User, Briefcase, Mail } from 'lucide-react';
 
 const orbitron = Orbitron({ subsets: ['latin'], weight: ['400', '700'] });
 
 const navLinks = [
-  { href: '/', label: 'Home', icon: Home }, // Add icon
-  { href: '/about', label: 'About', icon: User }, // Add icon
-  { href: '/works', label: 'Works', icon: Briefcase }, // Add icon
-  { href: '/contact', label: 'Contact', icon: Mail }, // Add icon
+  { href: '/', label: 'Home', icon: Home },
+  { href: '/about', label: 'About', icon: User },
+  { href: '/works', label: 'Works', icon: Briefcase },
+  { href: '/contact', label: 'Contact', icon: Mail },
 ];
 
 const Header = () => {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
-  const isDark = theme === 'dark';
   const [randomValue, setRandomValue] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
@@ -29,6 +28,9 @@ const Header = () => {
     setMounted(true);
     setRandomValue(Math.random());
   }, []);
+
+  // Prevent hydration mismatch by using consistent styling until mounted
+  const isDark = mounted ? theme === 'dark' : true; // Default to dark for SSR
 
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark');
@@ -87,30 +89,23 @@ const Header = () => {
                   </div>
                 </div>
               </Link>
-              <Link
-                href="/"
-                className={`${isDark ? 'text-white' : 'text-gray-900'} font-bold text-lg`}
-              >
+              <Link href="/" className="text-white font-bold text-lg">
                 fukayatti0.dev
               </Link>
             </div>
 
             <div className="flex items-center gap-6 backdrop-blur-sm bg-white/10 dark:bg-gray-900/10 rounded-lg p-2">
               <div className="hidden md:flex items-center gap-6">
-                {navLinks.map(
-                  (
-                    { href, label, icon: Icon } // Use Icon
-                  ) => (
-                    <Link
-                      key={href}
-                      href={href}
-                      className={`${isDark ? 'text-gray-200 hover:text-green-400' : 'text-gray-700 hover:text-green-600'} flex items-center transition-colors duration-150`}
-                    >
-                      <Icon className="mr-1 w-5 h-5" /> {/* Render Icon */}
-                      {label}
-                    </Link>
-                  )
-                )}
+                {navLinks.map(({ href, label, icon: Icon }) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    className="text-gray-200 hover:text-green-400 flex items-center transition-colors duration-150"
+                  >
+                    <Icon className="mr-1 w-5 h-5" />
+                    {label}
+                  </Link>
+                ))}
               </div>
               <ThemeSwitcher />
               <div className="md:hidden">
@@ -119,7 +114,7 @@ const Header = () => {
                   className="outline-none mobile-menu-button"
                 >
                   <svg
-                    className={`w-6 h-6 ${isDark ? 'text-gray-200 hover:text-green-400' : 'text-gray-700 hover:text-green-600'} transition-colors duration-150`}
+                    className="w-6 h-6 text-gray-200 hover:text-green-400 transition-colors duration-150"
                     fill="none"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -140,20 +135,16 @@ const Header = () => {
             }`}
             ref={menuRef}
           >
-            {navLinks.map(
-              (
-                { href, label, icon: Icon } // Use Icon
-              ) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className={`py-2 px-4 text-base ${isDark ? 'text-gray-200 hover:text-green-400' : 'text-gray-700 hover:text-green-600'} flex items-center transition-colors duration-150`}
-                >
-                  <Icon className="mr-1 w-4 h-4" /> {/* Render Icon */}
-                  {label}
-                </Link>
-              )
-            )}
+            {navLinks.map(({ href, label, icon: Icon }) => (
+              <Link
+                key={href}
+                href={href}
+                className="py-2 px-4 text-base text-gray-200 hover:text-green-400 flex items-center transition-colors duration-150"
+              >
+                <Icon className="mr-1 w-4 h-4" />
+                {label}
+              </Link>
+            ))}
           </div>
         </div>
       </nav>

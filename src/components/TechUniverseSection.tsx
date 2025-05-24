@@ -1,6 +1,9 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import { fadeIn } from '@/components/variants';
 import { useTheme } from 'next-themes';
+import { useState, useEffect } from 'react';
 import {
   SiPython,
   SiTypescript,
@@ -26,54 +29,43 @@ const techUniverseItems = [
 ];
 
 export default function TechUniverseSection() {
+  const [mounted, setMounted] = useState(false);
   const { resolvedTheme } = useTheme();
-  const isDark = resolvedTheme === 'dark';
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Prevent hydration mismatch by using consistent styling until mounted
+  const isDark = mounted ? resolvedTheme === 'dark' : true; // Default to dark for SSR
 
   return (
     <motion.section
-      className={`w-full flex flex-col items-center justify-center min-h-[40vh] rounded-2xl shadow-xl border border-white/10 p-8 md:p-16 backdrop-blur-xl
-        ${
-          isDark
-            ? 'bg-gradient-to-br from-indigo-900/80 via-purple-900/60 to-sky-900/40'
-            : 'bg-gradient-to-br from-indigo-50/80 via-purple-100/60 to-sky-50/40'
-        }
-      `}
+      className="w-full flex flex-col items-center justify-center min-h-[40vh] rounded-2xl shadow-xl border border-white/10 p-8 md:p-16 backdrop-blur-xl bg-gradient-to-br from-indigo-900/80 via-purple-900/60 to-sky-900/40"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: '-100px' }}
       variants={fadeIn}
       transition={{ duration: 0.8 }}
     >
-      <h2
-        className={`text-3xl font-bold mb-8 text-center ${isDark ? 'text-white' : 'text-gray-800'}`}
-      >
+      <h2 className="text-3xl font-bold mb-8 text-center text-white">
         <span className="inline-block relative">
           Tech Universe
-          <span
-            className={`absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r ${isDark ? 'from-pink-400' : 'from-pink-300'} to-indigo-400`}
-          ></span>
+          <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-pink-400 to-indigo-400"></span>
         </span>
       </h2>
       <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-9 gap-6 w-full">
         {techUniverseItems.map((item, index) => (
           <motion.div
             key={index}
-            className={`rounded-xl p-6 flex flex-col items-center justify-center border transition duration-300
-              ${
-                isDark
-                  ? 'bg-white/10 border-white/10 hover:scale-105 hover:shadow-xl'
-                  : 'bg-white/90 border-gray-200 hover:scale-105 hover:shadow-indigo-200/40'
-              }
-            `}
+            className="rounded-xl p-6 flex flex-col items-center justify-center border transition duration-300 bg-white/10 border-white/10 hover:scale-105 hover:shadow-xl"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: index * 0.07 }}
           >
             <item.icon color={item.color} size={38} />
-            <div
-              className={`text-center mt-2 text-sm font-semibold tracking-wide ${isDark ? 'text-white/90' : 'text-gray-800/90'}`}
-            >
+            <div className="text-center mt-2 text-sm font-semibold tracking-wide text-white/90">
               {item.label}
             </div>
           </motion.div>

@@ -1,7 +1,5 @@
 'use client';
 
-// import defaultMetadata from './metadata';
-
 import { useEffect, useState, useRef } from 'react';
 import Background from '@/components/background';
 import HeaderSection from '@/components/HeaderSection';
@@ -12,9 +10,7 @@ import Goals2025Section from '@/components/Goals2025Section';
 import LetsConnectSection from '@/components/LetsConnectSection';
 import FooterSection from '@/components/FooterSection';
 
-// OGP画像の内容指定constを削除（lib/og-image-presetsで一元管理するため）
-
-// カスタムフック: useWindowSize
+// Custom hook: useWindowSize
 function useWindowSize() {
   const [size, setSize] = useState({ width: 0, height: 0 });
   useEffect(() => {
@@ -28,7 +24,7 @@ function useWindowSize() {
   return size;
 }
 
-// カスタムフック: useParticles
+// Custom hook: useParticles
 function useParticles(
   width: number,
   height: number,
@@ -41,69 +37,115 @@ function useParticles(
       x: number;
       y: number;
       radius: number;
-      color: string;
+      hue: number;
       speedX: number;
       speedY: number;
+      opacity: number;
     }[] = [];
     let frame: number;
-    const particleCount = 50;
+    const particleCount = 60;
     const canvas = canvasRef.current;
     if (!canvas) return;
     ctx = canvas.getContext('2d');
     if (!ctx) return;
-    // キャンバスリサイズ用の関数
+
+    // Canvas resize function
     const resizeCanvas = () => {
       canvas.width = width;
       canvas.height = height;
     };
 
-    // width, height が変化するたびにキャンバスをリサイズ
     resizeCanvas();
 
-    // パーティクルの初期化
+    // Initialize particles with enhanced properties
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        radius: Math.random() * 2 + 1,
-        color: `rgba(99, 102, 241, ${Math.random() * 0.5 + 0.25})`,
-        speedX: Math.random() * 2 - 1,
-        speedY: Math.random() * 2 - 1,
+        radius: Math.random() * 3 + 1,
+        hue: 220 + Math.random() * 60, // Store hue separately for easy manipulation
+        speedX: (Math.random() - 0.5) * 2,
+        speedY: (Math.random() - 0.5) * 2,
+        opacity: Math.random() * 0.6 + 0.2,
       });
     }
 
-    // アニメーションループ
+    // Enhanced animation loop
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // パーティクル描画と移動
+      // Draw particles with glow effect
       particles.forEach((particle) => {
+        // Create glow effect
+        const gradient = ctx.createRadialGradient(
+          particle.x,
+          particle.y,
+          0,
+          particle.x,
+          particle.y,
+          particle.radius * 3
+        );
+
+        // Use proper RGBA format for gradient colors
+        const glowColor = `rgba(${Math.sin(particle.hue * 0.01) * 127 + 128}, ${Math.sin((particle.hue + 120) * 0.01) * 127 + 128}, ${Math.sin((particle.hue + 240) * 0.01) * 127 + 128}, ${particle.opacity})`;
+
+        gradient.addColorStop(0, glowColor);
+        gradient.addColorStop(1, 'transparent');
+
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.radius * 3, 0, Math.PI * 2);
+        ctx.fillStyle = gradient;
+        ctx.fill();
+
+        // Draw main particle
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color;
+
+        // Use proper RGBA format for main particle
+        const mainColor = `rgba(${Math.sin(particle.hue * 0.01) * 127 + 128}, ${Math.sin((particle.hue + 120) * 0.01) * 127 + 128}, ${Math.sin((particle.hue + 240) * 0.01) * 127 + 128}, ${Math.min(1, particle.opacity + 0.4)})`;
+        ctx.fillStyle = mainColor;
         ctx.fill();
+
+        // Update position
         particle.x += particle.speedX;
         particle.y += particle.speedY;
+
+        // Bounce off edges
         if (particle.x < 0 || particle.x > canvas.width) {
           particle.speedX *= -1;
         }
         if (particle.y < 0 || particle.y > canvas.height) {
           particle.speedY *= -1;
         }
+
+        // Pulse opacity
+        particle.opacity += (Math.random() - 0.5) * 0.02;
+        particle.opacity = Math.max(0.1, Math.min(0.8, particle.opacity));
       });
 
-      // パーティクル間の接続線描画
+      // Draw connection lines with enhanced styling
       particles.forEach((particle, i) => {
         particles.slice(i + 1).forEach((otherParticle) => {
           const dx = particle.x - otherParticle.x;
           const dy = particle.y - otherParticle.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
-          if (distance < 150) {
+          if (distance < 120) {
+            const opacity = (1 - distance / 120) * 0.3;
+            const gradient = ctx.createLinearGradient(
+              particle.x,
+              particle.y,
+              otherParticle.x,
+              otherParticle.y
+            );
+            gradient.addColorStop(0, `rgba(99, 102, 241, ${opacity})`);
+            gradient.addColorStop(0.5, `rgba(139, 92, 246, ${opacity * 1.2})`);
+            gradient.addColorStop(1, `rgba(219, 39, 119, ${opacity})`);
+
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(otherParticle.x, otherParticle.y);
-            ctx.strokeStyle = `rgba(99, 102, 241, ${0.2 * (1 - distance / 150)})`;
-            ctx.lineWidth = 0.5;
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = 1;
             ctx.stroke();
           }
         });
@@ -114,7 +156,6 @@ function useParticles(
 
     animate();
 
-    // クリーンアップ処理
     return () => {
       cancelAnimationFrame(frame);
     };
@@ -127,78 +168,128 @@ export default function AboutMePage() {
   useParticles(width, height, canvasRef);
 
   return (
-    <div className="relative min-h-screen text-gray-100 overflow-hidden font-sans">
-      {/* 新しい大胆なグラデーション背景 */}
+    <div className="relative min-h-screen text-gray-100 overflow-hidden">
+      {/* Enhanced background with modern mesh gradient */}
       <div
         aria-hidden
         className="pointer-events-none fixed inset-0 -z-30"
         style={{
-          background:
-            'linear-gradient(120deg, #0f172a 0%, #312e81 40%, #7c3aed 80%, #f472b6 100%)',
-          opacity: 0.9,
+          background: `
+            radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+            radial-gradient(circle at 40% 80%, rgba(99, 102, 241, 0.2) 0%, transparent 50%),
+            linear-gradient(135deg, #0f172a 0%, #1e1b4b 25%, #312e81 50%, #581c87 75%, #7c2d12 100%)
+          `,
         }}
       />
-      {/* ノイズレイヤー */}
+
+      {/* Animated mesh overlay */}
       <div
         aria-hidden
-        className="pointer-events-none fixed inset-0 -z-20"
+        className="pointer-events-none fixed inset-0 -z-20 opacity-40"
         style={{
-          backgroundImage:
-            "url('data:image/svg+xml,%3Csvg width=\'40\' height=\'40\' viewBox=\'0 0 40 40\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Crect width=\'40\' height=\'40\' fill=\'white\' fill-opacity=\'0.03\'/%3E%3C/svg%3E')",
-          opacity: 0.7,
+          backgroundImage: `
+            radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.1) 0%, transparent 50%)
+          `,
+          animation: 'gradient-xy 20s ease infinite',
         }}
       />
-      {/* パーティクル背景 */}
+
+      {/* Enhanced particle background */}
       <Background width={width} height={height} />
       <canvas
         ref={canvasRef}
-        className="absolute top-0 left-0 w-full h-full -z-10"
+        className="absolute top-0 left-0 w-full h-full -z-10 opacity-80"
       />
-      {/* 新レイアウト: センターカラム＋左右に装飾 */}
-      <div className="relative z-10 flex flex-col min-h-screen items-center justify-center px-2 md:px-0">
-        {/* 左右に大きなグラデーション円 */}
-        <div className="hidden md:block absolute left-0 top-1/3 w-96 h-96 bg-gradient-to-br from-pink-400 via-purple-500 to-indigo-500 opacity-30 blur-3xl rounded-full -z-10 animate-pulse" />
-        <div className="hidden md:block absolute right-0 bottom-0 w-80 h-80 bg-gradient-to-tr from-sky-400 via-indigo-400 to-purple-400 opacity-20 blur-2xl rounded-full -z-10 animate-pulse" />
-        {/* メインコンテンツ */}
-        <main className="w-full max-w-5xl mx-auto flex flex-col gap-32 md:gap-40 py-16 md:py-32">
-          <section
-            id="hero"
-            className="flex flex-col items-center justify-center min-h-[80vh]"
-          >
+
+      {/* Main content with improved layout */}
+      <div className="relative z-10 flex flex-col min-h-screen">
+        {/* Floating orbs decoration */}
+        <div className="fixed inset-0 -z-5 pointer-events-none">
+          <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-primary-400/20 to-accent-400/20 rounded-full blur-xl animate-blob" />
+          <div
+            className="absolute top-40 right-20 w-48 h-48 bg-gradient-to-br from-accent-400/15 to-primary-400/15 rounded-full blur-2xl animate-blob"
+            style={{ animationDelay: '2s' }}
+          />
+          <div
+            className="absolute bottom-32 left-1/4 w-24 h-24 bg-gradient-to-br from-primary-300/25 to-accent-300/25 rounded-full blur-lg animate-blob"
+            style={{ animationDelay: '4s' }}
+          />
+        </div>
+
+        {/* Hero section with enhanced glass effect */}
+        <section
+          id="hero"
+          className="flex flex-col items-center justify-center min-h-screen px-4 relative"
+        >
+          <div className="glass rounded-3xl p-8 md:p-12 max-w-6xl w-full backdrop-blur-xl border border-white/10 shadow-glass">
             <HeaderSection />
+          </div>
+        </section>
+
+        {/* Content sections with improved spacing and effects */}
+        <main className="w-full max-w-7xl mx-auto flex flex-col gap-24 md:gap-32 px-4 md:px-8 py-16 md:py-24">
+          <section id="identity" className="group relative">
+            <div className="glass rounded-3xl overflow-hidden border border-white/10 shadow-glass hover:shadow-glow-lg transition-all duration-500 hover:scale-[1.01]">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-accent-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative p-8 md:p-12 backdrop-blur-xl">
+                <TechIdentitySection />
+              </div>
+            </div>
           </section>
-          <section
-            id="identity"
-            className="flex flex-col md:flex-row gap-12 items-center justify-between min-h-[60vh] bg-white/5 rounded-3xl shadow-2xl border border-white/10 p-8 md:p-16 backdrop-blur-xl"
-          >
-            <TechIdentitySection />
+
+          <section id="focus" className="group relative">
+            <div className="glass rounded-3xl overflow-hidden border border-white/10 shadow-glass hover:shadow-glow-lg transition-all duration-500 hover:scale-[1.01]">
+              <div className="absolute inset-0 bg-gradient-to-br from-accent-500/5 to-primary-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative p-8 md:p-12 backdrop-blur-xl">
+                <CurrentFocusSection />
+              </div>
+            </div>
           </section>
-          <section
-            id="focus"
-            className="flex flex-col md:flex-row-reverse gap-12 items-center justify-between min-h-[60vh] bg-gradient-to-br from-indigo-900/80 via-purple-900/60 to-pink-900/40 rounded-3xl shadow-2xl border border-white/10 p-8 md:p-16 backdrop-blur-xl"
-          >
-            <CurrentFocusSection />
+
+          <section id="universe" className="group relative">
+            <div className="glass rounded-3xl overflow-hidden border border-white/10 shadow-glass hover:shadow-glow-lg transition-all duration-500 hover:scale-[1.01]">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-400/5 via-accent-400/5 to-primary-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative p-8 md:p-12 backdrop-blur-xl">
+                <TechUniverseSection />
+              </div>
+            </div>
           </section>
-          <section
-            id="universe"
-            className="flex flex-col items-center justify-center min-h-[50vh] bg-gradient-to-br from-purple-900/60 via-indigo-900/40 to-sky-900/30 rounded-3xl shadow-xl border border-white/10 p-8 md:p-16 backdrop-blur-xl"
-          >
-            <TechUniverseSection />
+
+          <section id="goals" className="group relative">
+            <div className="glass rounded-3xl overflow-hidden border border-white/10 shadow-glass hover:shadow-glow-lg transition-all duration-500 hover:scale-[1.01]">
+              <div className="absolute inset-0 bg-gradient-to-br from-accent-400/5 via-primary-400/5 to-accent-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative p-8 md:p-12 backdrop-blur-xl">
+                <Goals2025Section />
+              </div>
+            </div>
           </section>
-          <section
-            id="goals"
-            className="flex flex-col items-center justify-center min-h-[50vh] bg-gradient-to-br from-pink-400/10 via-indigo-400/10 to-purple-400/10 rounded-3xl shadow-xl border border-white/10 p-8 md:p-16 backdrop-blur-xl"
-          >
-            <Goals2025Section />
-          </section>
-          <section
-            id="connect"
-            className="flex flex-col items-center justify-center min-h-[40vh] bg-white/5 rounded-3xl shadow-xl border border-white/10 p-8 md:p-16 backdrop-blur-xl"
-          >
-            <LetsConnectSection />
+
+          <section id="connect" className="group relative">
+            <div className="glass rounded-3xl overflow-hidden border border-white/10 shadow-glass hover:shadow-glow-lg transition-all duration-500 hover:scale-[1.01]">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-accent-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative p-8 md:p-12 backdrop-blur-xl">
+                <LetsConnectSection />
+              </div>
+            </div>
           </section>
         </main>
-        <FooterSection />
+
+        {/* Footer with glass effect */}
+        <div className="mt-16 px-4 md:px-8">
+          <div className="glass rounded-3xl border border-white/10 shadow-glass backdrop-blur-xl">
+            <FooterSection />
+          </div>
+        </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-20 pointer-events-none">
+        <div className="flex flex-col items-center gap-2 text-white/60">
+          <span className="text-sm font-mono">scroll</span>
+          <div className="w-px h-8 bg-gradient-to-b from-white/60 to-transparent animate-pulse" />
+        </div>
       </div>
     </div>
   );
