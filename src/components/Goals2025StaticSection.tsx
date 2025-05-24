@@ -1,22 +1,12 @@
-'use client';
+import type { Goal2025 } from '@/lib/notion-content';
 
-import { motion } from 'framer-motion';
-import { slideIn } from '@/components/variants';
-import { useTheme } from 'next-themes';
-import { type Goal2025 } from '@/lib/notion-content';
-
-interface Goals2025SectionProps {
+interface Goals2025StaticSectionProps {
   goalCategories: any[];
 }
 
-export default function Goals2025Section({
+export default function Goals2025StaticSection({
   goalCategories,
-}: Goals2025SectionProps) {
-  const { resolvedTheme } = useTheme();
-
-  // Prevent hydration mismatch by using consistent styling until mounted
-  const isDark = resolvedTheme === 'dark'; // Default to dark for SSR
-
+}: Goals2025StaticSectionProps) {
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case 'high':
@@ -46,12 +36,7 @@ export default function Goals2025Section({
   return (
     <section className="mb-20">
       {/* Enhanced header with unified styling */}
-      <motion.div
-        className="text-center mb-12"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
+      <div className="text-center mb-12">
         <h2 className="text-display mb-4">
           <span className="gradient-text">Goals 2025</span>
         </h2>
@@ -59,17 +44,11 @@ export default function Goals2025Section({
           Ambitious objectives and milestones for continuous growth and
           innovation
         </p>
-      </motion.div>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {goalCategories.map((category, categoryIndex) => (
-          <motion.div
-            key={category.title}
-            className="group relative"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: categoryIndex * 0.2 }}
-          >
+          <div key={category.title} className="group relative">
             <div className="glass rounded-2xl border border-white/10 shadow-glass overflow-hidden h-full">
               {/* Background decoration */}
               <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -95,16 +74,7 @@ export default function Goals2025Section({
                 {/* Goals List */}
                 <div className="space-y-6">
                   {category.goals.map((goal: Goal2025, goalIndex: number) => (
-                    <motion.div
-                      key={goal.id}
-                      className="space-y-3"
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{
-                        delay: categoryIndex * 0.2 + goalIndex * 0.1 + 0.3,
-                        duration: 0.4,
-                      }}
-                    >
+                    <div key={goal.id} className="space-y-3">
                       {/* Goal Header */}
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex-1">
@@ -137,7 +107,7 @@ export default function Goals2025Section({
                           </span>
                         </div>
                         <div className="h-1.5 bg-gray-700 rounded-full overflow-hidden">
-                          <motion.div
+                          <div
                             className={`h-full rounded-full ${
                               category.color === 'primary'
                                 ? 'bg-gradient-to-r from-primary-500 to-primary-400'
@@ -145,18 +115,11 @@ export default function Goals2025Section({
                                   ? 'bg-gradient-to-r from-accent-500 to-accent-400'
                                   : 'bg-gradient-to-r from-purple-500 to-purple-400'
                             }`}
-                            initial={{ width: 0 }}
-                            animate={{ width: `${goal.progress}%` }}
-                            transition={{
-                              delay:
-                                categoryIndex * 0.2 + goalIndex * 0.1 + 0.5,
-                              duration: 0.8,
-                              ease: 'easeOut',
-                            }}
+                            style={{ width: `${goal.progress}%` }}
                           />
                         </div>
                       </div>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
 
@@ -181,17 +144,12 @@ export default function Goals2025Section({
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
 
       {/* Overall Progress Summary */}
-      <motion.div
-        className="mt-12 glass rounded-2xl border border-white/10 shadow-glass p-8"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.8 }}
-      >
+      <div className="mt-12 glass rounded-2xl border border-white/10 shadow-glass p-8">
         <div className="text-center space-y-4">
           <h3 className="text-xl font-semibold text-white">
             2025 Progress Overview
@@ -246,7 +204,7 @@ export default function Goals2025Section({
             ))}
           </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

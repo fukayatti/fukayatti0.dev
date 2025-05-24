@@ -9,6 +9,12 @@ const notion = new Client({
 const CURRENT_FOCUS_DB_ID = '1fd3dbb2-f059-8102-b403-ffd658d0423e';
 const GOALS_2025_DB_ID = '1fd3dbb2-f059-81de-9487-ffe50e290bec';
 
+// Cache for server-side functions
+let currentFocusCache: { data: CurrentFocusArea[]; timestamp: number } | null =
+  null;
+let goals2025Cache: { data: Goal2025[]; timestamp: number } | null = null;
+const CACHE_DURATION = 10 * 60 * 1000; // 10 minutes in milliseconds
+
 // Types
 export interface CurrentFocusArea {
   id: string;
@@ -164,4 +170,131 @@ export async function getGoals2025ByCategory() {
   );
 
   return Object.values(categories);
+}
+
+// Server-side cached functions for ISR
+export async function getCachedCurrentFocusAreas(): Promise<
+  CurrentFocusArea[]
+> {
+  const now = Date.now();
+
+  // Check if cache is valid
+  if (currentFocusCache && now - currentFocusCache.timestamp < CACHE_DURATION) {
+    return currentFocusCache.data;
+  }
+
+  try {
+    const data = await getCurrentFocusAreas();
+    // Update cache
+    currentFocusCache = {
+      data,
+      timestamp: now,
+    };
+    return data;
+  } catch (error) {
+    console.error('Error fetching cached current focus areas:', error);
+    // Return cached data if available, even if expired
+    if (currentFocusCache) {
+      return currentFocusCache.data;
+    }
+    return [];
+  }
+}
+
+export async function getCachedGoals2025ByCategory() {
+  const now = Date.now();
+
+  // Check if cache is valid
+  if (goals2025Cache && now - goals2025Cache.timestamp < CACHE_DURATION) {
+    const cachedGoals = goals2025Cache.data;
+    // Organize cached goals by category
+    const categories = cachedGoals.reduce(
+      (acc, goal) => {
+        const categoryKey = goal.category;
+        if (!acc[categoryKey]) {
+          acc[categoryKey] = {
+            title:
+              categoryKey === 'Technical Objectives'
+                ? '2025 Goals'
+                : categoryKey === 'Knowledge Sharing'
+                  ? 'Content Creation'
+                  : 'Project Goals',
+            subtitle: categoryKey,
+            icon: goal.categoryIcon,
+            color: goal.categoryColor,
+            goals: [],
+          };
+        }
+        acc[categoryKey].goals.push(goal);
+        return acc;
+      },
+      {} as Record<string, any>
+    );
+    return Object.values(categories);
+  }
+
+  try {
+    const data = await getGoals2025();
+    // Update cache
+    goals2025Cache = {
+      data,
+      timestamp: now,
+    };
+
+    // Organize by category
+    const categories = data.reduce(
+      (acc, goal) => {
+        const categoryKey = goal.category;
+        if (!acc[categoryKey]) {
+          acc[categoryKey] = {
+            title:
+              categoryKey === 'Technical Objectives'
+                ? '2025 Goals'
+                : categoryKey === 'Knowledge Sharing'
+                  ? 'Content Creation'
+                  : 'Project Goals',
+            subtitle: categoryKey,
+            icon: goal.categoryIcon,
+            color: goal.categoryColor,
+            goals: [],
+          };
+        }
+        acc[categoryKey].goals.push(goal);
+        return acc;
+      },
+      {} as Record<string, any>
+    );
+
+    return Object.values(categories);
+  } catch (error) {
+    console.error('Error fetching cached goals 2025:', error);
+    // Return cached data if available, even if expired
+    if (goals2025Cache) {
+      const cachedGoals = goals2025Cache.data;
+      const categories = cachedGoals.reduce(
+        (acc, goal) => {
+          const categoryKey = goal.category;
+          if (!acc[categoryKey]) {
+            acc[categoryKey] = {
+              title:
+                categoryKey === 'Technical Objectives'
+                  ? '2025 Goals'
+                  : categoryKey === 'Knowledge Sharing'
+                    ? 'Content Creation'
+                    : 'Project Goals',
+              subtitle: categoryKey,
+              icon: goal.categoryIcon,
+              color: goal.categoryColor,
+              goals: [],
+            };
+          }
+          acc[categoryKey].goals.push(goal);
+          return acc;
+        },
+        {} as Record<string, any>
+      );
+      return Object.values(categories);
+    }
+    return [];
+  }
 }

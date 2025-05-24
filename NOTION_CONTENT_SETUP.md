@@ -85,12 +85,45 @@ Notionでデータベースのレコードを編集するだけで、Webサイ�
 
 ## コンポーネント
 
-- `src/components/CurrentFocusSection.tsx`: Current Focus Areasの表示
-- `src/components/Goals2025Section.tsx`: Goals 2025の表示
+### クライアントサイド版（既存）
+
+- `src/components/CurrentFocusSection.tsx`: Current Focus Areasの表示（クライアントサイド）
+- `src/components/Goals2025Section.tsx`: Goals 2025の表示（クライアントサイド）
+
+### ISR版（新規追加）
+
+- `src/components/CurrentFocusStaticSection.tsx`: Current Focus Areasの表示（静的）
+- `src/components/Goals2025StaticSection.tsx`: Goals 2025の表示（静的）
+- `src/app/page-static/page.tsx`: ISR対応のトップページ
+
+## ページ
+
+### ISR版トップページ
+
+- **URL**: `/page-static`
+- **更新頻度**: 10分間隔（`revalidate = 600`）
+- **特徴**:
+  - 静的生成による高速表示
+  - 10分間隔での自動更新
+  - キャッシュ機能によるレート制限対策
+  - エラー時の自動回復
+
+### クライアントサイド版（既存）
+
+- **URL**: `/`
+- **特徴**: リアルタイムデータ取得
 
 ## フォールバック
 
-Notion APIが利用できない場合、コンポーネントは空のデータまたはエラーメッセージを表示します。
+### ISR版
+
+- キャッシュされたデータがある場合は期限切れでも表示
+- Notion APIエラー時は前回の成功データを使用
+- 完全に取得できない場合はエラーページを表示
+
+### クライアントサイド版
+
+- Notion APIが利用できない場合は空のデータまたはエラーメッセージを表示
 
 ## トラブルシューティング
 

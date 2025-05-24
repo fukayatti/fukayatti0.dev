@@ -1,8 +1,3 @@
-'use client';
-
-import { motion } from 'framer-motion';
-import { fadeIn } from '@/components/variants';
-import { useTheme } from 'next-themes';
 import {
   Code2,
   Smartphone,
@@ -14,20 +9,15 @@ import {
   Users,
   ArrowRight,
 } from 'lucide-react';
-import { type CurrentFocusArea } from '@/lib/notion-content';
+import type { CurrentFocusArea } from '@/lib/notion-content';
 
-interface CurrentFocusSectionProps {
+interface CurrentFocusStaticSectionProps {
   focusAreas: CurrentFocusArea[];
 }
 
-export default function CurrentFocusSection({
+export default function CurrentFocusStaticSection({
   focusAreas,
-}: CurrentFocusSectionProps) {
-  const { resolvedTheme } = useTheme();
-
-  // Prevent hydration mismatch by using consistent styling until mounted
-  const isDark = resolvedTheme === 'dark'; // Default to dark for SSR
-
+}: CurrentFocusStaticSectionProps) {
   // Icon mapping function
   const getIconComponent = (iconName: string) => {
     switch (iconName) {
@@ -107,19 +97,14 @@ export default function CurrentFocusSection({
   return (
     <section className="mb-20">
       {/* Enhanced header with unified styling */}
-      <motion.div
-        className="text-center mb-12"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
+      <div className="text-center mb-12">
         <h2 className="text-display mb-4">
           <span className="gradient-text">Current Focus</span>
         </h2>
         <p className="text-body max-w-2xl mx-auto text-gray-400">
           My ongoing projects and learning journey in technology
         </p>
-      </motion.div>
+      </div>
 
       {/* Focus Areas Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
@@ -127,13 +112,7 @@ export default function CurrentFocusSection({
           const colorClasses = getColorClasses(area.color);
           const IconComponent = getIconComponent(area.icon);
           return (
-            <motion.div
-              key={area.id}
-              className="group relative"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-            >
+            <div key={area.id} className="group relative">
               <div className="glass rounded-2xl border border-white/10 shadow-glass overflow-hidden h-full hover:shadow-glow-lg transition-all duration-300 group-hover:scale-105">
                 {/* Background decoration */}
                 <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -225,18 +204,13 @@ export default function CurrentFocusSection({
                   </button>
                 </div>
               </div>
-            </motion.div>
+            </div>
           );
         })}
       </div>
 
       {/* Summary Card */}
-      <motion.div
-        className="glass rounded-2xl border border-white/10 shadow-glass p-8"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.8 }}
-      >
+      <div className="glass rounded-2xl border border-white/10 shadow-glass p-8">
         <div className="text-center space-y-6">
           <div className="space-y-2">
             <h3 className="text-xl font-semibold text-white">
@@ -279,7 +253,7 @@ export default function CurrentFocusSection({
             </button>
           </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }
