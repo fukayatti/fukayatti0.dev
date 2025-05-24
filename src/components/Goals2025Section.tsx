@@ -4,119 +4,36 @@ import { motion } from 'framer-motion';
 import { slideIn } from '@/components/variants';
 import { useTheme } from 'next-themes';
 import { useState, useEffect } from 'react';
+import { getGoals2025ByCategory, type Goal2025 } from '@/lib/notion-content';
 
 export default function Goals2025Section() {
   const [mounted, setMounted] = useState(false);
+  const [goalCategories, setGoalCategories] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const { resolvedTheme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
+
+    // Fetch goals from Notion
+    const fetchGoals = async () => {
+      try {
+        const categories = await getGoals2025ByCategory();
+        setGoalCategories(categories);
+      } catch (error) {
+        console.error('Failed to fetch goals:', error);
+        // Fallback to empty data if Notion fails
+        setGoalCategories([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGoals();
   }, []);
 
   // Prevent hydration mismatch by using consistent styling until mounted
   const isDark = mounted ? resolvedTheme === 'dark' : true; // Default to dark for SSR
-
-  const goalCategories = [
-    {
-      title: '2025 Goals',
-      subtitle: 'Technical Objectives',
-      icon: '🎯',
-      color: 'primary',
-      goals: [
-        {
-          title: 'Master Backend Development',
-          description:
-            'Build scalable backend systems with modern architectures',
-          priority: 'high',
-          progress: 35,
-        },
-        {
-          title: 'Mobile App Development',
-          description:
-            'Create cross-platform applications with Expo and React Native',
-          priority: 'high',
-          progress: 20,
-        },
-        {
-          title: 'IoT Projects',
-          description: 'Develop IoT solutions with Raspberry Pi and Arduino',
-          priority: 'medium',
-          progress: 45,
-        },
-        {
-          title: 'API Development',
-          description: 'Build robust and scalable API services',
-          priority: 'high',
-          progress: 40,
-        },
-      ],
-    },
-    {
-      title: 'Content Creation',
-      subtitle: 'Knowledge Sharing',
-      icon: '✍️',
-      color: 'accent',
-      goals: [
-        {
-          title: 'Technical Articles',
-          description: 'Write comprehensive technical blog posts regularly',
-          priority: 'medium',
-          progress: 60,
-        },
-        {
-          title: 'Backend Tutorials',
-          description: 'Create step-by-step backend development guides',
-          priority: 'medium',
-          progress: 25,
-        },
-        {
-          title: 'IoT Documentation',
-          description: 'Share IoT project experiences and learnings',
-          priority: 'low',
-          progress: 15,
-        },
-        {
-          title: 'Mobile Dev Journey',
-          description: 'Document mobile application development process',
-          priority: 'medium',
-          progress: 30,
-        },
-      ],
-    },
-    {
-      title: 'Project Goals',
-      subtitle: 'Innovation & Impact',
-      icon: '🚀',
-      color: 'secondary',
-      goals: [
-        {
-          title: 'Home Automation',
-          description:
-            'Build comprehensive home automation system with Raspberry Pi',
-          priority: 'high',
-          progress: 50,
-        },
-        {
-          title: 'Mobile UniquePersonCounter',
-          description: 'Release mobile version of computer vision project',
-          priority: 'high',
-          progress: 65,
-        },
-        {
-          title: 'Backend Services',
-          description: 'Develop production-ready backend infrastructure',
-          priority: 'high',
-          progress: 30,
-        },
-        {
-          title: 'Open Source Contributions',
-          description: 'Contribute meaningfully to open-source projects',
-          priority: 'medium',
-          progress: 20,
-        },
-      ],
-    },
-  ];
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
@@ -143,6 +60,21 @@ export default function Goals2025Section() {
         return 'text-primary-300 border-primary-500/30';
     }
   };
+
+  if (loading) {
+    return (
+      <section className="mb-20">
+        <div className="text-center mb-12">
+          <h2 className="text-display mb-4">
+            <span className="gradient-text">Goals 2025</span>
+          </h2>
+          <p className="text-body max-w-2xl mx-auto text-gray-400">
+            Loading...
+          </p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="mb-20">
@@ -195,9 +127,9 @@ export default function Goals2025Section() {
 
                 {/* Goals List */}
                 <div className="space-y-6">
-                  {category.goals.map((goal, goalIndex) => (
+                  {category.goals.map((goal: Goal2025, goalIndex: number) => (
                     <motion.div
-                      key={goal.title}
+                      key={goal.id}
                       className="space-y-3"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -272,7 +204,7 @@ export default function Goals2025Section() {
                     >
                       {Math.round(
                         category.goals.reduce(
-                          (acc, goal) => acc + goal.progress,
+                          (acc: number, goal: Goal2025) => acc + goal.progress,
                           0
                         ) / category.goals.length
                       )}
@@ -311,7 +243,9 @@ export default function Goals2025Section() {
                 label: 'High Priority',
                 value: goalCategories.reduce(
                   (acc, cat) =>
-                    acc + cat.goals.filter((g) => g.priority === 'high').length,
+                    acc +
+                    cat.goals.filter((g: Goal2025) => g.priority === 'high')
+                      .length,
                   0
                 ),
                 icon: '🔥',
@@ -320,14 +254,18 @@ export default function Goals2025Section() {
                 label: 'In Progress',
                 value: goalCategories.reduce(
                   (acc, cat) =>
-                    acc + cat.goals.filter((g) => g.progress > 0).length,
+                    acc +
+                    cat.goals.filter((g: Goal2025) => g.progress > 0).length,
                   0
                 ),
                 icon: '⚡',
               },
               {
                 label: 'Avg Progress',
-                value: `${Math.round(goalCategories.reduce((acc, cat) => acc + cat.goals.reduce((sum, goal) => sum + goal.progress, 0), 0) / goalCategories.reduce((acc, cat) => acc + cat.goals.length, 0))}%`,
+                value:
+                  goalCategories.length > 0
+                    ? `${Math.round(goalCategories.reduce((acc, cat) => acc + cat.goals.reduce((sum: number, goal: Goal2025) => sum + goal.progress, 0), 0) / goalCategories.reduce((acc, cat) => acc + cat.goals.length, 0))}%`
+                    : '0%',
                 icon: '📈',
               },
             ].map((stat, index) => (

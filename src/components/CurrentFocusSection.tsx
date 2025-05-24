@@ -15,66 +15,55 @@ import {
   Users,
   ArrowRight,
 } from 'lucide-react';
+import {
+  getCurrentFocusAreas,
+  type CurrentFocusArea,
+} from '@/lib/notion-content';
 
 export default function CurrentFocusSection() {
   const [mounted, setMounted] = useState(false);
+  const [focusAreas, setFocusAreas] = useState<CurrentFocusArea[]>([]);
+  const [loading, setLoading] = useState(true);
   const { resolvedTheme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
+
+    // Fetch focus areas from Notion
+    const fetchFocusAreas = async () => {
+      try {
+        const areas = await getCurrentFocusAreas();
+        setFocusAreas(areas);
+      } catch (error) {
+        console.error('Failed to fetch focus areas:', error);
+        // Fallback to default data if Notion fails
+        setFocusAreas([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFocusAreas();
   }, []);
 
   // Prevent hydration mismatch by using consistent styling until mounted
   const isDark = mounted ? resolvedTheme === 'dark' : true; // Default to dark for SSR
 
-  const focusAreas = [
-    {
-      title: 'Web Development',
-      subtitle: 'Full-Stack Projects',
-      description:
-        'Building modern web applications with React, Next.js, and TypeScript',
-      icon: Code2,
-      color: 'primary',
-      progress: 85,
-      stats: '12 projects',
-      status: 'Active',
-      technologies: ['React', 'Next.js', 'TypeScript', 'Tailwind'],
-    },
-    {
-      title: 'Mobile Development',
-      subtitle: 'Cross-Platform Apps',
-      description: 'Creating mobile experiences with React Native and Flutter',
-      icon: Smartphone,
-      color: 'accent',
-      progress: 70,
-      stats: '6 apps',
-      status: 'Learning',
-      technologies: ['React Native', 'Flutter', 'Dart', 'Expo'],
-    },
-    {
-      title: 'Electronics & IoT',
-      subtitle: 'Hardware Integration',
-      description: 'Exploring microcontrollers, sensors, and embedded systems',
-      icon: Cpu,
-      color: 'secondary',
-      progress: 65,
-      stats: '8 projects',
-      status: 'Exploring',
-      technologies: ['Arduino', 'Raspberry Pi', 'ESP32', 'C++'],
-    },
-    {
-      title: 'Competitive Programming',
-      subtitle: 'Algorithm Mastery',
-      description:
-        'Solving complex problems and participating in coding contests',
-      icon: Trophy,
-      color: 'warning',
-      progress: 78,
-      stats: '150+ problems',
-      status: 'Competing',
-      technologies: ['C++', 'Python', 'Data Structures', 'Algorithms'],
-    },
-  ];
+  // Icon mapping function
+  const getIconComponent = (iconName: string) => {
+    switch (iconName) {
+      case 'Code2':
+        return Code2;
+      case 'Smartphone':
+        return Smartphone;
+      case 'Cpu':
+        return Cpu;
+      case 'Trophy':
+        return Trophy;
+      default:
+        return Code2;
+    }
+  };
 
   const getColorClasses = (color: string) => {
     switch (color) {
@@ -136,6 +125,21 @@ export default function CurrentFocusSection() {
     }
   };
 
+  if (loading) {
+    return (
+      <section className="mb-20">
+        <div className="text-center mb-12">
+          <h2 className="text-display mb-4">
+            <span className="gradient-text">Current Focus</span>
+          </h2>
+          <p className="text-body max-w-2xl mx-auto text-gray-400">
+            Loading...
+          </p>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="mb-20">
       {/* Enhanced header with unified styling */}
@@ -157,10 +161,10 @@ export default function CurrentFocusSection() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
         {focusAreas.map((area, index) => {
           const colorClasses = getColorClasses(area.color);
-          const IconComponent = area.icon;
+          const IconComponent = getIconComponent(area.icon);
           return (
             <motion.div
-              key={area.title}
+              key={area.id}
               className="group relative"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
