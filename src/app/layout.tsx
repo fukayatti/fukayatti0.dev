@@ -1,5 +1,5 @@
 import { ThemeProvider } from '../components/provider';
-import Header from '../components/header';
+import NavigationHeader from '../components/NavigationHeader';
 import './globals.css';
 import ClientLayout from '../components/ClientLayout';
 import { defaultMetadata } from '../lib/metadata-common';
@@ -21,7 +21,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <ClientLayout>
-            <Header />
+            <NavigationHeader />
             {children}
           </ClientLayout>
         </ThemeProvider>

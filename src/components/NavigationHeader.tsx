@@ -18,7 +18,7 @@ const navLinks = [
   { href: '/contact', label: 'Contact', icon: Mail },
 ];
 
-const Header = () => {
+const NavigationHeader = () => {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
   const [randomValue, setRandomValue] = useState(0);
@@ -153,4 +153,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default NavigationHeader;

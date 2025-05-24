@@ -1,4 +1,28 @@
 'use client';
+import type { Metadata } from 'next';
+import { defaultMetadata } from '../../lib/metadata-common';
+
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://fukayatti0.dev';
+
+const metadata: Metadata = {
+  ...defaultMetadata,
+  title: 'Contact',
+  description: "Let's build something amazing together",
+  openGraph: {
+    ...defaultMetadata.openGraph,
+    title: 'Contact',
+    description: "Let's build something amazing together",
+    url: `${baseUrl}/contact`,
+    images: [`${baseUrl}/contact/opengraph-image.png`],
+  },
+  twitter: {
+    ...defaultMetadata.twitter,
+    card: 'summary_large_image',
+    title: 'Contact',
+    description: "Let's build something amazing together",
+    images: [`${baseUrl}/contact/opengraph-image.png`],
+  },
+};
 
 import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';

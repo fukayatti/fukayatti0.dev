@@ -1,6 +1,6 @@
 import CurrentFocusSection from './CurrentFocusSection';
 import Goals2025Section from './Goals2025Section';
-import HeaderSection from '@/components/HeaderSection';
+import HeroSection from '@/components/HeroSection';
 import TechIdentitySection from '@/components/TechIdentitySection';
 import TechUniverseSection from '@/components/TechUniverseSection';
 import LetsConnectSection from '@/components/LetsConnectSection';
@@ -20,7 +20,7 @@ const HomePageClient: React.FC<HomePageClientProps> = ({
   return (
     <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24 2xl:px-32 max-w-7xl">
       <main className="space-y-12">
-        <HeaderSection />
+        <HeroSection />
         <TechIdentitySection />
         <TechUniverseSection />
         <LetsConnectSection />

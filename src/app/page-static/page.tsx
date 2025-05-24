@@ -3,9 +3,9 @@ import {
   getCachedGoals2025ByCategory,
 } from '@/lib/notion-content';
 import type { CurrentFocusArea } from '@/lib/notion-content';
-import CurrentFocusStaticSection from '@/components/CurrentFocusStaticSection';
-import Goals2025StaticSection from '@/components/Goals2025StaticSection';
-import HeaderSection from '@/components/HeaderSection';
+import CurrentFocusSection from '@/components/CurrentFocusSection';
+import Goals2025Section from '@/components/Goals2025Section';
+import HeroSection from '@/components/HeroSection';
 import LetsConnectSection from '@/components/LetsConnectSection';
 import FooterSection from '@/components/FooterSection';
 import {
@@ -141,13 +141,16 @@ export default async function HomeStaticPage({}: HomeStaticPageProps) {
             </div>
 
             {/* Header Section */}
-            <HeaderSection />
+            <HeroSection />
 
             {/* Current Focus Section */}
-            <CurrentFocusStaticSection focusAreas={focusAreas} />
+            <CurrentFocusSection focusAreas={focusAreas} animated={false} />
 
             {/* Goals 2025 Section */}
-            <Goals2025StaticSection goalCategories={goalCategories} />
+            <Goals2025Section
+              goalCategories={goalCategories}
+              animated={false}
+            />
 
             {/* Performance Information */}
             <div className="grid md:grid-cols-2 gap-8 mb-8">

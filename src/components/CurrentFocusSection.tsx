@@ -18,15 +18,27 @@ import { type CurrentFocusArea } from '@/lib/notion-content';
 
 interface CurrentFocusSectionProps {
   focusAreas: CurrentFocusArea[];
+  animated?: boolean; // 新しいプロパティでアニメーションを制御
 }
 
 export default function CurrentFocusSection({
   focusAreas,
+  animated = true,
 }: CurrentFocusSectionProps) {
   const { resolvedTheme } = useTheme();
 
   // Prevent hydration mismatch by using consistent styling until mounted
   const isDark = resolvedTheme === 'dark'; // Default to dark for SSR
+
+  // Wrapper component to handle conditional animation
+  const AnimatedWrapper = animated ? motion.div : 'div';
+  const animationProps = animated
+    ? {
+        initial: { opacity: 0, y: 20 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.6 },
+      }
+    : {};
 
   // Icon mapping function
   const getIconComponent = (iconName: string) => {
@@ -107,32 +119,34 @@ export default function CurrentFocusSection({
   return (
     <section className="mb-20">
       {/* Enhanced header with unified styling */}
-      <motion.div
-        className="text-center mb-12"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
+      <AnimatedWrapper className="text-center mb-12" {...animationProps}>
         <h2 className="text-display mb-4">
           <span className="gradient-text">Current Focus</span>
         </h2>
         <p className="text-body max-w-2xl mx-auto text-muted-foreground">
           My ongoing projects and learning journey in technology
         </p>
-      </motion.div>
+      </AnimatedWrapper>
 
       {/* Focus Areas Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
         {focusAreas.map((area, index) => {
           const colorClasses = getColorClasses(area.color);
           const IconComponent = getIconComponent(area.icon);
+          const AnimatedGridItem = animated ? motion.div : 'div';
+          const gridItemProps = animated
+            ? {
+                initial: { opacity: 0, y: 20 },
+                animate: { opacity: 1, y: 0 },
+                transition: { duration: 0.6, delay: index * 0.2 },
+              }
+            : {};
+
           return (
-            <motion.div
+            <AnimatedGridItem
               key={area.id}
               className="group relative"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
+              {...gridItemProps}
             >
               <div className="glass rounded-2xl border border-white/10 shadow-glass overflow-hidden h-full hover:shadow-glow-lg transition-all duration-300 group-hover:scale-105">
                 {/* Background decoration */}
@@ -184,10 +198,23 @@ export default function CurrentFocusSection({
                       </span>
                     </div>
                     <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
-                      <div
-                        className={`h-full ${colorClasses.progress} transition-all duration-1000 ease-out rounded-full`}
-                        style={{ width: `${area.progress}%` }}
-                      />
+                      {animated ? (
+                        <motion.div
+                          className={`h-full ${colorClasses.progress} rounded-full`}
+                          initial={{ width: 0 }}
+                          animate={{ width: `${area.progress}%` }}
+                          transition={{
+                            duration: 1,
+                            ease: 'easeOut',
+                            delay: index * 0.2 + 0.5,
+                          }}
+                        />
+                      ) : (
+                        <div
+                          className={`h-full ${colorClasses.progress} transition-all duration-1000 ease-out rounded-full`}
+                          style={{ width: `${area.progress}%` }}
+                        />
+                      )}
                     </div>
                   </div>
 
@@ -229,7 +256,7 @@ export default function CurrentFocusSection({
                   </button>
                 </div>
               </div>
-            </motion.div>
+            </AnimatedGridItem>
           );
         })}
       </div>
@@ -237,9 +264,13 @@ export default function CurrentFocusSection({
       {/* Summary Card */}
       <motion.div
         className="glass rounded-2xl border border-white/10 shadow-glass p-8"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.8 }}
+        {...(animated
+          ? {
+              initial: { opacity: 0, y: 20 },
+              animate: { opacity: 1, y: 0 },
+              transition: { duration: 0.6, delay: 0.8 },
+            }
+          : {})}
       >
         <div className="text-center space-y-6">
           <div className="space-y-2">
