@@ -12,7 +12,7 @@ import {
   SiRocket,
   SiHandshake,
 } from '@icons-pack/react-simple-icons';
-import { Star, MessageCircle } from 'lucide-react';
+import { Trophy, MessageCircle } from 'lucide-react';
 
 export default function LetsConnectSection() {
   const [mounted, setMounted] = useState(false);
@@ -246,7 +246,7 @@ export default function LetsConnectSection() {
               {
                 label: 'Satisfaction',
                 value: '5.0★',
-                IconComponent: Star,
+                IconComponent: Trophy,
               },
             ].map((stat, index) => (
               <div key={stat.label} className="text-center space-y-2">

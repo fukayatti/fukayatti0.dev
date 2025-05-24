@@ -1,5 +1,5 @@
-import CurrentFocusSection from './CurrentFocusSection';
-import Goals2025Section from './Goals2025Section';
+import CurrentFocusSection from '@/components/CurrentFocusSection';
+import Goals2025Section from '@/components/Goals2025Section';
 import HeroSection from '@/components/HeroSection';
 import TechIdentitySection from '@/components/TechIdentitySection';
 import TechUniverseSection from '@/components/TechUniverseSection';

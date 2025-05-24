@@ -1,8 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { fadeIn } from '@/components/variants';
-import { useTheme } from 'next-themes';
 import {
   Code2,
   Smartphone,
@@ -14,34 +11,28 @@ import {
   Users,
   ArrowRight,
 } from 'lucide-react';
-import { type CurrentFocusArea } from '@/lib/notion-content';
+import type { CurrentFocusArea } from '@/lib/notion-content';
+import dynamic from 'next/dynamic';
+
+const MotionDiv = dynamic(
+  () => import('framer-motion').then((mod) => mod.motion.div),
+  { ssr: false }
+);
 
 interface CurrentFocusSectionProps {
   focusAreas: CurrentFocusArea[];
-  animated?: boolean; // 新しいプロパティでアニメーションを制御
 }
 
 export default function CurrentFocusSection({
   focusAreas,
-  animated = true,
 }: CurrentFocusSectionProps) {
-  const { resolvedTheme } = useTheme();
-
-  // Prevent hydration mismatch by using consistent styling until mounted
-  const isDark = resolvedTheme === 'dark'; // Default to dark for SSR
-
-  // Wrapper component to handle conditional animation
-  const AnimatedWrapper = animated ? motion.div : 'div';
-  const animationProps = animated
-    ? {
-        initial: { opacity: 0, y: 20 },
-        animate: { opacity: 1, y: 0 },
-        transition: { duration: 0.6 },
-      }
-    : {};
-
   // Icon mapping function
-  const getIconComponent = (iconName: string) => {
+  const getIconComponent = (iconName?: string) => {
+    // Handle null, undefined, or empty string cases
+    if (!iconName || iconName.trim() === '') {
+      return Code2;
+    }
+
     switch (iconName) {
       case 'Code2':
         return Code2;
@@ -51,7 +42,19 @@ export default function CurrentFocusSection({
         return Cpu;
       case 'Trophy':
         return Trophy;
+      case 'TrendingUp':
+        return TrendingUp;
+      case 'Clock':
+        return Clock;
+      case 'Target':
+        return Target;
+      case 'Users':
+        return Users;
+      case 'ArrowRight':
+        return ArrowRight;
       default:
+        // Log unknown icon names for debugging
+        console.warn(`Unknown icon name: ${iconName}, falling back to Code2`);
         return Code2;
     }
   };
@@ -119,35 +122,22 @@ export default function CurrentFocusSection({
   return (
     <section className="mb-20">
       {/* Enhanced header with unified styling */}
-      <AnimatedWrapper className="text-center mb-12" {...animationProps}>
+      <div className="text-center mb-12">
         <h2 className="text-display mb-4">
           <span className="gradient-text">Current Focus</span>
         </h2>
         <p className="text-body max-w-2xl mx-auto text-muted-foreground">
           My ongoing projects and learning journey in technology
         </p>
-      </AnimatedWrapper>
+      </div>
 
       {/* Focus Areas Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
         {focusAreas.map((area, index) => {
           const colorClasses = getColorClasses(area.color);
           const IconComponent = getIconComponent(area.icon);
-          const AnimatedGridItem = animated ? motion.div : 'div';
-          const gridItemProps = animated
-            ? {
-                initial: { opacity: 0, y: 20 },
-                animate: { opacity: 1, y: 0 },
-                transition: { duration: 0.6, delay: index * 0.2 },
-              }
-            : {};
-
           return (
-            <AnimatedGridItem
-              key={area.id}
-              className="group relative"
-              {...gridItemProps}
-            >
+            <div key={area.id} className="group relative">
               <div className="glass rounded-2xl border border-white/10 shadow-glass overflow-hidden h-full hover:shadow-glow-lg transition-all duration-300 group-hover:scale-105">
                 {/* Background decoration */}
                 <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -197,24 +187,11 @@ export default function CurrentFocusSection({
                         {area.progress}%
                       </span>
                     </div>
-                    <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
-                      {animated ? (
-                        <motion.div
-                          className={`h-full ${colorClasses.progress} rounded-full`}
-                          initial={{ width: 0 }}
-                          animate={{ width: `${area.progress}%` }}
-                          transition={{
-                            duration: 1,
-                            ease: 'easeOut',
-                            delay: index * 0.2 + 0.5,
-                          }}
-                        />
-                      ) : (
-                        <div
-                          className={`h-full ${colorClasses.progress} transition-all duration-1000 ease-out rounded-full`}
-                          style={{ width: `${area.progress}%` }}
-                        />
-                      )}
+                    <div className="w-full bg-gray-700 rounded-full h-2 overflow-hidden">
+                      <div
+                        className={`h-full ${colorClasses.progress} transition-all duration-1000 ease-out rounded-full`}
+                        style={{ width: `${area.progress}%` }}
+                      />
                     </div>
                   </div>
 
@@ -256,22 +233,13 @@ export default function CurrentFocusSection({
                   </button>
                 </div>
               </div>
-            </AnimatedGridItem>
+            </div>
           );
         })}
       </div>
 
       {/* Summary Card */}
-      <motion.div
-        className="glass rounded-2xl border border-white/10 shadow-glass p-8"
-        {...(animated
-          ? {
-              initial: { opacity: 0, y: 20 },
-              animate: { opacity: 1, y: 0 },
-              transition: { duration: 0.6, delay: 0.8 },
-            }
-          : {})}
-      >
+      <MotionDiv className="glass rounded-2xl border border-white/10 shadow-glass p-8">
         <div className="text-center space-y-6">
           <div className="space-y-2">
             <h3 className="text-xl font-semibold text-foreground">
@@ -316,7 +284,7 @@ export default function CurrentFocusSection({
             </button>
           </div>
         </div>
-      </motion.div>
+      </MotionDiv>
     </section>
   );
 }
