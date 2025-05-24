@@ -82,11 +82,13 @@ export default function FooterSection() {
                 <Rocket className="w-6 h-6 text-primary-400" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-white">fukayatti0</h3>
-                <p className="text-sm text-gray-400">Tech Explorer</p>
+                <h3 className="text-lg font-semibold text-foreground">
+                  fukayatti0
+                </h3>
+                <p className="text-sm text-muted-foreground">Tech Explorer</p>
               </div>
             </div>
-            <p className="text-gray-300 leading-relaxed">
+            <p className="text-muted-foreground leading-relaxed">
               Building the future through code, innovation, and open-source
               collaboration. Always learning, always creating.
             </p>
@@ -117,13 +119,15 @@ export default function FooterSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <h4 className="text-lg font-semibold text-white">Quick Links</h4>
+            <h4 className="text-lg font-semibold text-foreground">
+              Quick Links
+            </h4>
             <nav className="space-y-2">
               {quickLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
-                  className="block text-gray-300 hover:text-primary-400 transition-colors duration-200 hover:translate-x-1 transform"
+                  className="block text-muted-foreground hover:text-primary-400 transition-colors duration-200 hover:translate-x-1 transform"
                 >
                   <span className="flex items-center gap-2">
                     <span className="text-primary-400">▹</span>
@@ -141,7 +145,9 @@ export default function FooterSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <h4 className="text-lg font-semibold text-white">Let's Connect</h4>
+            <h4 className="text-lg font-semibold text-foreground">
+              Let's Connect
+            </h4>
             <div className="flex flex-col space-y-3">
               {socialLinks.map((social) => {
                 const IconComponent = social.icon;
@@ -151,7 +157,7 @@ export default function FooterSection() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`flex items-center gap-3 text-gray-300 ${social.color} transition-all duration-200 hover:translate-x-1 transform group`}
+                    className={`flex items-center gap-3 text-muted-foreground ${social.color} transition-all duration-200 hover:translate-x-1 transform group`}
                   >
                     <IconComponent className="w-5 h-5" />
                     <span>{social.name}</span>
@@ -175,16 +181,16 @@ export default function FooterSection() {
 
             {/* Newsletter Signup */}
             <div className="pt-4">
-              <p className="text-sm text-gray-400 mb-3">
+              <p className="text-sm text-muted-foreground mb-3">
                 Stay updated with my latest projects
               </p>
               <div className="flex gap-2">
                 <input
                   type="email"
                   placeholder="your@email.com"
-                  className="flex-1 px-3 py-2 glass rounded-lg border border-white/10 bg-transparent text-white placeholder-gray-400 text-sm focus:outline-none focus:border-primary-400"
+                  className="flex-1 px-3 py-2 glass rounded-lg border border-white/10 bg-transparent text-foreground placeholder-muted-foreground text-sm focus:outline-none focus:border-primary-400"
                 />
-                <button className="px-4 py-2 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-lg font-medium text-sm hover:scale-105 transition-transform duration-200">
+                <button className="px-4 py-2 bg-gradient-to-r from-primary-500 to-accent-500 text-muted-foreground rounded-lg font-medium text-sm hover:scale-105 transition-transform duration-200">
                   Subscribe
                 </button>
               </div>
@@ -215,7 +221,9 @@ export default function FooterSection() {
                   <div className="text-xl font-bold text-primary-300">
                     {stat.value}
                   </div>
-                  <div className="text-sm text-gray-400">{stat.label}</div>
+                  <div className="text-sm text-muted-foreground">
+                    {stat.label}
+                  </div>
                 </div>
               );
             })}
@@ -231,13 +239,13 @@ export default function FooterSection() {
         >
           {/* Copyright */}
           <div className="flex items-center gap-3">
-            <span className="text-gray-300 font-semibold tracking-wide">
+            <span className="text-muted-foreground font-semibold tracking-wide">
               &copy; {currentYear} fukayatti0. All rights reserved.
             </span>
           </div>
 
           {/* Built With */}
-          <div className="flex items-center gap-3 text-gray-400">
+          <div className="flex items-center gap-3 text-muted-foreground">
             <span>Built with</span>
             <div className="flex items-center gap-2">
               <Heart className="w-4 h-4 text-red-400" />
@@ -248,7 +256,7 @@ export default function FooterSection() {
           {/* Back to Top */}
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="flex items-center gap-2 px-4 py-2 glass rounded-lg border border-white/10 text-gray-300 hover:text-primary-400 transition-all duration-200 hover:scale-105 group"
+            className="flex items-center gap-2 px-4 py-2 glass rounded-lg border border-white/10 text-muted-foreground hover:text-primary-400 transition-all duration-200 hover:scale-105 group"
           >
             <span className="text-sm">Back to top</span>
             <ChevronUp className="w-4 h-4 transform group-hover:-translate-y-1 transition-transform duration-200" />

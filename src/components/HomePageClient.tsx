@@ -18,15 +18,17 @@ const HomePageClient: React.FC<HomePageClientProps> = ({
   goalCategories,
 }) => {
   return (
-    <main className="space-y-12">
-      <HeaderSection />
-      <TechIdentitySection />
-      <TechUniverseSection />
-      <LetsConnectSection />
-      <CurrentFocusSection focusAreas={focusAreas} />
-      <Goals2025Section goalCategories={goalCategories} />
-      <FooterSection />
-    </main>
+    <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24 2xl:px-32 max-w-7xl">
+      <main className="space-y-12">
+        <HeaderSection />
+        <TechIdentitySection />
+        <TechUniverseSection />
+        <LetsConnectSection />
+        <CurrentFocusSection focusAreas={focusAreas} />
+        <Goals2025Section goalCategories={goalCategories} />
+        <FooterSection />
+      </main>
+    </div>
   );
 };
 

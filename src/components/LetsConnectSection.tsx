@@ -4,6 +4,15 @@ import { motion } from 'framer-motion';
 import { fadeIn } from '@/components/variants';
 import { useTheme } from 'next-themes';
 import { useState, useEffect } from 'react';
+import {
+  SiGithub,
+  SiGmail,
+  SiX,
+  SiZap,
+  SiRocket,
+  SiHandshake,
+} from '@icons-pack/react-simple-icons';
+import { Star, MessageCircle } from 'lucide-react';
 
 export default function LetsConnectSection() {
   const [mounted, setMounted] = useState(false);
@@ -21,7 +30,7 @@ export default function LetsConnectSection() {
       title: 'GitHub',
       subtitle: 'Open Source Projects',
       description: 'Explore my repositories and contribute to projects',
-      icon: '🐙',
+      icon: SiGithub,
       href: 'https://github.com/fukayatti',
       color: 'primary',
       stats: '50+ repos',
@@ -32,7 +41,7 @@ export default function LetsConnectSection() {
       title: 'Email',
       subtitle: 'Direct Communication',
       description: 'Get in touch for collaboration opportunities',
-      icon: '✉️',
+      icon: SiGmail,
       href: 'mailto:contact@fukayatti.dev',
       color: 'accent',
       stats: '24h response',
@@ -43,7 +52,7 @@ export default function LetsConnectSection() {
       title: 'Twitter/X',
       subtitle: 'Tech Updates',
       description: 'Follow my tech journey and daily insights',
-      icon: '🐦',
+      icon: SiX,
       href: 'https://twitter.com/fukayatti0',
       color: 'secondary',
       stats: 'Daily posts',
@@ -97,7 +106,7 @@ export default function LetsConnectSection() {
         <h2 className="text-display mb-4">
           <span className="gradient-text">Let's Connect</span>
         </h2>
-        <p className="text-body max-w-2xl mx-auto text-gray-400">
+        <p className="text-body max-w-2xl mx-auto text-muted-foreground">
           Ready to collaborate? Let's build something amazing together
         </p>
       </motion.div>
@@ -123,8 +132,11 @@ export default function LetsConnectSection() {
                 <div className="relative p-8 text-center space-y-6">
                   {/* Icon and Title */}
                   <div className="space-y-4">
-                    <div className="w-16 h-16 mx-auto rounded-xl glass flex items-center justify-center text-3xl border border-white/10 group-hover:scale-110 transition-transform duration-300">
-                      {method.icon}
+                    <div className="w-16 h-16 mx-auto rounded-xl glass flex items-center justify-center border border-white/10 group-hover:scale-110 transition-transform duration-300">
+                      <method.icon
+                        size={32}
+                        className={`${colorClasses.text} group-hover:scale-110 transition-transform duration-300`}
+                      />
                     </div>
                     <div>
                       <h3
@@ -132,18 +144,22 @@ export default function LetsConnectSection() {
                       >
                         {method.title}
                       </h3>
-                      <p className="text-sm text-gray-400">{method.subtitle}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {method.subtitle}
+                      </p>
                     </div>
                   </div>
 
                   {/* Description */}
-                  <p className="text-gray-300 leading-relaxed">
+                  <p className="text-muted-foreground leading-relaxed">
                     {method.description}
                   </p>
 
                   {/* Stats */}
                   <div className="glass rounded-lg p-3 border border-white/10">
-                    <div className="text-sm text-gray-400">Response Time</div>
+                    <div className="text-sm text-muted-foreground">
+                      Response Time
+                    </div>
                     <div className={`font-semibold ${colorClasses.text}`}>
                       {method.stats}
                     </div>
@@ -154,7 +170,7 @@ export default function LetsConnectSection() {
                     href={method.href}
                     target={method.external ? '_blank' : undefined}
                     rel={method.external ? 'noopener noreferrer' : undefined}
-                    className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white transition-all duration-300 bg-gradient-to-r ${colorClasses.bg} hover:scale-105 hover:shadow-xl ${colorClasses.glow} group/button`}
+                    className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-muted-foreground transition-all duration-300 bg-gradient-to-r ${colorClasses.bg} hover:scale-105 hover:shadow-xl ${colorClasses.glow} group/button`}
                   >
                     <span>{method.action}</span>
                     {method.external && (
@@ -204,10 +220,10 @@ export default function LetsConnectSection() {
       >
         <div className="text-center space-y-6">
           <div className="space-y-2">
-            <h3 className="text-xl font-semibold text-white">
+            <h3 className="text-xl font-semibold text-muted-foreground">
               Ready to Start a Project?
             </h3>
-            <p className="text-gray-300">
+            <p className="text-muted-foreground">
               I'm always open to discussing new opportunities, interesting
               projects, and creative ideas.
             </p>
@@ -216,17 +232,33 @@ export default function LetsConnectSection() {
           {/* Contact Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              { label: 'Response Time', value: '< 24h', icon: '⚡' },
-              { label: 'Projects Completed', value: '25+', icon: '🚀' },
-              { label: 'Collaboration Rate', value: '100%', icon: '🤝' },
-              { label: 'Satisfaction', value: '⭐⭐⭐⭐⭐', icon: '😊' },
+              { label: 'Response Time', value: '< 24h', IconComponent: SiZap },
+              {
+                label: 'Projects Completed',
+                value: '25+',
+                IconComponent: SiRocket,
+              },
+              {
+                label: 'Collaboration Rate',
+                value: '100%',
+                IconComponent: SiHandshake,
+              },
+              {
+                label: 'Satisfaction',
+                value: '5.0★',
+                IconComponent: Star,
+              },
             ].map((stat, index) => (
               <div key={stat.label} className="text-center space-y-2">
-                <div className="text-2xl">{stat.icon}</div>
+                <div className="flex justify-center">
+                  <stat.IconComponent size={24} className="text-primary-400" />
+                </div>
                 <div className="text-lg font-bold text-primary-300">
                   {stat.value}
                 </div>
-                <div className="text-sm text-gray-400">{stat.label}</div>
+                <div className="text-sm text-muted-foreground">
+                  {stat.label}
+                </div>
               </div>
             ))}
           </div>
@@ -235,9 +267,9 @@ export default function LetsConnectSection() {
           <div className="pt-4">
             <a
               href="mailto:contact@fukayatti.dev"
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl font-semibold text-white transition-all duration-300 bg-gradient-to-r from-primary-500 to-accent-500 hover:scale-105 hover:shadow-xl shadow-primary-500/20 group"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl font-semibold text-muted-foreground transition-all duration-300 bg-gradient-to-r from-primary-500 to-accent-500 hover:scale-105 hover:shadow-xl shadow-primary-500/20 group"
             >
-              <span className="text-xl">💬</span>
+              <MessageCircle size={20} className="text-muted-foreground" />
               <span>Let's Discuss Your Project</span>
               <svg
                 className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-200"

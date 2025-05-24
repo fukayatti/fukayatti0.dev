@@ -44,7 +44,7 @@ export default function CareerPage({}: CareerPageProps) {
 
   if (loading) {
     return (
-      <div className="relative min-h-screen text-gray-100 overflow-hidden">
+      <div className="relative min-h-screen text-muted-foreground-100 overflow-hidden">
         {/* Enhanced background with modern mesh gradient */}
         <div
           aria-hidden
@@ -70,10 +70,10 @@ export default function CareerPage({}: CareerPageProps) {
                 </div>
               </div>
 
-              <h2 className="text-xl font-semibold text-white mb-4">
+              <h2 className="text-xl font-semibold text-muted-foreground mb-4">
                 データを読み込み中...
               </h2>
-              <p className="text-gray-400">
+              <p className="text-muted-foreground">
                 Notionからキャリア情報を取得しています
               </p>
             </div>
@@ -85,7 +85,7 @@ export default function CareerPage({}: CareerPageProps) {
 
   if (error) {
     return (
-      <div className="relative min-h-screen text-gray-100 overflow-hidden">
+      <div className="relative min-h-screen text-muted-foreground-100 overflow-hidden">
         {/* Enhanced background */}
         <div
           aria-hidden
@@ -109,10 +109,10 @@ export default function CareerPage({}: CareerPageProps) {
               <h2 className="text-xl font-semibold text-red-400 mb-4">
                 エラーが発生しました
               </h2>
-              <p className="text-gray-400">{error}</p>
+              <p className="text-muted-foreground">{error}</p>
               <button
                 onClick={() => window.location.reload()}
-                className="mt-6 px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-xl font-semibold hover:scale-105 transition-transform duration-200"
+                className="mt-6 px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-muted-foreground rounded-xl font-semibold hover:scale-105 transition-transform duration-200"
               >
                 再試行
               </button>
@@ -124,7 +124,7 @@ export default function CareerPage({}: CareerPageProps) {
   }
 
   return (
-    <div className="relative min-h-screen text-gray-100 overflow-hidden">
+    <div className="relative min-h-screen text-muted-foreground-100 overflow-hidden">
       {/* Enhanced background with modern mesh gradient */}
       <div
         aria-hidden
@@ -166,7 +166,7 @@ export default function CareerPage({}: CareerPageProps) {
                 <h1 className="text-display mb-4">
                   <span className="gradient-text">キャリア・受賞歴</span>
                 </h1>
-                <p className="text-body max-w-2xl mx-auto text-gray-400 mb-6">
+                <p className="text-body max-w-2xl mx-auto text-muted-foreground mb-6">
                   NotionCMSで管理された実績・受賞歴をリアルタイムで表示
                 </p>
 
@@ -195,7 +195,7 @@ export default function CareerPage({}: CareerPageProps) {
                   <h2 className="text-2xl font-semibold text-primary-300">
                     受賞歴
                   </h2>
-                  <p className="text-sm text-gray-400">
+                  <p className="text-sm text-muted-foreground">
                     競技プログラミング・コンテストでの実績
                   </p>
                 </div>
@@ -204,12 +204,12 @@ export default function CareerPage({}: CareerPageProps) {
               {awards.length === 0 ? (
                 <div className="glass rounded-2xl border border-white/10 shadow-glass p-12 text-center">
                   <div className="w-16 h-16 mx-auto mb-6 rounded-xl glass flex items-center justify-center text-3xl border border-white/10">
-                    <Trophy className="w-8 h-8 text-gray-400" />
+                    <Trophy className="w-8 h-8 text-muted-foreground" />
                   </div>
-                  <h3 className="text-xl font-semibold text-white mb-2">
+                  <h3 className="text-xl font-semibold text-muted-foreground mb-2">
                     受賞歴がありません
                   </h3>
-                  <p className="text-gray-400">
+                  <p className="text-muted-foreground">
                     新しい実績が追加されると、ここに表示されます。
                   </p>
                 </div>
@@ -262,14 +262,14 @@ export default function CareerPage({}: CareerPageProps) {
                               </div>
 
                               {/* Title */}
-                              <h3 className="text-xl font-bold text-white mb-3">
+                              <h3 className="text-xl font-bold text-muted-foreground mb-3">
                                 {award.title}
                               </h3>
 
                               {/* Organizer */}
                               <div className="flex items-center gap-2 mb-4">
                                 <Building2 className="w-4 h-4 text-accent-400" />
-                                <p className="text-gray-300">
+                                <p className="text-muted-foreground-300">
                                   主催: {award.organizer}
                                 </p>
                               </div>
@@ -281,7 +281,7 @@ export default function CareerPage({}: CareerPageProps) {
                                     href={award.details}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-xl font-semibold hover:scale-105 transition-all duration-200 group/button"
+                                    className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-muted-foreground rounded-xl font-semibold hover:scale-105 transition-all duration-200 group/button"
                                   >
                                     <span>詳細を見る</span>
                                     <ExternalLink className="w-4 h-4 transform group-hover/button:translate-x-1 transition-transform duration-200" />
@@ -313,7 +313,7 @@ export default function CareerPage({}: CareerPageProps) {
                   <h3 className="text-xl font-semibold text-accent-300">
                     Notion CMS連携について
                   </h3>
-                  <p className="text-sm text-gray-400">
+                  <p className="text-sm text-muted-foreground">
                     リアルタイムデータ同期システム
                   </p>
                 </div>
@@ -321,11 +321,11 @@ export default function CareerPage({}: CareerPageProps) {
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-3">
-                  <h4 className="font-semibold text-white flex items-center gap-2">
+                  <h4 className="font-semibold text-muted-foreground flex items-center gap-2">
                     <Activity className="w-4 h-4 text-primary-400" />
                     自動同期機能
                   </h4>
-                  <ul className="space-y-2 text-gray-300">
+                  <ul className="space-y-2 text-muted-foreground-300">
                     <li className="flex items-start gap-2">
                       <span className="text-primary-400 mt-1">▹</span>
                       <span>Notionデータベースから自動取得</span>
@@ -342,11 +342,11 @@ export default function CareerPage({}: CareerPageProps) {
                 </div>
 
                 <div className="space-y-3">
-                  <h4 className="font-semibold text-white flex items-center gap-2">
+                  <h4 className="font-semibold text-muted-foreground flex items-center gap-2">
                     <Zap className="w-4 h-4 text-accent-400" />
                     技術仕様
                   </h4>
-                  <ul className="space-y-2 text-gray-300">
+                  <ul className="space-y-2 text-muted-foreground-300">
                     <li className="flex items-start gap-2">
                       <span className="text-accent-400 mt-1">▹</span>
                       <span>Next.js API Routes</span>
@@ -385,7 +385,7 @@ export default function CareerPage({}: CareerPageProps) {
                         <div className="text-lg font-bold text-primary-300">
                           {stat.value}
                         </div>
-                        <div className="text-sm text-gray-400">
+                        <div className="text-sm text-muted-foreground">
                           {stat.label}
                         </div>
                       </div>

@@ -1,21 +1,22 @@
 /**
- * Github Copilot theme for Prism.js
- * Based on Github: https://copilot.github.com
- * @author Katorly
+ * Dark Terminal theme for Prism.js
+ * Based on VSCode Dark+ theme with deeper blacks
+ * @author Custom Dark Theme
  */
 /* General */
 pre[class*='language-'],
 code[class*='language-'] {
-  color: #ffffff;
+  color: #d4d4d4;
   font-size: 13px;
   text-shadow: none;
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-family:
+    'Fira Code', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
   direction: ltr;
   text-align: left;
   white-space: pre;
   word-spacing: normal;
   word-break: normal;
-  line-height: 1.5;
+  line-height: 1.6;
   -moz-tab-size: 4;
   -o-tab-size: 4;
   tab-size: 4;
@@ -29,7 +30,7 @@ code[class*='language-']::selection,
 pre[class*='language-']::-moz-selection,
 code[class*='language-']::-moz-selection {
   text-shadow: none;
-  background: #27384e;
+  background: #264f78;
 }
 @media print {
   pre[class*='language-'],
@@ -41,13 +42,14 @@ pre[class*='language-'] {
   padding: 1em;
   margin: 0.5em 0;
   overflow: auto;
-  background: #24292f;
+  background: #0d1117;
+  border-radius: 8px;
 }
 :not(pre) > code[class*='language-'] {
   padding: 0.1em 0.3em;
   border-radius: 0.3em;
-  color: #ffffff;
-  background: #8b949e;
+  color: #d4d4d4;
+  background: #161b22;
 }
 /* Line highlighting */
 pre[data-line] {
@@ -58,17 +60,7 @@ pre[class*='language-'] > code[class*='language-'] {
   z-index: 1;
 }
 .line-highlight {
-  position: absolute;
-  left: 0;
-  right: 0;
-  padding: inherit;
-  margin-top: 1em;
-  background: #27384e;
-  box-shadow: inset 5px 0 0 #1f6fea;
-  z-index: 0;
-  pointer-events: none;
-  line-height: inherit;
-  white-space: pre;
+  display: none; /* 白い透明なカバーを無効化 */
 }
 /* Tokens */
 .namespace {
@@ -78,10 +70,11 @@ pre[class*='language-'] > code[class*='language-'] {
 .token.prolog,
 .token.doctype,
 .token.cdata {
-  color: #8b949e;
+  color: #6e7681;
+  font-style: italic;
 }
 .token.punctuation {
-  color: #ffffff;
+  color: #e6edf3;
 }
 .token.property,
 .token.tag,
@@ -90,7 +83,7 @@ pre[class*='language-'] > code[class*='language-'] {
 .token.constant,
 .token.symbol,
 .token.deleted {
-  color: #78bffe;
+  color: #79c0ff;
 }
 .token.selector,
 .token.attr-name,
@@ -105,21 +98,23 @@ pre[class*='language-'] > code[class*='language-'] {
 .token.url,
 .language-css .token.string,
 .style .token.string {
-  color: #79bffe;
-  background: #24292f;
+  color: #ff7b72;
+  background: transparent;
 }
 .token.atrule,
 .token.attr-value,
 .token.keyword {
   color: #ff7b72;
+  font-weight: 500;
 }
-.token.function {
+.token.function,
+.token.class-name {
   color: #d2a8ff;
 }
 .token.regex,
 .token.important,
 .token.variable {
-  color: #fea557;
+  color: #ffa657;
 }
 .token.important,
 .token.bold {
@@ -130,4 +125,29 @@ pre[class*='language-'] > code[class*='language-'] {
 }
 .token.entity {
   cursor: help;
+}
+
+/* TypeScript specific */
+.token.typescript.keyword {
+  color: #569cd6;
+}
+.token.typescript.type {
+  color: #4ec9b0;
+}
+
+/* C++ specific */
+.token.cpp.keyword {
+  color: #569cd6;
+}
+.token.cpp.function {
+  color: #dcdcaa;
+}
+.token.cpp.string {
+  color: #ce9178;
+}
+
+/* Line numbers styling */
+.line-numbers .line-numbers-rows {
+  border-right: 1px solid #30363d;
+  background: #0d1117;
 }

@@ -32,7 +32,7 @@ export default async function HomePage({}: HomePageProps) {
 
   if (error) {
     return (
-      <div className="relative min-h-screen text-gray-100 overflow-hidden">
+      <div className="relative min-h-screen text-foreground overflow-hidden">
         {/* Enhanced background with modern mesh gradient */}
         <div
           aria-hidden
@@ -55,8 +55,8 @@ export default async function HomePage({}: HomePageProps) {
               <h2 className="text-xl font-semibold text-red-400 mb-4">
                 データ取得エラー
               </h2>
-              <p className="text-gray-400 mb-4">{error}</p>
-              <p className="text-sm text-gray-500">
+              <p className="text-muted-foreground mb-4">{error}</p>
+              <p className="text-sm text-muted-foreground">
                 ISRによる自動復旧を待つか、ページを再読み込みしてください
               </p>
             </div>

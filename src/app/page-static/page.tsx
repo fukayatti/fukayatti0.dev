@@ -45,7 +45,7 @@ export default async function HomeStaticPage({}: HomeStaticPageProps) {
 
   if (error) {
     return (
-      <div className="relative min-h-screen text-gray-100 overflow-hidden">
+      <div className="relative min-h-screen text-muted-foreground-100 overflow-hidden">
         {/* Enhanced background with modern mesh gradient */}
         <div
           aria-hidden
@@ -69,8 +69,8 @@ export default async function HomeStaticPage({}: HomeStaticPageProps) {
               <h2 className="text-xl font-semibold text-red-400 mb-4">
                 データ取得エラー
               </h2>
-              <p className="text-gray-400 mb-4">{error}</p>
-              <p className="text-sm text-gray-500">
+              <p className="text-muted-foreground mb-4">{error}</p>
+              <p className="text-sm text-muted-foreground-500">
                 ISRによる自動復旧を待つか、ページを再読み込みしてください
               </p>
             </div>
@@ -81,7 +81,7 @@ export default async function HomeStaticPage({}: HomeStaticPageProps) {
   }
 
   return (
-    <div className="relative min-h-screen text-gray-100 overflow-hidden">
+    <div className="relative min-h-screen text-muted-foreground-100 overflow-hidden">
       {/* Enhanced background with modern mesh gradient */}
       <div
         aria-hidden
@@ -118,7 +118,7 @@ export default async function HomeStaticPage({}: HomeStaticPageProps) {
                 <h1 className="text-display mb-4">
                   <span className="gradient-text">fukayatti0.dev (ISR)</span>
                 </h1>
-                <p className="text-body max-w-2xl mx-auto text-gray-400 mb-6">
+                <p className="text-body max-w-2xl mx-auto text-muted-foreground mb-6">
                   High-performance static site with 10-minute ISR updates
                 </p>
 
@@ -161,7 +161,7 @@ export default async function HomeStaticPage({}: HomeStaticPageProps) {
                     <h3 className="text-xl font-semibold text-primary-300">
                       ISRパフォーマンス
                     </h3>
-                    <p className="text-sm text-gray-400">
+                    <p className="text-sm text-muted-foreground">
                       高速表示と自動更新を両立
                     </p>
                   </div>
@@ -171,8 +171,10 @@ export default async function HomeStaticPage({}: HomeStaticPageProps) {
                   <div className="flex items-center gap-3">
                     <Zap className="w-5 h-5 text-primary-400" />
                     <div>
-                      <div className="font-medium text-white">静的生成</div>
-                      <div className="text-sm text-gray-400">
+                      <div className="font-medium text-muted-foreground">
+                        静的生成
+                      </div>
+                      <div className="text-sm text-muted-foreground">
                         高速なページ表示
                       </div>
                     </div>
@@ -180,8 +182,10 @@ export default async function HomeStaticPage({}: HomeStaticPageProps) {
                   <div className="flex items-center gap-3">
                     <Activity className="w-5 h-5 text-accent-400" />
                     <div>
-                      <div className="font-medium text-white">自動更新</div>
-                      <div className="text-sm text-gray-400">
+                      <div className="font-medium text-muted-foreground">
+                        自動更新
+                      </div>
+                      <div className="text-sm text-muted-foreground">
                         10分間隔で再生成
                       </div>
                     </div>
@@ -189,10 +193,10 @@ export default async function HomeStaticPage({}: HomeStaticPageProps) {
                   <div className="flex items-center gap-3">
                     <Settings className="w-5 h-5 text-purple-400" />
                     <div>
-                      <div className="font-medium text-white">
+                      <div className="font-medium text-muted-foreground">
                         レート制限対策
                       </div>
-                      <div className="text-sm text-gray-400">
+                      <div className="text-sm text-muted-foreground">
                         効率的なAPI利用
                       </div>
                     </div>
@@ -210,7 +214,7 @@ export default async function HomeStaticPage({}: HomeStaticPageProps) {
                     <h3 className="text-xl font-semibold text-accent-300">
                       Notion CMS連携
                     </h3>
-                    <p className="text-sm text-gray-400">
+                    <p className="text-sm text-muted-foreground">
                       コンテンツ管理システム
                     </p>
                   </div>
@@ -220,10 +224,10 @@ export default async function HomeStaticPage({}: HomeStaticPageProps) {
                   <div className="flex items-center gap-3">
                     <Database className="w-5 h-5 text-primary-400" />
                     <div>
-                      <div className="font-medium text-white">
+                      <div className="font-medium text-muted-foreground">
                         Notionデータベース
                       </div>
-                      <div className="text-sm text-gray-400">
+                      <div className="text-sm text-muted-foreground">
                         自動データ取得
                       </div>
                     </div>
@@ -231,17 +235,21 @@ export default async function HomeStaticPage({}: HomeStaticPageProps) {
                   <div className="flex items-center gap-3">
                     <Activity className="w-5 h-5 text-accent-400" />
                     <div>
-                      <div className="font-medium text-white">
+                      <div className="font-medium text-muted-foreground">
                         キャッシュ管理
                       </div>
-                      <div className="text-sm text-gray-400">効率的な同期</div>
+                      <div className="text-sm text-muted-foreground">
+                        効率的な同期
+                      </div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
                     <Rocket className="w-5 h-5 text-purple-400" />
                     <div>
-                      <div className="font-medium text-white">Next.js ISR</div>
-                      <div className="text-sm text-gray-400">
+                      <div className="font-medium text-muted-foreground">
+                        Next.js ISR
+                      </div>
+                      <div className="text-sm text-muted-foreground">
                         最適化された配信
                       </div>
                     </div>
@@ -254,13 +262,13 @@ export default async function HomeStaticPage({}: HomeStaticPageProps) {
             <div className="glass rounded-2xl border border-white/10 shadow-glass p-8 mb-8">
               <div className="flex items-center gap-4 mb-8">
                 <div className="w-12 h-12 rounded-xl glass flex items-center justify-center text-2xl border border-white/10">
-                  <Settings className="w-6 h-6 text-white" />
+                  <Settings className="w-6 h-6 text-muted-foreground" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-semibold text-white">
+                  <h3 className="text-2xl font-semibold text-muted-foreground">
                     技術仕様
                   </h3>
-                  <p className="text-sm text-gray-400">
+                  <p className="text-sm text-muted-foreground">
                     ISRとNotion APIの技術詳細
                   </p>
                 </div>
@@ -272,7 +280,7 @@ export default async function HomeStaticPage({}: HomeStaticPageProps) {
                     <Activity className="w-4 h-4" />
                     更新頻度
                   </h4>
-                  <ul className="space-y-2 text-gray-300 text-sm">
+                  <ul className="space-y-2 text-muted-foreground-300 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="text-primary-400 mt-1">▹</span>
                       <span>ISR revalidate: 600秒</span>
@@ -293,7 +301,7 @@ export default async function HomeStaticPage({}: HomeStaticPageProps) {
                     <Zap className="w-4 h-4" />
                     パフォーマンス
                   </h4>
-                  <ul className="space-y-2 text-gray-300 text-sm">
+                  <ul className="space-y-2 text-muted-foreground-300 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="text-accent-400 mt-1">▹</span>
                       <span>静的生成による高速表示</span>
@@ -314,7 +322,7 @@ export default async function HomeStaticPage({}: HomeStaticPageProps) {
                     <Settings className="w-4 h-4" />
                     テクノロジー
                   </h4>
-                  <ul className="space-y-2 text-gray-300 text-sm">
+                  <ul className="space-y-2 text-muted-foreground-300 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="text-purple-400 mt-1">▹</span>
                       <span>Next.js 14 ISR</span>
@@ -359,7 +367,7 @@ export default async function HomeStaticPage({}: HomeStaticPageProps) {
                         <div className="text-lg font-bold text-primary-300">
                           {stat.value}
                         </div>
-                        <div className="text-sm text-gray-400">
+                        <div className="text-sm text-muted-foreground">
                           {stat.label}
                         </div>
                       </div>

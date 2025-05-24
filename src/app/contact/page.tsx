@@ -51,7 +51,7 @@ export default function ContactPage() {
     },
     {
       name: 'Email',
-      href: 'mailto:contact@fukayatti.dev',
+      href: 'mailto:contact@fukayatti0.dev',
       icon: SiGmail,
       color: '#ec4899',
       description: '直接メッセージをお送りください',
@@ -109,7 +109,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="relative min-h-screen text-gray-100 overflow-hidden">
+    <div className="relative min-h-screen text-foreground overflow-hidden">
       {/* Enhanced background with modern mesh gradient */}
       <div
         aria-hidden
@@ -162,16 +162,29 @@ export default function ContactPage() {
             >
               <div className="glass rounded-3xl p-8 md:p-12 border border-white/10 shadow-glass backdrop-blur-xl mb-8">
                 <h1 className="text-display mb-4">
-                  <span className="gradient-text">Let's Connect</span>
+                  <span
+                    className="gradient-text"
+                    style={{
+                      background: isDark
+                        ? 'linear-gradient(90deg, #a78bfa, #f472b6, #38bdf8)'
+                        : 'linear-gradient(90deg, #6366f1, #ec4899, #06b6d4)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text',
+                      color: 'transparent',
+                    }}
+                  >
+                    Let's Connect
+                  </span>
                 </h1>
-                <p className="text-body max-w-2xl mx-auto text-gray-400 mb-6">
+                <p className="text-body max-w-2xl mx-auto text-muted-foreground mb-6">
                   新しいプロジェクト、コラボレーション、技術的な相談など、お気軽にお声がけください
                 </p>
 
                 {/* Availability Status */}
                 <div className="inline-flex items-center px-4 py-2 glass rounded-full border border-white/10">
-                  <div className="w-2 h-2 bg-green-400 rounded-full mr-3 animate-pulse"></div>
-                  <span className="text-sm font-medium text-green-300">
+                  <div className="w-2 h-2 bg-success rounded-full mr-3 animate-pulse"></div>
+                  <span className="text-sm font-medium text-success">
                     新しいプロジェクトを募集中
                   </span>
                 </div>
@@ -195,7 +208,7 @@ export default function ContactPage() {
                       <h2 className="text-2xl font-semibold text-primary-300">
                         メッセージを送る
                       </h2>
-                      <p className="text-sm text-gray-400">
+                      <p className="text-sm text-muted-foreground">
                         プロジェクトについて詳しくお聞かせください
                       </p>
                     </div>
@@ -206,7 +219,7 @@ export default function ContactPage() {
                       <div>
                         <label
                           htmlFor="name"
-                          className="block text-sm font-medium text-gray-300 mb-2"
+                          className="block text-sm font-medium text-muted-foreground mb-2"
                         >
                           お名前
                         </label>
@@ -216,7 +229,7 @@ export default function ContactPage() {
                           name="name"
                           value={formData.name}
                           onChange={handleInputChange}
-                          className="w-full px-4 py-3 glass rounded-xl border border-white/10 bg-transparent text-white placeholder-gray-400 focus:outline-none focus:border-primary-400 transition-colors"
+                          className="w-full px-4 py-3 glass rounded-xl border border-white/10 bg-transparent text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary-400 transition-colors"
                           placeholder="山田太郎"
                           required
                         />
@@ -224,7 +237,7 @@ export default function ContactPage() {
                       <div>
                         <label
                           htmlFor="email"
-                          className="block text-sm font-medium text-gray-300 mb-2"
+                          className="block text-sm font-medium text-muted-foreground mb-2"
                         >
                           メールアドレス
                         </label>
@@ -234,7 +247,7 @@ export default function ContactPage() {
                           name="email"
                           value={formData.email}
                           onChange={handleInputChange}
-                          className="w-full px-4 py-3 glass rounded-xl border border-white/10 bg-transparent text-white placeholder-gray-400 focus:outline-none focus:border-primary-400 transition-colors"
+                          className="w-full px-4 py-3 glass rounded-xl border border-white/10 bg-transparent text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary-400 transition-colors"
                           placeholder="your@email.com"
                           required
                         />
@@ -244,7 +257,7 @@ export default function ContactPage() {
                     <div>
                       <label
                         htmlFor="subject"
-                        className="block text-sm font-medium text-gray-300 mb-2"
+                        className="block text-sm font-medium text-muted-foreground mb-2"
                       >
                         件名
                       </label>
@@ -254,7 +267,7 @@ export default function ContactPage() {
                         name="subject"
                         value={formData.subject}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 glass rounded-xl border border-white/10 bg-transparent text-white placeholder-gray-400 focus:outline-none focus:border-primary-400 transition-colors"
+                        className="w-full px-4 py-3 glass rounded-xl border border-white/10 bg-transparent text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary-400 transition-colors"
                         placeholder="プロジェクトのご相談"
                         required
                       />
@@ -263,7 +276,7 @@ export default function ContactPage() {
                     <div>
                       <label
                         htmlFor="message"
-                        className="block text-sm font-medium text-gray-300 mb-2"
+                        className="block text-sm font-medium text-muted-foreground mb-2"
                       >
                         メッセージ
                       </label>
@@ -273,7 +286,7 @@ export default function ContactPage() {
                         value={formData.message}
                         onChange={handleInputChange}
                         rows={6}
-                        className="w-full px-4 py-3 glass rounded-xl border border-white/10 bg-transparent text-white placeholder-gray-400 focus:outline-none focus:border-primary-400 transition-colors resize-none"
+                        className="w-full px-4 py-3 glass rounded-xl border border-white/10 bg-transparent text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary-400 transition-colors resize-none"
                         placeholder="プロジェクトの詳細、技術要件、期間などをお聞かせください..."
                         required
                       />
@@ -317,7 +330,7 @@ export default function ContactPage() {
                       <h2 className="text-2xl font-semibold text-accent-300">
                         ソーシャルメディア
                       </h2>
-                      <p className="text-sm text-gray-400">
+                      <p className="text-sm text-muted-foreground">
                         各プラットフォームでつながりましょう
                       </p>
                     </div>
@@ -348,15 +361,15 @@ export default function ContactPage() {
                               <IconComponent color={link.color} size={24} />
                             </div>
                             <div className="flex-1">
-                              <h3 className="font-semibold text-white group-hover:text-primary-300 transition-colors">
+                              <h3 className="font-semibold text-foreground group-hover:text-primary-300 transition-colors">
                                 {link.name}
                               </h3>
-                              <p className="text-sm text-gray-400">
+                              <p className="text-sm text-muted-foreground">
                                 {link.description}
                               </p>
                             </div>
                             <svg
-                              className="w-5 h-5 text-gray-400 group-hover:text-primary-400 group-hover:translate-x-1 transition-all duration-200"
+                              className="w-5 h-5 text-muted-foreground group-hover:text-primary-400 group-hover:translate-x-1 transition-all duration-200"
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
@@ -385,7 +398,7 @@ export default function ContactPage() {
                       <h3 className="text-xl font-semibold text-purple-300">
                         基本情報
                       </h3>
-                      <p className="text-sm text-gray-400">
+                      <p className="text-sm text-muted-foreground">
                         レスポンス時間とアベイラビリティ
                       </p>
                     </div>
@@ -395,10 +408,10 @@ export default function ContactPage() {
                     <div className="flex items-center gap-3">
                       <Clock className="w-5 h-5 text-primary-400" />
                       <div>
-                        <div className="font-medium text-white">
+                        <div className="font-medium text-foreground">
                           レスポンス時間
                         </div>
-                        <div className="text-sm text-gray-400">
+                        <div className="text-sm text-muted-foreground">
                           通常24時間以内
                         </div>
                       </div>
@@ -406,17 +419,21 @@ export default function ContactPage() {
                     <div className="flex items-center gap-3">
                       <Globe className="w-5 h-5 text-accent-400" />
                       <div>
-                        <div className="font-medium text-white">
+                        <div className="font-medium text-foreground">
                           タイムゾーン
                         </div>
-                        <div className="text-sm text-gray-400">JST (UTC+9)</div>
+                        <div className="text-sm text-muted-foreground">
+                          JST (UTC+9)
+                        </div>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <Briefcase className="w-5 h-5 text-purple-400" />
                       <div>
-                        <div className="font-medium text-white">ステータス</div>
-                        <div className="text-sm text-gray-400">
+                        <div className="font-medium text-foreground">
+                          ステータス
+                        </div>
+                        <div className="text-sm text-muted-foreground">
                           新規プロジェクト受付中
                         </div>
                       </div>

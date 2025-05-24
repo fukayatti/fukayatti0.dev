@@ -4,6 +4,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useRef, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import {
+  SiReact,
+  SiNextdotjs,
+  SiTypescript,
+  SiTailwindcss,
+  SiArduino,
+  SiInternetcomputer,
+  SiCircuitverse,
+  SiCodeproject,
+} from '@icons-pack/react-simple-icons';
 import '@/app/code-block-theme.css';
 
 export default function TechIdentitySection() {
@@ -96,16 +107,16 @@ export default function TechIdentitySection() {
 
   const skills = {
     frontEnd: [
-      { name: 'React', level: 90, icon: '⚛️' },
-      { name: 'Next.js', level: 85, icon: '🔺' },
-      { name: 'TypeScript', level: 80, icon: '🔷' },
-      { name: 'TailwindCSS', level: 95, icon: '🎨' },
+      { name: 'React', level: 90, icon: SiReact },
+      { name: 'Next.js', level: 85, icon: SiNextdotjs },
+      { name: 'TypeScript', level: 80, icon: SiTypescript },
+      { name: 'TailwindCSS', level: 95, icon: SiTailwindcss },
     ],
     electronic: [
-      { name: 'Circuit Design', level: 75, icon: '🔌' },
-      { name: 'Arduino/ESP32', level: 80, icon: '🤖' },
-      { name: 'PCB Design', level: 70, icon: '💾' },
-      { name: 'IoT Systems', level: 65, icon: '🌐' },
+      { name: 'Circuit Design', level: 75, icon: SiCircuitverse },
+      { name: 'Arduino/ESP32', level: 80, icon: SiArduino },
+      { name: 'PCB Design', level: 70, icon: SiCodeproject },
+      { name: 'IoT Systems', level: 65, icon: SiInternetcomputer },
     ],
   };
 
@@ -121,7 +132,7 @@ export default function TechIdentitySection() {
         <h2 className="text-display mb-4">
           <span className="gradient-text">Tech Identity</span>
         </h2>
-        <p className="text-body max-w-2xl mx-auto text-gray-400">
+        <p className="text-body max-w-2xl mx-auto text-muted-foreground">
           Bridging the gap between digital interfaces and physical electronics
         </p>
       </motion.div>
@@ -143,15 +154,23 @@ export default function TechIdentitySection() {
                 className={`relative px-6 py-3 rounded-xl font-medium text-sm transition-all duration-300 flex-1
                   ${
                     activeSection === section
-                      ? 'text-white shadow-glow'
-                      : 'text-gray-400 hover:text-gray-200'
+                      ? 'text-muted-foreground shadow-glow'
+                      : 'text-muted-foreground hover:text-foreground'
                   }
                 `}
               >
-                <span className="relative z-10">
-                  {section === 'frontEnd'
-                    ? '🌐 Frontend Engineer'
-                    : '⚡ Electronic Engineer'}
+                <span className="relative z-10 flex items-center gap-2">
+                  {section === 'frontEnd' ? (
+                    <>
+                      <SiReact size={16} />
+                      Frontend Engineer
+                    </>
+                  ) : (
+                    <>
+                      <SiArduino size={16} />
+                      Electronic Engineer
+                    </>
+                  )}
                 </span>
                 {activeSection === section && (
                   <motion.div
@@ -178,12 +197,12 @@ export default function TechIdentitySection() {
                 >
                   {/* Section title and description */}
                   <div>
-                    <h3 className="text-headline mb-3 text-primary-300">
+                    <h3 className="text-headline mb-3 text-primary-400 dark:text-primary-300">
                       {activeSection === 'frontEnd'
                         ? 'Frontend Engineering'
                         : 'Electronic Engineering'}
                     </h3>
-                    <p className="text-body text-gray-300">
+                    <p className="text-body text-muted-foreground">
                       {activeSection === 'frontEnd'
                         ? 'Crafting pixel-perfect, responsive web interfaces with modern technologies and design principles.'
                         : 'Designing and prototyping electronic circuits that bridge the physical and digital worlds.'}
@@ -192,7 +211,9 @@ export default function TechIdentitySection() {
 
                   {/* Skills with animated progress bars */}
                   <div className="space-y-4">
-                    <h4 className="font-semibold text-gray-200">Core Skills</h4>
+                    <h4 className="font-semibold text-foreground">
+                      Core Skills
+                    </h4>
                     {skills[activeSection].map((skill, index) => (
                       <motion.div
                         key={skill.name}
@@ -202,11 +223,14 @@ export default function TechIdentitySection() {
                         className="space-y-2"
                       >
                         <div className="flex items-center justify-between">
-                          <span className="flex items-center gap-2 font-medium text-gray-300">
-                            <span className="text-lg">{skill.icon}</span>
+                          <span className="flex items-center gap-2 font-medium text-foreground">
+                            <skill.icon
+                              size={18}
+                              className="text-primary-400"
+                            />
                             {skill.name}
                           </span>
-                          <span className="text-sm text-gray-400">
+                          <span className="text-sm text-muted-foreground">
                             {skill.level}%
                           </span>
                         </div>
@@ -228,7 +252,7 @@ export default function TechIdentitySection() {
 
                   {/* Passion points */}
                   <div className="space-y-3">
-                    <h4 className="font-semibold text-gray-200">
+                    <h4 className="font-semibold text-foreground">
                       Current Focus
                     </h4>
                     <ul className="space-y-2">
@@ -257,7 +281,9 @@ export default function TechIdentitySection() {
                           className="flex items-start gap-3"
                         >
                           <span className="text-primary-400 mt-1">▹</span>
-                          <span className="text-sm text-gray-300">{point}</span>
+                          <span className="text-sm text-foreground">
+                            {point}
+                          </span>
                         </motion.li>
                       ))}
                     </ul>
@@ -284,7 +310,7 @@ export default function TechIdentitySection() {
                   <div className="w-3 h-3 rounded-full bg-yellow-500" />
                   <div className="w-3 h-3 rounded-full bg-green-500" />
                 </div>
-                <span className="text-sm font-mono text-gray-300">
+                <span className="text-sm font-mono text-foreground">
                   {activeSection === 'frontEnd'
                     ? 'profile.tsx'
                     : 'embedded.ino'}
@@ -292,7 +318,7 @@ export default function TechIdentitySection() {
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                <span className="text-xs text-gray-400">Live</span>
+                <span className="text-xs text-muted-foreground">Live</span>
               </div>
             </div>
 
@@ -311,17 +337,26 @@ export default function TechIdentitySection() {
                       language={
                         activeSection === 'frontEnd' ? 'typescript' : 'cpp'
                       }
-                      className={
-                        activeSection === 'frontEnd'
-                          ? 'language-typescript'
-                          : 'language-cpp'
-                      }
+                      style={atomDark}
+                      customStyle={{
+                        backgroundColor: '#0d1117',
+                        border: 'none',
+                        borderRadius: '0',
+                        margin: 0,
+                        padding: 0,
+                        fontSize: '13px',
+                        lineHeight: '1.6',
+                      }}
                       showLineNumbers={true}
                       wrapLines={true}
                       lineNumberStyle={{
-                        color: '#64748b',
+                        color: '#6e7681',
                         fontSize: '12px',
                         paddingRight: '16px',
+                        backgroundColor: '#0d1117',
+                        borderRight: '1px solid #30363d',
+                        minWidth: '40px',
+                        textAlign: 'right',
                       }}
                     >
                       {activeSection === 'frontEnd'
@@ -342,7 +377,7 @@ type TechStack = {
 const fukayatti: Developer = {
   name: "fukayatti0",
   age: 16,
-  location: "Japan 🇯🇵",
+  location: "Japan",
   education: "NITIC",
   expertise: {
     frontend: [
@@ -409,18 +444,18 @@ void loop() {
             <div className="px-6 py-4 border-t border-white/10">
               <div className="flex items-center justify-between text-sm">
                 <div className="flex items-center gap-4">
-                  <span className="flex items-center gap-2 text-gray-400">
+                  <span className="flex items-center gap-2 text-muted-foreground">
                     <span className="w-2 h-2 rounded-full bg-primary-400" />
                     {activeSection === 'frontEnd' ? '3+ years' : '2+ years'}
                   </span>
-                  <span className="flex items-center gap-2 text-gray-400">
+                  <span className="flex items-center gap-2 text-muted-foreground">
                     <span className="w-2 h-2 rounded-full bg-accent-400" />
                     {activeSection === 'frontEnd'
                       ? '25+ projects'
                       : '15+ circuits'}
                   </span>
                 </div>
-                <span className="text-gray-500">
+                <span className="text-muted-foreground">
                   Lines: {activeSection === 'frontEnd' ? '1.2K+' : '850+'}
                 </span>
               </div>

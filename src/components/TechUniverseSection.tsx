@@ -80,7 +80,7 @@ export default function TechUniverseSection() {
         <h2 className="text-display mb-4">
           <span className="gradient-text">Tech Universe</span>
         </h2>
-        <p className="text-body max-w-2xl mx-auto text-gray-400">
+        <p className="text-body max-w-2xl mx-auto text-muted-foreground">
           The technologies and tools that power my development journey
         </p>
       </motion.div>
@@ -99,8 +99,8 @@ export default function TechUniverseSection() {
             className={`relative px-6 py-3 rounded-xl font-medium text-sm transition-all duration-300 flex items-center gap-2
               ${
                 activeCategory === category.id
-                  ? 'text-white shadow-glow'
-                  : 'text-gray-400 hover:text-gray-200'
+                  ? 'text-foreground shadow-glow'
+                  : 'text-muted-foreground hover:text-foreground'
               }
             `}
           >
@@ -155,10 +155,10 @@ export default function TechUniverseSection() {
 
                 {/* Label */}
                 <div className="space-y-1">
-                  <h3 className="font-semibold text-white group-hover:text-primary-300 transition-colors duration-300">
+                  <h3 className="font-semibold text-foreground group-hover:text-primary-300 transition-colors duration-300">
                     {item.label}
                   </h3>
-                  <p className="text-xs text-gray-400 capitalize">
+                  <p className="text-xs text-muted-foreground capitalize">
                     {item.category}
                   </p>
                 </div>
@@ -166,12 +166,12 @@ export default function TechUniverseSection() {
                 {/* Skill Level Indicator */}
                 <div className="w-full space-y-1">
                   <div className="flex justify-between text-xs">
-                    <span className="text-gray-500">Proficiency</span>
-                    <span className="text-gray-400">
+                    <span className="text-muted-foreground">Proficiency</span>
+                    <span className="text-muted-foreground">
                       {Math.floor(Math.random() * 30) + 70}%
                     </span>
                   </div>
-                  <div className="h-1 bg-gray-700 rounded-full overflow-hidden">
+                  <div className="h-1 bg-muted rounded-full overflow-hidden">
                     <motion.div
                       className="h-full rounded-full"
                       style={{
@@ -216,7 +216,7 @@ export default function TechUniverseSection() {
             <div className="text-2xl font-bold text-primary-300">
               {stat.count}
             </div>
-            <div className="text-sm text-gray-400">{stat.label}</div>
+            <div className="text-sm text-muted-foreground">{stat.label}</div>
           </div>
         ))}
       </motion.div>

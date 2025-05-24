@@ -16,7 +16,7 @@ export default function Goals2025StaticSection({
       case 'low':
         return 'text-green-400 bg-green-400/10';
       default:
-        return 'text-gray-400 bg-gray-400/10';
+        return 'text-muted-foreground bg-gray-400/10';
     }
   };
 
@@ -40,7 +40,7 @@ export default function Goals2025StaticSection({
         <h2 className="text-display mb-4">
           <span className="gradient-text">Goals 2025</span>
         </h2>
-        <p className="text-body max-w-2xl mx-auto text-gray-400">
+        <p className="text-body max-w-2xl mx-auto text-muted-foreground">
           Ambitious objectives and milestones for continuous growth and
           innovation
         </p>
@@ -67,7 +67,9 @@ export default function Goals2025StaticSection({
                     >
                       {category.title}
                     </h3>
-                    <p className="text-sm text-gray-400">{category.subtitle}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {category.subtitle}
+                    </p>
                   </div>
                 </div>
 
@@ -79,7 +81,7 @@ export default function Goals2025StaticSection({
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-1">
-                            <h4 className="font-medium text-white">
+                            <h4 className="font-medium text-muted-foreground">
                               {goal.title}
                             </h4>
                             <span
@@ -88,7 +90,7 @@ export default function Goals2025StaticSection({
                               {goal.priority}
                             </span>
                           </div>
-                          <p className="text-sm text-gray-300 leading-relaxed">
+                          <p className="text-sm text-muted-foreground-300 leading-relaxed">
                             {goal.description}
                           </p>
                         </div>
@@ -97,7 +99,9 @@ export default function Goals2025StaticSection({
                       {/* Progress Bar */}
                       <div className="space-y-1">
                         <div className="flex justify-between text-xs">
-                          <span className="text-gray-400">Progress</span>
+                          <span className="text-muted-foreground">
+                            Progress
+                          </span>
                           <span
                             className={
                               getColorClasses(category.color).split(' ')[0]
@@ -126,7 +130,7 @@ export default function Goals2025StaticSection({
                 {/* Category Summary */}
                 <div className="mt-8 pt-6 border-t border-white/10">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-400">
+                    <span className="text-muted-foreground">
                       {category.goals.length} objectives
                     </span>
                     <span
@@ -151,7 +155,7 @@ export default function Goals2025StaticSection({
       {/* Overall Progress Summary */}
       <div className="mt-12 glass rounded-2xl border border-white/10 shadow-glass p-8">
         <div className="text-center space-y-4">
-          <h3 className="text-xl font-semibold text-white">
+          <h3 className="text-xl font-semibold text-muted-foreground">
             2025 Progress Overview
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -199,7 +203,9 @@ export default function Goals2025StaticSection({
                 <div className="text-2xl font-bold text-primary-300">
                   {stat.value}
                 </div>
-                <div className="text-sm text-gray-400">{stat.label}</div>
+                <div className="text-sm text-muted-foreground">
+                  {stat.label}
+                </div>
               </div>
             ))}
           </div>

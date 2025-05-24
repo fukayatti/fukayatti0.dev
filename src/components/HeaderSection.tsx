@@ -20,7 +20,7 @@ export default function HeaderSection() {
 
   return (
     <motion.header
-      className="relative flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20 min-h-[60vh] w-full overflow-hidden"
+      className="relative flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-16 min-h-[60vh] w-full overflow-hidden"
       initial="hidden"
       animate="visible"
       variants={fadeIn}
@@ -34,7 +34,7 @@ export default function HeaderSection() {
 
       {/* Left side: Profile image with enhanced effects */}
       <motion.div
-        className="relative flex-shrink-0 flex flex-col items-center lg:items-start"
+        className="relative flex-shrink-0 flex flex-col items-center lg:items-start lg:flex-1"
         variants={slideUp}
         transition={{ delay: 0.2, duration: 0.8 }}
       >
@@ -49,7 +49,7 @@ export default function HeaderSection() {
           />
 
           {/* Profile image container */}
-          <div className="relative w-56 h-56 md:w-64 md:h-64 rounded-full p-1 overflow-hidden bg-gray-900">
+          <div className="relative w-48 h-48 md:w-56 md:h-56 lg:w-52 lg:h-52 xl:w-60 xl:h-60 rounded-full p-1 overflow-hidden bg-gray-900">
             <div className="w-full h-full rounded-full overflow-hidden relative group-hover:scale-105 transition-transform duration-500">
               <Image
                 src="/gyarupi.png"
@@ -83,27 +83,27 @@ export default function HeaderSection() {
 
         {/* Status indicator */}
         <motion.div
-          className="mt-6 flex items-center gap-3 px-4 py-2 glass rounded-full border border-white/10"
+          className="mt-4 lg:mt-6 flex items-center gap-3 px-4 py-2 glass rounded-full border border-white/10"
           variants={slideUp}
           transition={{ delay: 0.6, duration: 0.6 }}
         >
-          <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-          <span className="text-sm font-medium text-gray-300">
+          <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="text-sm font-medium text-muted-foreground">
             Available for collaboration
           </span>
         </motion.div>
       </motion.div>
 
       {/* Right side: Enhanced text content */}
-      <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left max-w-2xl">
+      <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left max-w-2xl lg:pl-8">
         {/* Animated greeting */}
         <motion.div
           className="mb-4 flex items-center gap-2"
           variants={slideUp}
           transition={{ delay: 0.1, duration: 0.6 }}
         >
-          <Hand className="w-6 h-6 text-primary-400 animate-bounce-subtle" />
-          <span className="text-lg font-medium text-gray-400">
+          <Hand className="w-6 h-6 text-primary animate-bounce-subtle" />
+          <span className="text-lg font-medium text-muted-foreground">
             Hey there, I'm
           </span>
         </motion.div>
@@ -130,23 +130,22 @@ export default function HeaderSection() {
 
         {/* Enhanced description */}
         <motion.p
-          className="text-body-lg mb-8 leading-relaxed max-w-xl text-gray-300"
+          className="text-body-lg mb-8 leading-relaxed max-w-xl text-muted-foreground"
           variants={slideUp}
           transition={{ delay: 0.5, duration: 0.8 }}
         >
-          <span className="font-semibold text-primary-400">
+          <span className="font-semibold text-primary">
             16-year-old tech explorer
           </span>{' '}
           from{' '}
           <span className="relative inline-block">
             National Institute of Technology, Ibaraki College
-            <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-accent-400 to-primary-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+            <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-accent to-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
           </span>{' '}
           passionate about{' '}
-          <span className="font-semibold text-accent-400">code</span>,{' '}
-          <span className="font-semibold text-primary-400">innovation</span>,
-          and <span className="font-semibold text-accent-400">open source</span>
-          .
+          <span className="font-semibold text-accent">code</span>,{' '}
+          <span className="font-semibold text-primary">innovation</span>, and{' '}
+          <span className="font-semibold text-accent">open source</span>.
         </motion.p>
 
         {/* Skill tags */}
@@ -159,7 +158,7 @@ export default function HeaderSection() {
             (skill, index) => (
               <span
                 key={skill}
-                className="px-4 py-2 glass rounded-full text-sm font-medium border border-white/10 hover:scale-105 transition-all duration-300 cursor-default text-gray-300"
+                className="px-4 py-2 glass rounded-full text-sm font-medium border border-white/10 hover:scale-105 transition-all duration-300 cursor-default text-foreground"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 {skill}
@@ -188,7 +187,7 @@ export default function HeaderSection() {
 
       {/* Floating social proof */}
       <motion.div
-        className="absolute top-8 right-8 hidden lg:block"
+        className="absolute top-4 right-4 lg:top-8 lg:right-8 hidden lg:block"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 1.2, duration: 0.6 }}
@@ -204,8 +203,8 @@ export default function HeaderSection() {
               ))}
             </div>
             <div className="text-sm">
-              <div className="font-medium text-gray-300">50+ Projects</div>
-              <div className="text-xs text-gray-500">Open Source</div>
+              <div className="font-medium text-foreground">50+ Projects</div>
+              <div className="text-xs text-muted-foreground">Open Source</div>
             </div>
           </div>
         </div>

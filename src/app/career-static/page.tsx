@@ -33,7 +33,7 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
 
   if (error) {
     return (
-      <div className="relative min-h-screen text-gray-100 overflow-hidden">
+      <div className="relative min-h-screen text-foreground overflow-hidden">
         {/* Enhanced background with modern mesh gradient */}
         <div
           aria-hidden
@@ -52,13 +52,13 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
           <div className="text-center">
             <div className="glass rounded-2xl border border-white/10 shadow-glass p-12">
               <div className="w-16 h-16 mx-auto mb-6 rounded-xl glass flex items-center justify-center text-3xl border border-white/10">
-                <AlertTriangle className="w-8 h-8 text-red-400" />
+                <AlertTriangle className="w-8 h-8 text-destructive" />
               </div>
-              <h2 className="text-xl font-semibold text-red-400 mb-4">
+              <h2 className="text-xl font-semibold text-destructive mb-4">
                 データ取得エラー
               </h2>
-              <p className="text-gray-400 mb-4">{error}</p>
-              <p className="text-sm text-gray-500">
+              <p className="text-muted-foreground mb-4">{error}</p>
+              <p className="text-sm text-muted-foreground">
                 フォールバックデータを表示する場合は、ページを再読み込みしてください
               </p>
             </div>
@@ -69,7 +69,7 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
   }
 
   return (
-    <div className="relative min-h-screen text-gray-100 overflow-hidden">
+    <div className="relative min-h-screen text-foreground overflow-hidden">
       {/* Enhanced background with modern mesh gradient */}
       <div
         aria-hidden
@@ -104,25 +104,35 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
             <div className="text-center mb-12">
               <div className="glass rounded-3xl p-8 md:p-12 border border-white/10 shadow-glass backdrop-blur-xl mb-8">
                 <h1 className="text-display mb-4">
-                  <span className="gradient-text">
-                    キャリア・受賞歴 (Static)
+                  <span
+                    className="gradient-text"
+                    style={{
+                      background:
+                        'linear-gradient(90deg, #6366f1, #ec4899, #06b6d4)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text',
+                      color: 'transparent',
+                    }}
+                  >
+                    受賞歴・実績
                   </span>
                 </h1>
-                <p className="text-body max-w-2xl mx-auto text-gray-400 mb-6">
+                <p className="text-body max-w-2xl mx-auto text-muted-foreground mb-6">
                   NotionCMSで管理された実績・受賞歴をISRで高速表示
                 </p>
 
                 {/* Status Indicators */}
                 <div className="flex flex-wrap justify-center gap-3">
                   <div className="inline-flex items-center px-4 py-2 glass rounded-full border border-white/10">
-                    <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
-                    <span className="text-sm font-medium text-blue-300">
+                    <div className="w-2 h-2 bg-primary-400 rounded-full mr-3"></div>
+                    <span className="text-sm font-medium text-primary-300">
                       ISR（10分間隔更新）
                     </span>
                   </div>
                   <div className="inline-flex items-center px-4 py-2 glass rounded-full border border-white/10">
-                    <div className="w-2 h-2 bg-green-400 rounded-full mr-3 animate-pulse"></div>
-                    <span className="text-sm font-medium text-green-300">
+                    <div className="w-2 h-2 bg-success rounded-full mr-3 animate-pulse"></div>
+                    <span className="text-sm font-medium text-success">
                       Notionと自動同期
                     </span>
                   </div>
@@ -140,7 +150,7 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
                   <h2 className="text-2xl font-semibold text-primary-300">
                     受賞歴
                   </h2>
-                  <p className="text-sm text-gray-400">
+                  <p className="text-sm text-muted-foreground">
                     競技プログラミング・コンテストでの実績（Static Generated）
                   </p>
                 </div>
@@ -149,12 +159,12 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
               {awards.length === 0 ? (
                 <div className="glass rounded-2xl border border-white/10 shadow-glass p-12 text-center">
                   <div className="w-16 h-16 mx-auto mb-6 rounded-xl glass flex items-center justify-center text-3xl border border-white/10">
-                    <Trophy className="w-8 h-8 text-gray-400" />
+                    <Trophy className="w-8 h-8 text-muted-foreground" />
                   </div>
-                  <h3 className="text-xl font-semibold text-white mb-2">
+                  <h3 className="text-xl font-semibold text-muted-foreground mb-2">
                     受賞歴がありません
                   </h3>
-                  <p className="text-gray-400">
+                  <p className="text-muted-foreground">
                     新しい実績が追加されると、ここに表示されます。
                   </p>
                 </div>
@@ -201,14 +211,14 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
                               </div>
 
                               {/* Title */}
-                              <h3 className="text-xl font-bold text-white mb-3">
+                              <h3 className="text-xl font-bold text-muted-foreground mb-3">
                                 {award.title}
                               </h3>
 
                               {/* Organizer */}
                               <div className="flex items-center gap-2 mb-4">
                                 <Building2 className="w-4 h-4 text-accent-400" />
-                                <p className="text-gray-300">
+                                <p className="text-muted-foreground">
                                   主催: {award.organizer}
                                 </p>
                               </div>
@@ -220,7 +230,7 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
                                     href={award.details}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-xl font-semibold hover:scale-105 transition-all duration-200 group/button"
+                                    className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-muted-foreground rounded-xl font-semibold hover:scale-105 transition-all duration-200 group/button"
                                   >
                                     <span>詳細を見る</span>
                                     <ExternalLink className="w-4 h-4 transform group-hover/button:translate-x-1 transition-transform duration-200" />
@@ -249,7 +259,7 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
                     <h3 className="text-xl font-semibold text-primary-300">
                       ISRパフォーマンス
                     </h3>
-                    <p className="text-sm text-gray-400">
+                    <p className="text-sm text-muted-foreground">
                       高速表示と自動更新を両立
                     </p>
                   </div>
@@ -259,8 +269,10 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
                   <div className="flex items-center gap-3">
                     <Zap className="w-5 h-5 text-primary-400" />
                     <div>
-                      <div className="font-medium text-white">静的生成</div>
-                      <div className="text-sm text-gray-400">
+                      <div className="font-medium text-muted-foreground">
+                        静的生成
+                      </div>
+                      <div className="text-sm text-muted-foreground">
                         高速なページ表示
                       </div>
                     </div>
@@ -268,8 +280,10 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
                   <div className="flex items-center gap-3">
                     <Activity className="w-5 h-5 text-accent-400" />
                     <div>
-                      <div className="font-medium text-white">自動更新</div>
-                      <div className="text-sm text-gray-400">
+                      <div className="font-medium text-muted-foreground">
+                        自動更新
+                      </div>
+                      <div className="text-sm text-muted-foreground">
                         10分間隔で再生成
                       </div>
                     </div>
@@ -277,10 +291,10 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
                   <div className="flex items-center gap-3">
                     <Settings className="w-5 h-5 text-purple-400" />
                     <div>
-                      <div className="font-medium text-white">
+                      <div className="font-medium text-muted-foreground">
                         レート制限対策
                       </div>
-                      <div className="text-sm text-gray-400">
+                      <div className="text-sm text-muted-foreground">
                         効率的なAPI利用
                       </div>
                     </div>
@@ -298,7 +312,7 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
                     <h3 className="text-xl font-semibold text-accent-300">
                       Notion CMS連携
                     </h3>
-                    <p className="text-sm text-gray-400">
+                    <p className="text-sm text-muted-foreground">
                       コンテンツ管理システム
                     </p>
                   </div>
@@ -308,10 +322,10 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
                   <div className="flex items-center gap-3">
                     <Database className="w-5 h-5 text-primary-400" />
                     <div>
-                      <div className="font-medium text-white">
+                      <div className="font-medium text-muted-foreground">
                         Notionデータベース
                       </div>
-                      <div className="text-sm text-gray-400">
+                      <div className="text-sm text-muted-foreground">
                         自動データ取得
                       </div>
                     </div>
@@ -319,8 +333,10 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
                   <div className="flex items-center gap-3">
                     <Activity className="w-5 h-5 text-accent-400" />
                     <div>
-                      <div className="font-medium text-white">API連携</div>
-                      <div className="text-sm text-gray-400">
+                      <div className="font-medium text-muted-foreground">
+                        API連携
+                      </div>
+                      <div className="text-sm text-muted-foreground">
                         リアルタイム同期
                       </div>
                     </div>
@@ -328,8 +344,10 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
                   <div className="flex items-center gap-3">
                     <Rocket className="w-5 h-5 text-purple-400" />
                     <div>
-                      <div className="font-medium text-white">Next.js ISR</div>
-                      <div className="text-sm text-gray-400">
+                      <div className="font-medium text-muted-foreground">
+                        Next.js ISR
+                      </div>
+                      <div className="text-sm text-muted-foreground">
                         最適化された配信
                       </div>
                     </div>
@@ -342,13 +360,13 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
             <div className="glass rounded-2xl border border-white/10 shadow-glass p-8">
               <div className="flex items-center gap-4 mb-8">
                 <div className="w-12 h-12 rounded-xl glass flex items-center justify-center text-2xl border border-white/10">
-                  <Settings className="w-6 h-6 text-white" />
+                  <Settings className="w-6 h-6 text-muted-foreground" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-semibold text-white">
+                  <h3 className="text-2xl font-semibold text-muted-foreground">
                     技術仕様
                   </h3>
-                  <p className="text-sm text-gray-400">
+                  <p className="text-sm text-muted-foreground">
                     ISRとNotion APIの技術詳細
                   </p>
                 </div>
@@ -360,7 +378,7 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
                     <Activity className="w-4 h-4" />
                     更新頻度
                   </h4>
-                  <ul className="space-y-2 text-gray-300 text-sm">
+                  <ul className="space-y-2 text-muted-foreground-300 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="text-primary-400 mt-1">▹</span>
                       <span>ISR revalidate: 600秒</span>
@@ -381,7 +399,7 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
                     <Zap className="w-4 h-4" />
                     パフォーマンス
                   </h4>
-                  <ul className="space-y-2 text-gray-300 text-sm">
+                  <ul className="space-y-2 text-muted-foreground-300 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="text-accent-400 mt-1">▹</span>
                       <span>静的生成による高速表示</span>
@@ -402,7 +420,7 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
                     <Settings className="w-4 h-4" />
                     テクノロジー
                   </h4>
-                  <ul className="space-y-2 text-gray-300 text-sm">
+                  <ul className="space-y-2 text-muted-foreground-300 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="text-purple-400 mt-1">▹</span>
                       <span>Next.js 14 ISR</span>
@@ -441,7 +459,7 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
                         <div className="text-lg font-bold text-primary-300">
                           {stat.value}
                         </div>
-                        <div className="text-sm text-gray-400">
+                        <div className="text-sm text-muted-foreground">
                           {stat.label}
                         </div>
                       </div>
