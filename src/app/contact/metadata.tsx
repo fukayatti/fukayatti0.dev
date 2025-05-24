@@ -1,22 +1,23 @@
 import { defaultMetadata } from '../../lib/metadata-common';
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://example.com';
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://fukayatti0.dev';
 
 export const metadata = {
   ...defaultMetadata,
-  title: 'お問い合わせ',
-  description: 'ご質問やお仕事のご依頼はこちらからお気軽にどうぞ',
+  title: 'Contact',
+  description: "Let's build something amazing together",
   openGraph: {
     ...defaultMetadata.openGraph,
-    title: 'お問い合わせ',
-    description: 'ご質問やお仕事のご依頼はこちらからお気軽にどうぞ',
+    title: 'Contact',
+    description: "Let's build something amazing together",
     url: `${baseUrl}/contact`,
-    images: [`${baseUrl}/opengraph-image.png`],
+    images: [`${baseUrl}/contact/opengraph-image.png`],
   },
   twitter: {
     ...defaultMetadata.twitter,
-    title: 'お問い合わせ',
-    description: 'ご質問やお仕事のご依頼はこちらからお気軽にどうぞ',
-    images: [`${baseUrl}/opengraph-image.png`],
+    card: 'summary_large_image',
+    title: 'Contact',
+    description: "Let's build something amazing together",
+    images: [`${baseUrl}/contact/opengraph-image.png`],
   },
 };
