@@ -44,7 +44,7 @@ export default function LetsConnectSection() {
           className="flex items-center gap-2 px-6 py-3 rounded-xl border shadow-lg text-lg font-semibold transition duration-300 bg-gradient-to-r from-indigo-400/80 to-pink-400/80 border-white/20 text-white hover:scale-105 hover:shadow-pink-400/30"
         >
           <span>Email</span>
-          <span className="opacity-70">contact@fukayatti.dev</span>
+          <span className="opacity-70">contact@fukayatti0.dev</span>
         </a>
       </div>
     </motion.section>
