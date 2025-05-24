@@ -4,8 +4,7 @@ import {
 } from '@/lib/notion-content';
 import type { CurrentFocusArea } from '@/lib/notion-content';
 import { AlertTriangle } from 'lucide-react';
-import CurrentFocusSection from '@/components/CurrentFocusSection';
-import Goals2025Section from '@/components/Goals2025Section';
+import HomePageClient from '@/components/HomePageClient';
 
 // ISRで10分間隔で再生成
 export const revalidate = 600; // 10分
@@ -47,7 +46,6 @@ export default async function HomePage({}: HomePageProps) {
             `,
           }}
         />
-
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
             <div className="glass rounded-2xl border border-white/10 shadow-glass p-12">
@@ -69,9 +67,6 @@ export default async function HomePage({}: HomePageProps) {
   }
 
   return (
-    <main>
-      <CurrentFocusSection focusAreas={focusAreas} />
-      <Goals2025Section goalCategories={goalCategories} />
-    </main>
+    <HomePageClient focusAreas={focusAreas} goalCategories={goalCategories} />
   );
 }
