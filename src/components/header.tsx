@@ -6,13 +6,14 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Orbitron } from 'next/font/google';
 import ThemeSwitcher from './ThemeSwitcher';
-import { Home, User, Briefcase, Mail } from 'lucide-react';
+import { Home, User, Briefcase, Mail, Award } from 'lucide-react';
 
 const orbitron = Orbitron({ subsets: ['latin'], weight: ['400', '700'] });
 
 const navLinks = [
   { href: '/', label: 'Home', icon: Home },
   { href: '/about', label: 'About', icon: User },
+  { href: '/career-static', label: 'Career', icon: Award },
   { href: '/works', label: 'Works', icon: Briefcase },
   { href: '/contact', label: 'Contact', icon: Mail },
 ];

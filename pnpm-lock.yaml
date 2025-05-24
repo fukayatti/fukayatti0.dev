@@ -14,6 +14,9 @@ importers:
       '@icons-pack/react-simple-icons':
         specifier: ^12.5.0
         version: 12.5.0(react@19.1.0)
+      '@notionhq/client':
+        specifier: ^3.1.2
+        version: 3.1.2
       '@radix-ui/react-dropdown-menu':
         specifier: ^2.1.6
         version: 2.1.6(@types/react-dom@19.1.1(@types/react@19.1.0))(@types/react@19.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -362,6 +365,10 @@ packages:
   '@nolyfill/is-core-module@1.0.39':
     resolution: {integrity: sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==}
     engines: {node: '>=12.4.0'}
+
+  '@notionhq/client@3.1.2':
+    resolution: {integrity: sha512-EqJhtx5ekKW3wieENnDHPl5ZSgDxGyRP5r2664rPH39toW899sL000TSE7WHxenHb+kSIckVQ5OsT9tzPqbENg==}
+    engines: {node: '>=18'}
 
   '@pkgr/core@0.2.0':
     resolution: {integrity: sha512-vsJDAkYR6qCPu+ioGScGiMYR7LvZYIXh/dlQeviqoTWNCVfKTLYD/LkNWH4Mxsv2a5vpIRc77FN5DnmK1eBggQ==}
@@ -2761,6 +2768,8 @@ snapshots:
       fastq: 1.19.1
 
   '@nolyfill/is-core-module@1.0.39': {}
+
+  '@notionhq/client@3.1.2': {}
 
   '@pkgr/core@0.2.0': {}
 
