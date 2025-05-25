@@ -19,7 +19,7 @@ export default function Goals2025Section({
       case 'low':
         return 'text-green-400 bg-green-400/10';
       default:
-        return 'text-muted-foreground bg-muted/20';
+        return 'text-foreground/70 bg-muted/20';
     }
   };
 
@@ -43,7 +43,7 @@ export default function Goals2025Section({
         <h2 className="text-display mb-4">
           <span className="gradient-text">Goals 2025</span>
         </h2>
-        <p className="text-body max-w-2xl mx-auto text-muted-foreground">
+        <p className="text-body max-w-2xl mx-auto text-foreground/70">
           Ambitious objectives and milestones for continuous growth and
           innovation
         </p>
@@ -70,7 +70,7 @@ export default function Goals2025Section({
                     >
                       {category.title}
                     </h3>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-foreground/70">
                       {category.subtitle}
                     </p>
                   </div>
@@ -93,7 +93,7 @@ export default function Goals2025Section({
                               {goal.priority}
                             </span>
                           </div>
-                          <p className="text-sm text-muted-foreground leading-relaxed">
+                          <p className="text-sm text-foreground/70 leading-relaxed">
                             {goal.description}
                           </p>
                         </div>
@@ -102,9 +102,7 @@ export default function Goals2025Section({
                       {/* Progress Bar */}
                       <div className="space-y-1">
                         <div className="flex justify-between text-xs">
-                          <span className="text-muted-foreground">
-                            Progress
-                          </span>
+                          <span className="text-foreground/60">Progress</span>
                           <span
                             className={
                               getColorClasses(category.color).split(' ')[0]
@@ -133,7 +131,7 @@ export default function Goals2025Section({
                 {/* Category Summary */}
                 <div className="mt-8 pt-6 border-t border-white/10">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">
+                    <span className="text-foreground/70">
                       {category.goals.length} objectives
                     </span>
                     <span
@@ -206,9 +204,7 @@ export default function Goals2025Section({
                 <div className="text-2xl font-bold text-primary-300">
                   {stat.value}
                 </div>
-                <div className="text-sm text-muted-foreground">
-                  {stat.label}
-                </div>
+                <div className="text-sm text-foreground/70">{stat.label}</div>
               </div>
             ))}
           </div>

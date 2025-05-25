@@ -101,7 +101,7 @@ const NavigationHeader = () => {
                   <Link
                     key={href}
                     href={href}
-                    className="text-muted-foreground hover:text-primary-400 flex items-center transition-colors duration-150"
+                    className="text-foreground/80 hover:text-primary transition-colors duration-150 flex items-center"
                   >
                     <Icon className="mr-1 w-5 h-5" />
                     {label}
@@ -115,7 +115,7 @@ const NavigationHeader = () => {
                   className="outline-none mobile-menu-button"
                 >
                   <svg
-                    className="w-6 h-6 text-muted-foreground hover:text-primary-400 transition-colors duration-150"
+                    className="w-6 h-6 text-foreground/80 hover:text-primary transition-colors duration-150"
                     fill="none"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -140,7 +140,7 @@ const NavigationHeader = () => {
               <Link
                 key={href}
                 href={href}
-                className="py-2 px-4 text-base text-foreground hover:text-primary-400 flex items-center transition-colors duration-150"
+                className="py-2 px-4 text-base text-foreground hover:text-primary flex items-center transition-colors duration-150"
               >
                 <Icon className="mr-1 w-4 h-4" />
                 {label}

@@ -6,7 +6,7 @@
   --background: 250 250 250; /* #fafafa */
   --foreground: 17 24 39; /* #111827 - darker for better contrast */
   --muted: 245 245 245; /* #f5f5f5 */
-  --muted-foreground: 55 65 81; /* #374151 - much darker for better contrast in light mode */
+  --muted-foreground: 31 41 55; /* #1f2937 - much darker for better contrast in light mode */
   --popover: 255 255 255; /* #ffffff */
   --popover-foreground: 10 10 10; /* #0a0a0a */
   --card: 255 255 255; /* #ffffff */
@@ -63,7 +63,7 @@
   --background: 10 10 10; /* #0a0a0a */
   --foreground: 250 250 250; /* #fafafa */
   --muted: 23 23 23; /* #171717 */
-  --muted-foreground: 156 163 175; /* #9ca3af - slightly lighter for dark mode */
+  --muted-foreground: 209 213 219; /* #d1d5db - much lighter for better contrast in dark mode */
   --popover: 10 10 10; /* #0a0a0a */
   --popover-foreground: 250 250 250; /* #fafafa */
   --card: 10 10 10; /* #0a0a0a */
@@ -99,7 +99,7 @@
     --background: 10 10 10;
     --foreground: 250 250 250;
     --muted: 23 23 23;
-    --muted-foreground: 163 163 163;
+    --muted-foreground: 209 213 219;
     --popover: 10 10 10;
     --popover-foreground: 250 250 250;
     --card: 10 10 10;
@@ -439,7 +439,7 @@ body {
 
 .text-caption {
   font-size: 0.875rem;
-  color: var(--muted-foreground);
+  color: rgb(var(--foreground) / 0.7);
 }
 
 /* Responsive grid utilities */
@@ -497,6 +497,55 @@ body {
 }
 .text-muted-foreground-300 {
   color: #d1d5db;
+}
+
+/* Enhanced contrast utility classes */
+.text-contrast-high {
+  color: rgb(var(--foreground) / 0.9);
+}
+
+.text-contrast-medium {
+  color: rgb(var(--foreground) / 0.8);
+}
+
+.text-contrast-low {
+  color: rgb(var(--foreground) / 0.7);
+}
+
+.text-contrast-subtle {
+  color: rgb(var(--foreground) / 0.6);
+}
+
+/* Improved accessible button styles */
+.btn-accessible {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+  cursor: pointer;
+  min-height: 44px; /* WCAG AA touch target size */
+}
+
+.btn-accessible:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --muted-foreground: 0 0 0; /* Pure black for light mode */
+  }
+
+  .dark {
+    --muted-foreground: 255 255 255; /* Pure white for dark mode */
+  }
 }
 .text-muted-foreground-400 {
   color: #9ca3af;

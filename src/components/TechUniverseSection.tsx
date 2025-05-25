@@ -80,7 +80,7 @@ export default function TechUniverseSection() {
         <h2 className="text-display mb-4">
           <span className="gradient-text">Tech Universe</span>
         </h2>
-        <p className="text-body max-w-2xl mx-auto text-muted-foreground">
+        <p className="text-body max-w-2xl mx-auto text-foreground/70">
           The technologies and tools that power my development journey
         </p>
       </motion.div>
@@ -100,7 +100,7 @@ export default function TechUniverseSection() {
               ${
                 activeCategory === category.id
                   ? 'text-foreground shadow-glow'
-                  : 'text-muted-foreground hover:text-foreground'
+                  : 'text-foreground/80 hover:text-foreground'
               }
             `}
           >
@@ -158,7 +158,7 @@ export default function TechUniverseSection() {
                   <h3 className="font-semibold text-foreground group-hover:text-primary-300 transition-colors duration-300">
                     {item.label}
                   </h3>
-                  <p className="text-xs text-muted-foreground capitalize">
+                  <p className="text-xs text-foreground/60 capitalize">
                     {item.category}
                   </p>
                 </div>
@@ -166,8 +166,8 @@ export default function TechUniverseSection() {
                 {/* Skill Level Indicator */}
                 <div className="w-full space-y-1">
                   <div className="flex justify-between text-xs">
-                    <span className="text-muted-foreground">Proficiency</span>
-                    <span className="text-muted-foreground">
+                    <span className="text-foreground/60">Proficiency</span>
+                    <span className="text-foreground/60">
                       {Math.floor(Math.random() * 30) + 70}%
                     </span>
                   </div>
@@ -216,7 +216,7 @@ export default function TechUniverseSection() {
             <div className="text-2xl font-bold text-primary-300">
               {stat.count}
             </div>
-            <div className="text-sm text-muted-foreground">{stat.label}</div>
+            <div className="text-sm text-foreground/70">{stat.label}</div>
           </div>
         ))}
       </motion.div>

@@ -126,7 +126,7 @@ export default function CurrentFocusSection({
         <h2 className="text-display mb-4">
           <span className="gradient-text">Current Focus</span>
         </h2>
-        <p className="text-body max-w-2xl mx-auto text-muted-foreground">
+        <p className="text-body max-w-2xl mx-auto text-foreground/70">
           My ongoing projects and learning journey in technology
         </p>
       </div>
@@ -158,7 +158,7 @@ export default function CurrentFocusSection({
                       >
                         {area.title}
                       </h3>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-foreground/70">
                         {area.subtitle}
                       </p>
                     </div>
@@ -171,14 +171,14 @@ export default function CurrentFocusSection({
                   </div>
 
                   {/* Description */}
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-foreground/70 leading-relaxed">
                     {area.description}
                   </p>
 
                   {/* Progress Bar */}
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm font-medium text-muted-foreground">
+                      <span className="text-sm font-medium text-foreground/70">
                         Progress
                       </span>
                       <span
@@ -198,7 +198,7 @@ export default function CurrentFocusSection({
                   {/* Stats */}
                   <div className="glass rounded-lg p-3 border border-white/10">
                     <div className="flex justify-between items-center">
-                      <div className="text-sm text-muted-foreground">
+                      <div className="text-sm text-foreground/70">
                         Completed
                       </div>
                       <div className={`font-semibold ${colorClasses.text}`}>
@@ -209,14 +209,14 @@ export default function CurrentFocusSection({
 
                   {/* Technologies */}
                   <div className="space-y-3">
-                    <div className="text-sm font-medium text-muted-foreground">
+                    <div className="text-sm font-medium text-foreground/70">
                       Tech Stack
                     </div>
                     <div className="flex flex-wrap gap-2">
                       {area.technologies.map((tech) => (
                         <span
                           key={tech}
-                          className="px-2 py-1 text-xs font-medium glass rounded border border-white/10 text-muted-foreground hover:scale-105 transition-transform duration-200"
+                          className="px-2 py-1 text-xs font-medium glass rounded border border-white/10 text-foreground/70 hover:scale-105 transition-transform duration-200"
                         >
                           {tech}
                         </span>
@@ -226,7 +226,7 @@ export default function CurrentFocusSection({
 
                   {/* Action Button */}
                   <button
-                    className={`w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r ${colorClasses.bg} text-muted-foreground rounded-xl font-semibold hover:scale-105 transition-all duration-200 group/button`}
+                    className={`w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r ${colorClasses.bg} text-white rounded-xl font-semibold hover:scale-105 transition-all duration-200 group/button`}
                   >
                     <span>View Projects</span>
                     <ArrowRight className="w-4 h-4 transform group-hover/button:translate-x-1 transition-transform duration-200" />
@@ -245,7 +245,7 @@ export default function CurrentFocusSection({
             <h3 className="text-xl font-semibold text-foreground">
               Learning Journey Overview
             </h3>
-            <p className="text-muted-foreground">
+            <p className="text-foreground/70">
               Continuously expanding my skillset across multiple domains
             </p>
           </div>
@@ -267,9 +267,7 @@ export default function CurrentFocusSection({
                   <div className="text-lg font-bold text-primary-300">
                     {stat.value}
                   </div>
-                  <div className="text-sm text-muted-foreground">
-                    {stat.label}
-                  </div>
+                  <div className="text-sm text-foreground/70">{stat.label}</div>
                 </div>
               );
             })}
@@ -277,7 +275,7 @@ export default function CurrentFocusSection({
 
           {/* Call to Action */}
           <div className="pt-4">
-            <button className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-500 to-accent-500 text-muted-foreground rounded-xl font-semibold hover:scale-105 transition-all duration-200 group">
+            <button className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-xl font-semibold hover:scale-105 transition-all duration-200 group">
               <Code2 className="w-5 h-5" />
               <span>Explore All Projects</span>
               <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-200" />

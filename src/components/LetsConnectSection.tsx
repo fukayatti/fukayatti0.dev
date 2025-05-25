@@ -106,7 +106,7 @@ export default function LetsConnectSection() {
         <h2 className="text-display mb-4">
           <span className="gradient-text">Let's Connect</span>
         </h2>
-        <p className="text-body max-w-2xl mx-auto text-muted-foreground">
+        <p className="text-body max-w-2xl mx-auto text-foreground/70">
           Ready to collaborate? Let's build something amazing together
         </p>
       </motion.div>
@@ -144,20 +144,20 @@ export default function LetsConnectSection() {
                       >
                         {method.title}
                       </h3>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-foreground/70">
                         {method.subtitle}
                       </p>
                     </div>
                   </div>
 
                   {/* Description */}
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-foreground/70 leading-relaxed">
                     {method.description}
                   </p>
 
                   {/* Stats */}
                   <div className="glass rounded-lg p-3 border border-white/10">
-                    <div className="text-sm text-muted-foreground">
+                    <div className="text-sm text-foreground/70">
                       Response Time
                     </div>
                     <div className={`font-semibold ${colorClasses.text}`}>
@@ -170,7 +170,7 @@ export default function LetsConnectSection() {
                     href={method.href}
                     target={method.external ? '_blank' : undefined}
                     rel={method.external ? 'noopener noreferrer' : undefined}
-                    className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-muted-foreground transition-all duration-300 bg-gradient-to-r ${colorClasses.bg} hover:scale-105 hover:shadow-xl ${colorClasses.glow} group/button`}
+                    className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white transition-all duration-300 bg-gradient-to-r ${colorClasses.bg} hover:scale-105 hover:shadow-xl ${colorClasses.glow} group/button`}
                   >
                     <span>{method.action}</span>
                     {method.external && (
@@ -220,10 +220,10 @@ export default function LetsConnectSection() {
       >
         <div className="text-center space-y-6">
           <div className="space-y-2">
-            <h3 className="text-xl font-semibold text-muted-foreground">
+            <h3 className="text-xl font-semibold text-foreground">
               Ready to Start a Project?
             </h3>
-            <p className="text-muted-foreground">
+            <p className="text-foreground/70">
               I'm always open to discussing new opportunities, interesting
               projects, and creative ideas.
             </p>
@@ -256,9 +256,7 @@ export default function LetsConnectSection() {
                 <div className="text-lg font-bold text-primary-300">
                   {stat.value}
                 </div>
-                <div className="text-sm text-muted-foreground">
-                  {stat.label}
-                </div>
+                <div className="text-sm text-foreground/70">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -267,9 +265,9 @@ export default function LetsConnectSection() {
           <div className="pt-4">
             <a
               href="mailto:contact@fukayatti.dev"
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl font-semibold text-muted-foreground transition-all duration-300 bg-gradient-to-r from-primary-500 to-accent-500 hover:scale-105 hover:shadow-xl shadow-primary-500/20 group"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl font-semibold text-white transition-all duration-300 bg-gradient-to-r from-primary-500 to-accent-500 hover:scale-105 hover:shadow-xl shadow-primary-500/20 group"
             >
-              <MessageCircle size={20} className="text-muted-foreground" />
+              <MessageCircle size={20} className="text-white" />
               <span>Let's Discuss Your Project</span>
               <svg
                 className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-200"

@@ -88,7 +88,7 @@ export default function HeroSection() {
           transition={{ delay: 0.6, duration: 0.6 }}
         >
           <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-sm font-medium text-muted-foreground">
+          <span className="text-sm font-medium text-foreground/80">
             Available for collaboration
           </span>
         </motion.div>
@@ -103,7 +103,7 @@ export default function HeroSection() {
           transition={{ delay: 0.1, duration: 0.6 }}
         >
           <Hand className="w-6 h-6 text-primary animate-bounce-subtle" />
-          <span className="text-lg font-medium text-muted-foreground">
+          <span className="text-lg font-medium text-foreground/80">
             Hey there, I'm
           </span>
         </motion.div>
@@ -130,7 +130,7 @@ export default function HeroSection() {
 
         {/* Enhanced description */}
         <motion.p
-          className="text-body-lg mb-8 leading-relaxed max-w-xl text-muted-foreground"
+          className="text-body-lg mb-8 leading-relaxed max-w-xl text-foreground/70"
           variants={slideUp}
           transition={{ delay: 0.5, duration: 0.8 }}
         >
@@ -204,7 +204,7 @@ export default function HeroSection() {
             </div>
             <div className="text-sm">
               <div className="font-medium text-foreground">50+ Projects</div>
-              <div className="text-xs text-muted-foreground">Open Source</div>
+              <div className="text-xs text-foreground/60">Open Source</div>
             </div>
           </div>
         </div>

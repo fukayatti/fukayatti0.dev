@@ -132,7 +132,7 @@ export default function TechIdentitySection() {
         <h2 className="text-display mb-4">
           <span className="gradient-text">Tech Identity</span>
         </h2>
-        <p className="text-body max-w-2xl mx-auto text-muted-foreground">
+        <p className="text-body max-w-2xl mx-auto text-foreground/70">
           Bridging the gap between digital interfaces and physical electronics
         </p>
       </motion.div>
@@ -154,8 +154,8 @@ export default function TechIdentitySection() {
                 className={`relative px-6 py-3 rounded-xl font-medium text-sm transition-all duration-300 flex-1
                   ${
                     activeSection === section
-                      ? 'text-muted-foreground shadow-glow'
-                      : 'text-muted-foreground hover:text-foreground'
+                      ? 'text-white dark:text-white text-gray-900 shadow-glow'
+                      : 'text-foreground/80 hover:text-foreground'
                   }
                 `}
               >
@@ -202,7 +202,7 @@ export default function TechIdentitySection() {
                         ? 'Frontend Engineering'
                         : 'Electronic Engineering'}
                     </h3>
-                    <p className="text-body text-muted-foreground">
+                    <p className="text-body text-foreground/70">
                       {activeSection === 'frontEnd'
                         ? 'Crafting pixel-perfect, responsive web interfaces with modern technologies and design principles.'
                         : 'Designing and prototyping electronic circuits that bridge the physical and digital worlds.'}
@@ -230,7 +230,7 @@ export default function TechIdentitySection() {
                             />
                             {skill.name}
                           </span>
-                          <span className="text-sm text-muted-foreground">
+                          <span className="text-sm text-foreground/60">
                             {skill.level}%
                           </span>
                         </div>
@@ -318,7 +318,7 @@ export default function TechIdentitySection() {
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                <span className="text-xs text-muted-foreground">Live</span>
+                <span className="text-xs text-foreground/60">Live</span>
               </div>
             </div>
 
@@ -444,18 +444,18 @@ void loop() {
             <div className="px-6 py-4 border-t border-white/10">
               <div className="flex items-center justify-between text-sm">
                 <div className="flex items-center gap-4">
-                  <span className="flex items-center gap-2 text-muted-foreground">
+                  <span className="flex items-center gap-2 text-foreground/70">
                     <span className="w-2 h-2 rounded-full bg-primary-400" />
                     {activeSection === 'frontEnd' ? '3+ years' : '2+ years'}
                   </span>
-                  <span className="flex items-center gap-2 text-muted-foreground">
+                  <span className="flex items-center gap-2 text-foreground/70">
                     <span className="w-2 h-2 rounded-full bg-accent-400" />
                     {activeSection === 'frontEnd'
                       ? '25+ projects'
                       : '15+ circuits'}
                   </span>
                 </div>
-                <span className="text-muted-foreground">
+                <span className="text-foreground/70">
                   Lines: {activeSection === 'frontEnd' ? '1.2K+' : '850+'}
                 </span>
               </div>

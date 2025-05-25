@@ -62,7 +62,7 @@ const ColorThemeSelector = () => {
                 {item === 'light' ? (
                   <SunIcon className="size-5 text-amber-500" />
                 ) : item === 'system' ? (
-                  <ComputerDesktopIcon className="size-5 text-muted-foreground" />
+                  <ComputerDesktopIcon className="size-5 text-foreground/70" />
                 ) : item === 'dark' ? (
                   <MoonIcon className="size-5 text-blue-400" />
                 ) : null}
