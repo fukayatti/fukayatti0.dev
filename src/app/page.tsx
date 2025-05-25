@@ -5,28 +5,24 @@ import {
 import type { CurrentFocusArea } from '@/lib/notion-content';
 import { AlertTriangle } from 'lucide-react';
 import HomePageClient from '@/components/HomePageClient';
-import type { Metadata } from 'next';
+import { createPageMetadata } from '@/lib/metadata-common';
 
 // ISRで10分間隔で再生成
 export const revalidate = 600; // 10分
 
-export const metadata: Metadata = {
-  openGraph: {
-    images: [
-      {
-        url: '/api/og?title=Fukayatti0%20Portfolio&subtitle=フロントエンド開発者&description=Next.js、React、TypeScriptで現代的なWebアプリケーションを構築',
-        width: 1200,
-        height: 630,
-        alt: 'Fukayatti0 Portfolio - フロントエンド開発者',
-      },
-    ],
-  },
-  twitter: {
-    images: [
-      '/api/og?title=Fukayatti0%20Portfolio&subtitle=フロントエンド開発者&description=Next.js、React、TypeScriptで現代的なWebアプリケーションを構築',
-    ],
-  },
-};
+// ページ固有のメタデータ設定
+const PAGE_TITLE = 'Fukayatti0 Portfolio';
+const PAGE_DESCRIPTION =
+  '16歳のテクノロジー探求者によるポートフォリオサイト。Next.js、React、TypeScriptを使った現代的なWebアプリケーション開発';
+
+export const metadata = createPageMetadata({
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
+  path: '/',
+  ogSubtitle: 'フロントエンド開発者',
+  ogDescription:
+    'Next.js、React、TypeScriptで現代的なWebアプリケーションを構築',
+});
 
 interface HomePageProps {}
 

@@ -2,6 +2,62 @@ import { Metadata } from 'next';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://fukayatti0.dev';
 
+// メタデータテンプレート生成関数のオプション型
+interface MetadataOptions {
+  title: string;
+  description: string;
+  path?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogSubtitle?: string;
+  keywords?: string[];
+}
+
+// メタデータテンプレート生成関数
+export function createPageMetadata(options: MetadataOptions): Metadata {
+  const {
+    title,
+    description,
+    path = '',
+    ogTitle = title,
+    ogDescription = description,
+    ogSubtitle,
+    keywords = [],
+  } = options;
+
+  const fullUrl = `${baseUrl}${path}`;
+
+  // OG画像URLの生成
+  const ogImageParams = new URLSearchParams({
+    title: ogTitle,
+    description: ogDescription,
+    ...(ogSubtitle && { subtitle: ogSubtitle }),
+  });
+  const ogImageUrl = `${baseUrl}/api/og?${ogImageParams.toString()}`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title: ogTitle,
+      description: ogDescription,
+      url: fullUrl,
+      images: [ogImageUrl],
+      type: 'website',
+      locale: 'en_US',
+      siteName: 'fukayatti0 Portfolio',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: ogTitle,
+      description: ogDescription,
+      creator: '@fukayatti0',
+      images: [ogImageUrl],
+    },
+    ...(keywords.length > 0 && { keywords }),
+  };
+}
+
 export const defaultMetadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {

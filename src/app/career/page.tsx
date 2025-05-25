@@ -1,5 +1,6 @@
 import { getCachedAwards } from '@/lib/notion-server';
 import type { NotionAward } from '@/lib/notion';
+import { createPageMetadata } from '@/lib/metadata-common';
 import {
   Trophy,
   Calendar,
@@ -14,6 +15,18 @@ import {
   Settings,
   Rocket,
 } from 'lucide-react';
+
+// ページ固有のメタデータ設定
+const PAGE_TITLE = '受賞歴・実績';
+const PAGE_DESCRIPTION = 'NotionCMSで管理された受賞歴・実績を高速表示';
+
+export const metadata = createPageMetadata({
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
+  path: '/career',
+  ogSubtitle: 'NotionCMSで管理された受賞歴・実績を高速表示',
+  ogDescription: '競技プログラミングやコンテストでの受賞歴を紹介します',
+});
 
 // ISRで10分間隔で再生成
 export const revalidate = 600; // 10分
