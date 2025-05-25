@@ -13,7 +13,7 @@ const orbitron = Orbitron({ subsets: ['latin'], weight: ['400', '700'] });
 const navLinks = [
   { href: '/', label: 'Home', icon: Home },
   { href: '/about', label: 'About', icon: User },
-  { href: '/career-static', label: 'Career', icon: Award },
+  { href: '/career', label: 'Career', icon: Award },
   { href: '/works', label: 'Works', icon: Briefcase },
   { href: '/contact', label: 'Contact', icon: Mail },
 ];
