@@ -12,8 +12,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="ja" suppressHydrationWarning>
       <body>
+        <a href="#main-content" className="skip-link">
+          メインコンテンツにスキップ
+        </a>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -22,7 +25,7 @@ export default function RootLayout({
         >
           <ClientLayout>
             <NavigationHeader />
-            {children}
+            <main id="main-content">{children}</main>
           </ClientLayout>
         </ThemeProvider>
       </body>

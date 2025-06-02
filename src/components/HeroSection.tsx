@@ -55,25 +55,27 @@ export default function HeroSection() {
                 src="/gyarupi.png"
                 width={256}
                 height={256}
-                alt="Profile"
+                alt="fukayatti0のプロフィール画像"
                 className="w-full h-full object-cover"
                 priority
+                sizes="(max-width: 768px) 192px, (max-width: 1024px) 208px, 240px"
+                quality={85}
               />
               {/* Overlay effect on hover */}
               <div className="absolute inset-0 bg-gradient-to-t from-primary-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </div>
           </div>
 
-          {/* Floating particles around image */}
+          {/* Floating particles around image - reduced count for performance */}
           <div className="absolute inset-0 pointer-events-none">
-            {[...Array(8)].map((_, i) => (
+            {[...Array(4)].map((_, i) => (
               <div
                 key={i}
                 className="absolute w-1 h-1 rounded-full animate-float bg-primary-400/60"
                 style={{
-                  top: `${15 + i * 10}%`,
-                  left: `${10 + i * 12}%`,
-                  animationDelay: `${i * 0.5}s`,
+                  top: `${20 + i * 15}%`,
+                  left: `${15 + i * 20}%`,
+                  animationDelay: `${i * 0.8}s`,
                   animationDuration: `${3 + i * 0.5}s`,
                 }}
               />
@@ -173,14 +175,23 @@ export default function HeroSection() {
           variants={slideUp}
           transition={{ delay: 0.9, duration: 0.6 }}
         >
-          <button className="btn-primary group">
+          <button
+            className="btn-primary group focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
+            aria-label="私の作品を見る"
+          >
             <span className="relative z-10">View My Work</span>
             <div className="absolute inset-0 bg-gradient-to-r from-primary-600 to-accent-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
           </button>
 
-          <button className="btn-secondary group">
+          <button
+            className="btn-secondary group focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
+            aria-label="連絡を取る"
+          >
             <span className="relative z-10">Let's Connect</span>
-            <ArrowRight className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform duration-200" />
+            <ArrowRight
+              className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform duration-200"
+              aria-hidden="true"
+            />
           </button>
         </motion.div>
       </div>

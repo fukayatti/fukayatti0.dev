@@ -42,9 +42,16 @@ export function createPageMetadata(options: MetadataOptions): Metadata {
       title: ogTitle,
       description: ogDescription,
       url: fullUrl,
-      images: [ogImageUrl],
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: ogTitle,
+        },
+      ],
       type: 'website',
-      locale: 'en_US',
+      locale: 'ja_JP',
       siteName: 'fukayatti0 Portfolio',
     },
     twitter: {
@@ -52,7 +59,12 @@ export function createPageMetadata(options: MetadataOptions): Metadata {
       title: ogTitle,
       description: ogDescription,
       creator: '@fukayatti0',
-      images: [ogImageUrl],
+      images: [
+        {
+          url: ogImageUrl,
+          alt: ogTitle,
+        },
+      ],
     },
     ...(keywords.length > 0 && { keywords }),
   };
@@ -88,13 +100,20 @@ export const defaultMetadata: Metadata = {
   applicationName: 'fukayatti0 Portfolio',
   openGraph: {
     type: 'website',
-    locale: 'en_US',
+    locale: 'ja_JP',
     siteName: 'fukayatti0 Portfolio',
     title: 'fukayatti0 - Tech Explorer & Engineer',
     description:
       '16-year-old tech explorer from National Institute of Technology, Ibaraki College passionate about code, innovation, and open source.',
     url: baseUrl,
-    images: [`${baseUrl}/opengraph-image.png`],
+    images: [
+      {
+        url: `${baseUrl}/opengraph-image.png`,
+        width: 1200,
+        height: 630,
+        alt: 'fukayatti0 Portfolio',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
@@ -102,7 +121,12 @@ export const defaultMetadata: Metadata = {
     description:
       '16-year-old tech explorer from National Institute of Technology, Ibaraki College passionate about code, innovation, and open source.',
     creator: '@fukayatti0',
-    images: [`${baseUrl}/opengraph-image.png`],
+    images: [
+      {
+        url: `${baseUrl}/opengraph-image.png`,
+        alt: 'fukayatti0 Portfolio',
+      },
+    ],
   },
   robots: {
     index: true,

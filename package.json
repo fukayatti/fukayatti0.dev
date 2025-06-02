@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky"
+    "prepare": "husky",
+    "analyze": "cross-env ANALYZE=true next build",
+    "build:production": "next build && next-sitemap"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",

@@ -96,16 +96,18 @@ export default function TechUniverseSection() {
           <button
             key={category.id}
             onClick={() => setActiveCategory(category.id)}
-            className={`relative px-6 py-3 rounded-xl font-medium text-sm transition-all duration-300 flex items-center gap-2
+            className={`relative px-6 py-3 rounded-xl font-medium text-sm transition-all duration-300 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background
               ${
                 activeCategory === category.id
                   ? 'text-foreground shadow-glow'
                   : 'text-foreground/80 hover:text-foreground'
               }
             `}
+            aria-label={`${category.label}のテクノロジーを表示`}
+            aria-pressed={activeCategory === category.id}
           >
             <span className="relative z-10 flex items-center gap-2">
-              <span>{category.icon}</span>
+              <span aria-hidden="true">{category.icon}</span>
               {category.label}
             </span>
             {activeCategory === category.id && (
@@ -128,11 +130,11 @@ export default function TechUniverseSection() {
           <motion.div
             key={item.label}
             className="group relative"
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: index * 0.05 }}
+            transition={{ duration: 0.3, delay: index * 0.03 }}
             layout
-            whileHover={{ y: -5 }}
+            whileHover={{ y: -3, transition: { duration: 0.2 } }}
           >
             <div className="glass rounded-2xl border border-white/10 shadow-glass overflow-hidden h-full hover:shadow-glow-lg transition-all duration-300">
               {/* Background decoration */}
@@ -182,8 +184,8 @@ export default function TechUniverseSection() {
                         width: `${Math.floor(Math.random() * 30) + 70}%`,
                       }}
                       transition={{
-                        delay: index * 0.05 + 0.3,
-                        duration: 0.8,
+                        delay: index * 0.03 + 0.2,
+                        duration: 0.5,
                         ease: 'easeOut',
                       }}
                     />
@@ -195,25 +197,27 @@ export default function TechUniverseSection() {
         ))}
       </motion.div>
 
-      {/* Statistics Footer */}
+      {/* Statistics Footer - simplified structure */}
       <motion.div
         className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.8 }}
+        transition={{ duration: 0.4, delay: 0.6 }}
       >
         {[
           { label: 'Languages', count: '4+', icon: '💻' },
           { label: 'Frameworks', count: '6+', icon: '⚛️' },
           { label: 'Tools', count: '10+', icon: '🛠️' },
           { label: 'Years Experience', count: '3+', icon: '📈' },
-        ].map((stat, index) => (
+        ].map((stat) => (
           <div
             key={stat.label}
-            className="glass rounded-xl border border-white/10 p-4 text-center space-y-2"
+            className="glass rounded-xl border border-white/10 p-4 text-center"
           >
-            <div className="text-2xl">{stat.icon}</div>
-            <div className="text-2xl font-bold text-primary-300">
+            <div className="text-2xl mb-2" aria-hidden="true">
+              {stat.icon}
+            </div>
+            <div className="text-2xl font-bold text-primary-300 mb-1">
               {stat.count}
             </div>
             <div className="text-sm text-foreground/70">{stat.label}</div>

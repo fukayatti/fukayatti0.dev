@@ -7,13 +7,6 @@ import {
   Building2,
   ExternalLink,
   AlertTriangle,
-  Database,
-  Activity,
-  Zap,
-  Clock,
-  BarChart3,
-  Settings,
-  Rocket,
 } from 'lucide-react';
 
 // ページ固有のメタデータ設定
@@ -97,16 +90,15 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
         }}
       />
 
-      {/* Animated mesh overlay */}
+      {/* Simplified static overlay for performance */}
       <div
         aria-hidden
-        className="pointer-events-none fixed inset-0 -z-20 opacity-40"
+        className="pointer-events-none fixed inset-0 -z-20 opacity-20"
         style={{
           backgroundImage: `
-            radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.1) 0%, transparent 50%)
+            radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+            radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.05) 0%, transparent 50%)
           `,
-          animation: 'gradient-xy 20s ease infinite',
         }}
       />
 
@@ -144,7 +136,7 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
                     </span>
                   </div>
                   <div className="inline-flex items-center px-4 py-2 glass rounded-full border border-white/10">
-                    <div className="w-2 h-2 bg-success rounded-full mr-3 animate-pulse"></div>
+                    <div className="w-2 h-2 bg-success rounded-full mr-3"></div>
                     <span className="text-sm font-medium text-success">
                       Notionと自動同期
                     </span>
@@ -184,21 +176,22 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
               ) : (
                 <div className="grid gap-8">
                   {awards.map((award, index) => (
-                    <div key={award.id} className="group relative">
-                      <div className="glass rounded-2xl border border-white/10 shadow-glass overflow-hidden hover:shadow-glow-lg transition-all duration-300">
-                        {/* Background decoration */}
-                        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                          <div className="absolute -top-1/2 -right-1/2 w-32 h-32 rounded-full blur-2xl animate-pulse opacity-5 bg-gradient-to-br from-primary-400 to-accent-400" />
-                        </div>
-
+                    <div key={award.id}>
+                      <div className="glass rounded-2xl border border-white/10 shadow-glass overflow-hidden">
                         <div className="relative md:flex">
-                          {/* Image */}
+                          {/* Image - optimized for performance */}
                           {award.imageUrl && (
                             <div className="md:w-1/3">
                               <img
                                 src={award.imageUrl}
-                                alt={award.title}
+                                alt={`${award.title}の受賞画像`}
                                 className="w-full h-48 md:h-full object-cover"
+                                loading="lazy"
+                                decoding="async"
+                                style={{
+                                  maxWidth: '400px',
+                                  height: 'auto',
+                                }}
                               />
                             </div>
                           )}
@@ -243,10 +236,14 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
                                     href={award.details}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-muted-foreground rounded-xl font-semibold hover:scale-105 transition-all duration-200 group/button"
+                                    className="inline-flex items-center gap-2 px-6 py-3 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-600 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                                    aria-label={`${award.title}の詳細を見る`}
                                   >
                                     <span>詳細を見る</span>
-                                    <ExternalLink className="w-4 h-4 transform group-hover/button:translate-x-1 transition-transform duration-200" />
+                                    <ExternalLink
+                                      className="w-4 h-4"
+                                      aria-hidden="true"
+                                    />
                                   </a>
                                 </div>
                               )}
@@ -260,224 +257,57 @@ export default async function CareerStaticPage({}: CareerStaticPageProps) {
               )}
             </section>
 
-            {/* Performance Information */}
-            <div className="grid md:grid-cols-2 gap-8 mb-8">
-              {/* ISR Performance */}
-              <div className="glass rounded-2xl border border-white/10 shadow-glass p-8">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-xl glass flex items-center justify-center text-2xl border border-white/10">
-                    <BarChart3 className="w-6 h-6 text-primary-400" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-primary-300">
-                      ISRパフォーマンス
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      高速表示と自動更新を両立
-                    </p>
-                  </div>
+            {/* Performance Information - Simplified */}
+            <div className="glass rounded-2xl border border-white/10 shadow-glass p-8 mb-8">
+              <h3 className="text-xl font-semibold text-primary-300 mb-4">
+                技術仕様概要
+              </h3>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h4 className="font-semibold text-primary-300 mb-2">
+                    ISRパフォーマンス
+                  </h4>
+                  <p className="text-sm text-muted-foreground">
+                    静的生成による高速表示、10分間隔で自動更新、効率的なAPI利用でレート制限対策を実装
+                  </p>
                 </div>
-
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <Zap className="w-5 h-5 text-primary-400" />
-                    <div>
-                      <div className="font-medium text-muted-foreground">
-                        静的生成
-                      </div>
-                      <div className="text-sm text-muted-foreground">
-                        高速なページ表示
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Activity className="w-5 h-5 text-accent-400" />
-                    <div>
-                      <div className="font-medium text-muted-foreground">
-                        自動更新
-                      </div>
-                      <div className="text-sm text-muted-foreground">
-                        10分間隔で再生成
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Settings className="w-5 h-5 text-purple-400" />
-                    <div>
-                      <div className="font-medium text-muted-foreground">
-                        レート制限対策
-                      </div>
-                      <div className="text-sm text-muted-foreground">
-                        効率的なAPI利用
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* CMS Information */}
-              <div className="glass rounded-2xl border border-white/10 shadow-glass p-8">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-xl glass flex items-center justify-center text-2xl border border-white/10">
-                    <Database className="w-6 h-6 text-accent-400" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-accent-300">
-                      Notion CMS連携
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      コンテンツ管理システム
-                    </p>
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <Database className="w-5 h-5 text-primary-400" />
-                    <div>
-                      <div className="font-medium text-muted-foreground">
-                        Notionデータベース
-                      </div>
-                      <div className="text-sm text-muted-foreground">
-                        自動データ取得
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Activity className="w-5 h-5 text-accent-400" />
-                    <div>
-                      <div className="font-medium text-muted-foreground">
-                        API連携
-                      </div>
-                      <div className="text-sm text-muted-foreground">
-                        リアルタイム同期
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Rocket className="w-5 h-5 text-purple-400" />
-                    <div>
-                      <div className="font-medium text-muted-foreground">
-                        Next.js ISR
-                      </div>
-                      <div className="text-sm text-muted-foreground">
-                        最適化された配信
-                      </div>
-                    </div>
-                  </div>
+                <div>
+                  <h4 className="font-semibold text-accent-300 mb-2">
+                    Notion CMS連携
+                  </h4>
+                  <p className="text-sm text-muted-foreground">
+                    Notionデータベースからの自動データ取得、API連携によるリアルタイム同期、Next.js
+                    ISRで最適化配信
+                  </p>
                 </div>
               </div>
             </div>
 
-            {/* Technical Specifications */}
+            {/* Simplified Statistics */}
             <div className="glass rounded-2xl border border-white/10 shadow-glass p-8">
-              <div className="flex items-center gap-4 mb-8">
-                <div className="w-12 h-12 rounded-xl glass flex items-center justify-center text-2xl border border-white/10">
-                  <Settings className="w-6 h-6 text-muted-foreground" />
+              <h3 className="text-xl font-semibold text-primary-300 mb-6 text-center">
+                技術統計
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-6 text-center">
+                <div>
+                  <div className="text-2xl font-bold text-primary-300 mb-1">
+                    10 min
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    ISR更新間隔
+                  </div>
                 </div>
                 <div>
-                  <h3 className="text-2xl font-semibold text-muted-foreground">
-                    技術仕様
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    ISRとNotion APIの技術詳細
-                  </p>
+                  <div className="text-2xl font-bold text-primary-300 mb-1">
+                    {awards.length}
+                  </div>
+                  <div className="text-sm text-muted-foreground">受賞数</div>
                 </div>
-              </div>
-
-              <div className="grid md:grid-cols-3 gap-6">
-                <div className="space-y-3">
-                  <h4 className="font-semibold text-primary-300 flex items-center gap-2">
-                    <Activity className="w-4 h-4" />
-                    更新頻度
-                  </h4>
-                  <ul className="space-y-2 text-muted-foreground-300 text-sm">
-                    <li className="flex items-start gap-2">
-                      <span className="text-primary-400 mt-1">▹</span>
-                      <span>ISR revalidate: 600秒</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-primary-400 mt-1">▹</span>
-                      <span>Notion API: 最大10分に1回</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-primary-400 mt-1">▹</span>
-                      <span>キャッシュ効率化</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="space-y-3">
-                  <h4 className="font-semibold text-accent-300 flex items-center gap-2">
-                    <Zap className="w-4 h-4" />
-                    パフォーマンス
-                  </h4>
-                  <ul className="space-y-2 text-muted-foreground-300 text-sm">
-                    <li className="flex items-start gap-2">
-                      <span className="text-accent-400 mt-1">▹</span>
-                      <span>静的生成による高速表示</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-accent-400 mt-1">▹</span>
-                      <span>CDN配信最適化</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-accent-400 mt-1">▹</span>
-                      <span>レート制限回避</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="space-y-3">
-                  <h4 className="font-semibold text-purple-300 flex items-center gap-2">
-                    <Settings className="w-4 h-4" />
-                    テクノロジー
-                  </h4>
-                  <ul className="space-y-2 text-muted-foreground-300 text-sm">
-                    <li className="flex items-start gap-2">
-                      <span className="text-purple-400 mt-1">▹</span>
-                      <span>Next.js 14 ISR</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-purple-400 mt-1">▹</span>
-                      <span>Notion API v1</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-purple-400 mt-1">▹</span>
-                      <span>TypeScript</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* Statistics */}
-              <div className="mt-8 pt-6 border-t border-white/10">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                  {[
-                    { label: 'Revalidate', value: '10 min', icon: Clock },
-                    {
-                      label: 'Total Awards',
-                      value: awards.length.toString(),
-                      icon: Trophy,
-                    },
-                    { label: 'Generation', value: 'Static', icon: Zap },
-                    { label: 'Data Source', value: 'Notion', icon: Database },
-                  ].map((stat, index) => {
-                    const IconComponent = stat.icon;
-                    return (
-                      <div key={stat.label} className="text-center space-y-2">
-                        <div className="text-2xl">
-                          <IconComponent className="w-6 h-6 mx-auto text-primary-400" />
-                        </div>
-                        <div className="text-lg font-bold text-primary-300">
-                          {stat.value}
-                        </div>
-                        <div className="text-sm text-muted-foreground">
-                          {stat.label}
-                        </div>
-                      </div>
-                    );
-                  })}
+                <div>
+                  <div className="text-2xl font-bold text-primary-300 mb-1">
+                    Static
+                  </div>
+                  <div className="text-sm text-muted-foreground">生成方式</div>
                 </div>
               </div>
             </div>

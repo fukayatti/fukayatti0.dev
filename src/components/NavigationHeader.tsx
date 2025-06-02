@@ -82,10 +82,12 @@ const NavigationHeader = () => {
                   <div className="w-10 h-10 rounded-full overflow-hidden bg-white dark:bg-gray-900">
                     <Image
                       src="/profile.png"
-                      alt="Profile"
+                      alt="fukayatti0のプロフィール画像"
                       width={40}
                       height={40}
                       className="object-cover w-full h-full"
+                      sizes="40px"
+                      quality={75}
                     />
                   </div>
                 </div>
@@ -101,9 +103,9 @@ const NavigationHeader = () => {
                   <Link
                     key={href}
                     href={href}
-                    className="text-foreground/80 hover:text-primary transition-colors duration-150 flex items-center"
+                    className="text-foreground/80 hover:text-primary transition-colors duration-150 flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background rounded-lg px-2 py-1"
                   >
-                    <Icon className="mr-1 w-5 h-5" />
+                    <Icon className="mr-1 w-5 h-5" aria-hidden="true" />
                     {label}
                   </Link>
                 ))}
@@ -112,7 +114,10 @@ const NavigationHeader = () => {
               <div className="md:hidden">
                 <button
                   onClick={toggleMenu}
-                  className="outline-none mobile-menu-button"
+                  className="outline-none mobile-menu-button focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background rounded-lg p-2"
+                  aria-label="メニューを開く"
+                  aria-expanded={isOpen}
+                  aria-controls="mobile-menu"
                 >
                   <svg
                     className="w-6 h-6 text-foreground/80 hover:text-primary transition-colors duration-150"
@@ -122,6 +127,7 @@ const NavigationHeader = () => {
                     strokeWidth="2"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
+                    aria-hidden="true"
                   >
                     <path d="M4 6h16M4 12h16M4 18h16"></path>
                   </svg>
@@ -131,18 +137,23 @@ const NavigationHeader = () => {
           </motion.div>
           {/* Mobile Menu */}
           <div
+            id="mobile-menu"
             className={`md:hidden absolute top-16 right-0 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-md shadow-md p-4 ${
               isOpen ? 'block' : 'hidden'
             }`}
             ref={menuRef}
+            role="menu"
+            aria-labelledby="mobile-menu-button"
           >
             {navLinks.map(({ href, label, icon: Icon }) => (
               <Link
                 key={href}
                 href={href}
-                className="py-2 px-4 text-base text-foreground hover:text-primary flex items-center transition-colors duration-150"
+                className="py-2 px-4 text-base text-foreground hover:text-primary flex items-center transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background rounded-lg"
+                role="menuitem"
+                onClick={() => setIsOpen(false)}
               >
-                <Icon className="mr-1 w-4 h-4" />
+                <Icon className="mr-1 w-4 h-4" aria-hidden="true" />
                 {label}
               </Link>
             ))}

@@ -4,22 +4,13 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import {
-  SiInstagram,
-  SiX,
-  SiZenn,
-  SiGithub,
-  SiQiita,
-  SiGmail,
-} from '@icons-pack/react-simple-icons';
-import {
   MessageSquare,
-  Rocket,
-  MapPin,
+  Send,
+  Loader2,
   Clock,
   Globe,
   Briefcase,
-  Send,
-  Loader2,
+  ExternalLink,
 } from 'lucide-react';
 
 export default function ContactPageClient() {
@@ -40,49 +31,27 @@ export default function ContactPageClient() {
   // Prevent hydration mismatch by using consistent styling until mounted
   const isDark = mounted ? resolvedTheme === 'dark' : true; // Default to dark for SSR
 
-  // 連絡先リンクの定義
+  // 連絡先リンクの定義 - 軽量化
   const contactLinks = [
     {
       name: 'GitHub',
       href: 'https://github.com/fukayatti',
-      icon: SiGithub,
-      color: '#6366f1',
       description: 'コードと共に未来を創る',
     },
     {
       name: 'Email',
       href: 'mailto:contact@fukayatti0.dev',
-      icon: SiGmail,
-      color: '#ec4899',
       description: '直接メッセージをお送りください',
     },
     {
       name: 'X (Twitter)',
       href: 'https://x.com/fukayatti0',
-      icon: SiX,
-      color: '#8b5cf6',
       description: '最新の技術トレンドを共有',
     },
     {
       name: 'Zenn',
       href: 'https://zenn.dev/fukayatti0',
-      icon: SiZenn,
-      color: '#06b6d4',
       description: '技術記事とナレッジシェア',
-    },
-    {
-      name: 'Qiita',
-      href: 'https://qiita.com/fukayatti0',
-      icon: SiQiita,
-      color: '#10b981',
-      description: 'プログラミングTips & Tricks',
-    },
-    {
-      name: 'Instagram',
-      href: 'https://instagram.com/fukayatti0',
-      icon: SiInstagram,
-      color: '#f59e0b',
-      description: '日常とテックライフを発信',
     },
   ];
 
@@ -124,42 +93,23 @@ export default function ContactPageClient() {
         }}
       />
 
-      {/* Animated mesh overlay */}
+      {/* Simplified static overlay for performance */}
       <div
         aria-hidden
-        className="pointer-events-none fixed inset-0 -z-20 opacity-40"
+        className="pointer-events-none fixed inset-0 -z-20 opacity-20"
         style={{
           backgroundImage: `
-            radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.1) 0%, transparent 50%)
+            radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+            radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.05) 0%, transparent 50%)
           `,
-          animation: 'gradient-xy 20s ease infinite',
         }}
       />
-
-      {/* Floating orbs decoration */}
-      <div className="fixed inset-0 -z-5 pointer-events-none">
-        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-primary-400/20 to-accent-400/20 rounded-full blur-xl animate-blob" />
-        <div
-          className="absolute top-40 right-20 w-48 h-48 bg-gradient-to-br from-accent-400/15 to-primary-400/15 rounded-full blur-2xl animate-blob"
-          style={{ animationDelay: '2s' }}
-        />
-        <div
-          className="absolute bottom-32 left-1/4 w-24 h-24 bg-gradient-to-br from-primary-300/25 to-accent-300/25 rounded-full blur-lg animate-blob"
-          style={{ animationDelay: '4s' }}
-        />
-      </div>
 
       <div className="relative z-10 min-h-screen">
         <div className="container mx-auto px-4 py-12">
           <div className="max-w-7xl mx-auto">
             {/* Enhanced Header */}
-            <motion.div
-              className="text-center mb-12"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
+            <div className="text-center mb-12">
               <div className="glass rounded-3xl p-8 md:p-12 border border-white/10 shadow-glass backdrop-blur-xl mb-8">
                 <h1 className="text-display mb-4">
                   <span
@@ -183,22 +133,17 @@ export default function ContactPageClient() {
 
                 {/* Availability Status */}
                 <div className="inline-flex items-center px-4 py-2 glass rounded-full border border-white/10">
-                  <div className="w-2 h-2 bg-success rounded-full mr-3 animate-pulse"></div>
+                  <div className="w-2 h-2 bg-success rounded-full mr-3"></div>
                   <span className="text-sm font-medium text-success">
                     新しいプロジェクトを募集中
                   </span>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {/* Contact Form */}
-              <motion.div
-                className="space-y-8"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-              >
+              <div className="space-y-8">
                 <div className="glass rounded-2xl border border-white/10 shadow-glass p-8">
                   <div className="flex items-center gap-4 mb-8">
                     <div className="w-12 h-12 rounded-xl glass flex items-center justify-center text-2xl border border-white/10">
@@ -295,7 +240,8 @@ export default function ContactPageClient() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full px-8 py-4 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-xl font-semibold hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                      className="w-full px-8 py-4 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-600 transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                      aria-label="フォームを送信する"
                     >
                       {isSubmitting ? (
                         <>
@@ -311,102 +257,63 @@ export default function ContactPageClient() {
                     </button>
                   </form>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Contact Links & Info */}
-              <motion.div
-                className="space-y-8"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-              >
-                {/* Quick Contact */}
+              <motion.div className="space-y-8">
+                {/* Quick Contact - Simplified */}
                 <div className="glass rounded-2xl border border-white/10 shadow-glass p-8">
-                  <div className="flex items-center gap-4 mb-8">
-                    <div className="w-12 h-12 rounded-xl glass flex items-center justify-center text-2xl border border-white/10">
-                      <Rocket className="w-6 h-6 text-accent-400" />
-                    </div>
-                    <div>
-                      <h2 className="text-2xl font-semibold text-accent-300">
-                        ソーシャルメディア
-                      </h2>
-                      <p className="text-sm text-muted-foreground">
-                        各プラットフォームでつながりましょう
-                      </p>
-                    </div>
-                  </div>
+                  <h2 className="text-2xl font-semibold text-accent-300 mb-6">
+                    ソーシャルメディア
+                  </h2>
+                  <p className="text-sm text-muted-foreground mb-6">
+                    各プラットフォームでつながりましょう
+                  </p>
 
                   <div className="grid gap-4">
-                    {contactLinks.map((link, index) => {
-                      const IconComponent = link.icon;
-                      return (
-                        <motion.a
-                          key={link.name}
-                          href={link.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="group glass rounded-xl border border-white/10 p-4 hover:shadow-glow-lg transition-all duration-300 hover:scale-105"
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{
-                            duration: 0.4,
-                            delay: index * 0.1 + 0.6,
-                          }}
-                        >
-                          <div className="flex items-center gap-4">
-                            <div
-                              className="w-12 h-12 rounded-xl glass flex items-center justify-center border border-white/10 group-hover:scale-110 transition-transform duration-300"
-                              style={{ backgroundColor: `${link.color}20` }}
-                            >
-                              <IconComponent color={link.color} size={24} />
-                            </div>
-                            <div className="flex-1">
-                              <h3 className="font-semibold text-foreground group-hover:text-primary-300 transition-colors">
-                                {link.name}
-                              </h3>
-                              <p className="text-sm text-muted-foreground">
-                                {link.description}
-                              </p>
-                            </div>
-                            <svg
-                              className="w-5 h-5 text-muted-foreground group-hover:text-primary-400 group-hover:translate-x-1 transition-all duration-200"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                              />
-                            </svg>
+                    {contactLinks.map((link) => (
+                      <a
+                        key={link.name}
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group glass rounded-xl border border-white/10 p-4 hover:bg-primary-500/10 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                        aria-label={`${link.name}で連絡する`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h3 className="font-semibold text-foreground group-hover:text-primary-300 transition-colors">
+                              {link.name}
+                            </h3>
+                            <p className="text-sm text-muted-foreground">
+                              {link.description}
+                            </p>
                           </div>
-                        </motion.a>
-                      );
-                    })}
+                          <ExternalLink
+                            className="w-5 h-5 text-muted-foreground group-hover:text-primary-400 transition-colors"
+                            aria-hidden="true"
+                          />
+                        </div>
+                      </a>
+                    ))}
                   </div>
                 </div>
 
-                {/* Contact Info */}
+                {/* Contact Info - Simplified */}
                 <div className="glass rounded-2xl border border-white/10 shadow-glass p-8">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="w-12 h-12 rounded-xl glass flex items-center justify-center text-2xl border border-white/10">
-                      <MapPin className="w-6 h-6 text-purple-400" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-purple-300">
-                        基本情報
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        レスポンス時間とアベイラビリティ
-                      </p>
-                    </div>
-                  </div>
+                  <h3 className="text-xl font-semibold text-purple-300 mb-4">
+                    基本情報
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-6">
+                    レスポンス時間とアベイラビリティ
+                  </p>
 
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
-                      <Clock className="w-5 h-5 text-primary-400" />
+                      <Clock
+                        className="w-5 h-5 text-primary-400"
+                        aria-hidden="true"
+                      />
                       <div>
                         <div className="font-medium text-foreground">
                           レスポンス時間
@@ -417,7 +324,10 @@ export default function ContactPageClient() {
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <Globe className="w-5 h-5 text-accent-400" />
+                      <Globe
+                        className="w-5 h-5 text-accent-400"
+                        aria-hidden="true"
+                      />
                       <div>
                         <div className="font-medium text-foreground">
                           タイムゾーン
@@ -428,7 +338,10 @@ export default function ContactPageClient() {
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <Briefcase className="w-5 h-5 text-purple-400" />
+                      <Briefcase
+                        className="w-5 h-5 text-purple-400"
+                        aria-hidden="true"
+                      />
                       <div>
                         <div className="font-medium text-foreground">
                           ステータス
