@@ -3,6 +3,7 @@ import NavigationHeader from '../components/NavigationHeader';
 import './globals.css';
 import ClientLayout from '../components/ClientLayout';
 import { defaultMetadata } from '../lib/metadata-common';
+import { Analytics } from '@vercel/analytics/next';
 
 export const metadata = defaultMetadata;
 
@@ -12,6 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+    <Analytics/>
     <html lang="ja" suppressHydrationWarning>
       <body>
         <a href="#main-content" className="skip-link">
