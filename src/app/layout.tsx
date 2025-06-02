@@ -13,9 +13,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Analytics/>
     <html lang="ja" suppressHydrationWarning>
       <body>
+        <Analytics />
         <a href="#main-content" className="skip-link">
           メインコンテンツにスキップ
         </a>
