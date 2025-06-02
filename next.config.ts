@@ -4,7 +4,6 @@ const nextConfig: NextConfig = {
   /* config options here */
   experimental: {
     mdxRs: true,
-    optimizeCss: true,
   },
   // 画像最適化
   images: {
