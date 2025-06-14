@@ -1,9 +1,10 @@
-import { ThemeProvider } from '../components/provider';
-import NavigationHeader from '../components/NavigationHeader';
-import './globals.css';
-import ClientLayout from '../components/ClientLayout';
-import { defaultMetadata } from '../lib/metadata-common';
 import { Analytics } from '@vercel/analytics/next';
+
+import ClientLayout from '../components/layout/ClientLayout';
+import NavigationHeader from '../components/layout/NavigationHeader';
+import { ThemeProvider } from '../components/shared/provider';
+import { defaultMetadata } from '../lib/metadata-common';
+import './globals.css';
 
 export const metadata = defaultMetadata;
 

@@ -1,13 +1,14 @@
-import { getCachedAwards } from '@/lib/notion-server';
-import type { NotionAward } from '@/lib/notion';
-import { createPageMetadata } from '@/lib/metadata-common';
 import {
-  Trophy,
-  Calendar,
-  Building2,
-  ExternalLink,
   AlertTriangle,
+  Building2,
+  Calendar,
+  ExternalLink,
+  Trophy,
 } from 'lucide-react';
+
+import { createPageMetadata } from '@/lib/metadata-common';
+import type { NotionAward } from '@/lib/notion';
+import { getCachedAwards } from '@/lib/notion-server';
 
 // ページ固有のメタデータ設定
 const PAGE_TITLE = '受賞歴・実績';

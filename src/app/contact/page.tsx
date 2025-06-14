@@ -1,4 +1,5 @@
 import { createPageMetadata } from '@/lib/metadata-common';
+
 import ContactPageClient from './contact-page-client';
 
 // ページ固有のメタデータ設定

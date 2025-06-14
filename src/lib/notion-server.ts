@@ -1,6 +1,6 @@
 // サーバーサイドでNotion APIを直接叩いてデータを取得する関数
-
 import { Client } from '@notionhq/client';
+
 import type { NotionAward } from './notion';
 
 // Notion クライアントの初期化

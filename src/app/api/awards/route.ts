@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { getCachedAwards, clearAwardsCache } from '@/lib/notion-server';
+
+import { clearAwardsCache, getCachedAwards } from '@/lib/notion-server';
 
 // Notionデータベースから受賞歴を取得するAPI route
 export async function GET(request: Request) {

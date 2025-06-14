@@ -1,11 +1,12 @@
+import { AlertTriangle } from 'lucide-react';
+
+import HomePageClient from '@/components/shared/HomePageClient';
+import { createPageMetadata } from '@/lib/metadata-common';
 import {
   getCachedCurrentFocusAreas,
   getCachedGoals2025ByCategory,
 } from '@/lib/notion-content';
 import type { CurrentFocusArea } from '@/lib/notion-content';
-import { AlertTriangle } from 'lucide-react';
-import HomePageClient from '@/components/HomePageClient';
-import { createPageMetadata } from '@/lib/metadata-common';
 
 // ISRで10分間隔で再生成
 export const revalidate = 600; // 10分
