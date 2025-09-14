@@ -1,37 +1,27 @@
-import { FlatCompat } from '@eslint/eslintrc';
-import js from '@eslint/js';
-import typescriptPlugin from '@typescript-eslint/eslint-plugin';
-import typescriptParser from '@typescript-eslint/parser';
-import unusedImports from 'eslint-plugin-unused-imports';
+import { dirname } from 'path'
+import { fileURLToPath } from 'url'
+import { FlatCompat } from '@eslint/eslintrc'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 const compat = new FlatCompat({
-  baseDirectory: import.meta.url,
-  recommendedConfig: js.configs.recommended,
-});
+  baseDirectory: __dirname,
+})
 
-/** @type {import('eslint').Linter.Config[]} */
 const eslintConfig = [
-  ...compat.extends('next/core-web-vitals'),
+  ...compat.extends('next/core-web-vitals', 'next/typescript'),
   {
-    files: ['**/*.{js,jsx,ts,tsx}'],
-    languageOptions: {
-      parser: typescriptParser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-        ecmaFeatures: {
-          jsx: true,
-        },
-      },
-    },
     plugins: {
-      '@typescript-eslint': typescriptPlugin,
-      'unused-imports': unusedImports,
+      'unused-imports': (await import('eslint-plugin-unused-imports')).default,
+      import: (await import('eslint-plugin-import')).default,
+      prettier: (await import('eslint-plugin-prettier')).default,
     },
     rules: {
-      // 未使用インポートの検出と削除
-      'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': 'off',
+      // Prettierのルール
+      'prettier/prettier': 'error',
+
+      // 不要なインポートを削除
       'unused-imports/no-unused-imports': 'error',
       'unused-imports/no-unused-vars': [
         'warn',
@@ -42,8 +32,53 @@ const eslintConfig = [
           argsIgnorePattern: '^_',
         },
       ],
+
+      // インポートの順序を整理
+      'import/order': [
+        'error',
+        {
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            'parent',
+            'sibling',
+            'index',
+            'object',
+            'type',
+          ],
+          pathGroups: [
+            {
+              pattern: 'react',
+              group: 'external',
+              position: 'before',
+            },
+            {
+              pattern: 'next/**',
+              group: 'external',
+              position: 'before',
+            },
+            {
+              pattern: '@/**',
+              group: 'internal',
+              position: 'before',
+            },
+          ],
+          pathGroupsExcludedImportTypes: ['react'],
+          'newlines-between': 'always',
+          alphabetize: {
+            order: 'asc',
+            caseInsensitive: true,
+          },
+        },
+      ],
+
+      // その他のインポート関連ルール
+      'import/no-duplicates': 'error',
+      'import/newline-after-import': 'error',
     },
   },
-];
+  ...compat.extends('prettier'),
+]
 
-export default eslintConfig;
+export default eslintConfig
