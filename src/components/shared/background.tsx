@@ -4,8 +4,6 @@ import * as THREE from 'three';
 
 import { useEffect, useRef, useState } from 'react';
 
-import { useTheme } from 'next-themes';
-
 interface Props {
   width: number;
   height: number;
@@ -13,7 +11,6 @@ interface Props {
 
 const Background: React.FC<Props> = ({ width, height }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -34,13 +31,12 @@ const Background: React.FC<Props> = ({ width, height }) => {
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    // テーマに基づいて背景と色を設定
-    const isDark = resolvedTheme === 'dark';
-    renderer.setClearColor(isDark ? '#0a0a0a' : '#fafafa', 0);
+    // ダークモード設定（ライトモードは削除済み）
+    renderer.setClearColor('#0a0a0a', 0);
 
     // パーティクルの作成
     const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = isDark ? 3000 : 2000; // ダークモードでより多くのパーティクル
+    const particlesCount = 3000;
     const posArray = new Float32Array(particlesCount * 3);
 
     for (let i = 0; i < particlesCount * 3; i++) {
@@ -52,12 +48,12 @@ const Background: React.FC<Props> = ({ width, height }) => {
       new THREE.BufferAttribute(posArray, 3)
     );
 
-    // テーマに応じた色とサイズの設定
+    // ダークモード用のスタイル設定
     const particlesMaterial = new THREE.PointsMaterial({
-      size: isDark ? 0.012 : 0.008,
-      color: isDark ? '#3b82f6' : '#6366f1', // primary-500 colors
+      size: 0.012,
+      color: '#3b82f6',
       transparent: true,
-      opacity: isDark ? 0.6 : 0.4,
+      opacity: 0.6,
       blending: THREE.AdditiveBlending,
     });
 
@@ -70,9 +66,9 @@ const Background: React.FC<Props> = ({ width, height }) => {
     // 追加の視覚効果：グラデーション球体
     const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32);
     const sphereMaterial = new THREE.MeshBasicMaterial({
-      color: isDark ? '#8b5cf6' : '#a855f7', // accent colors
+      color: '#8b5cf6',
       transparent: true,
-      opacity: isDark ? 0.1 : 0.05,
+      opacity: 0.1,
     });
     const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
     sphere.position.set(2, 1, -1);
@@ -111,15 +107,15 @@ const Background: React.FC<Props> = ({ width, height }) => {
       sphereMaterial.dispose();
       renderer.dispose();
     };
-  }, [width, height, resolvedTheme, mounted]);
+  }, [width, height, mounted]);
 
   if (!mounted) {
     return (
       <div
-        className="fixed inset-0 -z-10 bg-gradient-to-br from-background via-background/95 to-background/90"
+        className="fixed inset-0 -z-10"
         style={{
           background:
-            'linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--background) / 0.95) 50%, hsl(var(--background) / 0.9) 100%)',
+            'radial-gradient(ellipse at top, #1e1b4b 0%, #0f172a 50%, #000000 100%)',
         }}
       />
     );
@@ -132,9 +128,7 @@ const Background: React.FC<Props> = ({ width, height }) => {
         className="fixed inset-0 -z-20"
         style={{
           background:
-            resolvedTheme === 'dark'
-              ? 'radial-gradient(ellipse at top, #1e1b4b 0%, #0f172a 50%, #000000 100%)'
-              : 'radial-gradient(ellipse at top, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%)',
+            'radial-gradient(ellipse at top, #1e1b4b 0%, #0f172a 50%, #000000 100%)',
         }}
       />
 
@@ -143,7 +137,7 @@ const Background: React.FC<Props> = ({ width, height }) => {
         ref={canvasRef}
         className="fixed inset-0 -z-10 pointer-events-none"
         style={{
-          mixBlendMode: resolvedTheme === 'dark' ? 'screen' : 'multiply',
+          mixBlendMode: 'screen',
         }}
       />
     </>

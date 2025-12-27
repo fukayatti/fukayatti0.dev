@@ -1,4 +1,4 @@
-import { generateOgImage, OgImageParams } from '../lib/og-utils';
+import { generateOgImage, OgImageParams } from '../../lib/og-utils';
 
 export const runtime = 'edge';
 export const size = { width: 1200, height: 630 };

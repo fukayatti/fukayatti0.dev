@@ -3,6 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import Background from '../shared/background';
+import CursorGlow from '../shared/CursorGlow';
 
 export default function ClientLayout({
   children,
@@ -43,6 +44,7 @@ export default function ClientLayout({
 
   return (
     <>
+      <CursorGlow />
       <Background width={windowSize.width} height={windowSize.height} />
       <div ref={headerRef}>
         {/* ここにHeaderコンポーネントを配置 */}

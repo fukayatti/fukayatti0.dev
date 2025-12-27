@@ -3,7 +3,7 @@ import FooterContent from './FooterContent';
 
 export default function FooterSection() {
   return (
-    <footer className="relative">
+    <footer className="relative bg-black px-6">
       {/* Gradient separator */}
       <div className="absolute left-1/2 -top-1 w-2/3 h-1 -translate-x-1/2 bg-gradient-to-r rounded-full blur-sm from-primary-400 via-accent-400 to-purple-500 opacity-60" />
 

@@ -1,32 +1,26 @@
 import React from 'react';
 
 import FooterSection from '@/components/layout/FooterSection';
-import CurrentFocusSection from '@/components/sections/CurrentFocusSection';
-import Goals2025Section from '@/components/sections/Goals2025Section';
+import AboutSection from '@/components/sections/AboutSection';
+import CareerSection from '@/components/sections/CareerSection';
+import ContactSection from '@/components/sections/ContactSection';
 import HeroSection from '@/components/sections/HeroSection';
-import LetsConnectSection from '@/components/sections/LetsConnectSection';
-import TechIdentitySection from '@/components/sections/TechIdentitySection';
-import TechUniverseSection from '@/components/sections/TechUniverseSection';
-import type { CurrentFocusArea } from '@/lib/notion-content';
+import ProjectsSection from '@/components/sections/ProjectsSection';
 
 interface HomePageClientProps {
-  focusAreas: CurrentFocusArea[];
+  focusAreas: any[];
   goalCategories: any[];
 }
 
-const HomePageClient: React.FC<HomePageClientProps> = ({
-  focusAreas,
-  goalCategories,
-}) => {
+const HomePageClient: React.FC<HomePageClientProps> = () => {
   return (
-    <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24 2xl:px-32 max-w-7xl">
-      <main className="space-y-12">
+    <div className="relative bg-black">
+      <main>
         <HeroSection />
-        <TechIdentitySection />
-        <TechUniverseSection />
-        <LetsConnectSection />
-        <CurrentFocusSection focusAreas={focusAreas} />
-        <Goals2025Section goalCategories={goalCategories} />
+        <AboutSection />
+        <ProjectsSection />
+        <CareerSection />
+        <ContactSection />
         <FooterSection />
       </main>
     </div>

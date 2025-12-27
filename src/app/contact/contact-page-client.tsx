@@ -126,7 +126,7 @@ export default function ContactPageClient() {
                       color: 'transparent',
                     }}
                   >
-                    Let's Connect
+                    Let&apos;s get in touch and discuss your next project!
                   </span>
                 </h1>
                 <p className="text-body max-w-2xl mx-auto text-muted-foreground mb-6">
