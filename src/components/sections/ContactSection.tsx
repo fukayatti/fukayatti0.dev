@@ -22,8 +22,8 @@ const contactMethods = [
   {
     icon: Instagram,
     title: 'INSTAGRAM',
-    contact: '@fukayatti',
-    href: 'https://instagram.com/fukayatti',
+    contact: '@fukayatti0',
+    href: 'https://instagram.com/fukayatti0',
   },
   {
     icon: Github,
@@ -42,7 +42,7 @@ const socialLinks = [
   },
   {
     name: 'Instagram',
-    href: 'https://instagram.com/fukayatti',
+    href: 'https://instagram.com/fukayatti0',
     icon: Instagram,
   },
 ];
@@ -51,7 +51,7 @@ const socialLinks = [
 const externalLinks = [
   { name: 'Qiita', href: 'https://qiita.com/fukayatti' },
   { name: 'Zenn', href: 'https://zenn.dev/fukayatti' },
-  { name: 'Instagram', href: 'https://instagram.com/fukayatti' },
+  { name: 'Instagram', href: 'https://instagram.com/fukayatti0' },
 ];
 
 // Matrix-style falling characters

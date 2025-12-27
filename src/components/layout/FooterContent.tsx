@@ -12,7 +12,7 @@ const socialLinks = [
   },
   {
     name: 'Instagram',
-    href: 'https://instagram.com/fukayatti',
+    href: 'https://instagram.com/fukayatti0',
     icon: Instagram,
   },
 ];
