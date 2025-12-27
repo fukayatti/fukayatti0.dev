@@ -270,7 +270,7 @@ export default function ContactSection() {
           viewport={{ once: true }}
         >
           <div className="text-[10px] font-mono text-cyan-500 tracking-[0.5em] mb-4">
-            ◈ SECTION_004 // CONTACT
+            ◈ SECTION_005 // CONTACT
           </div>
 
           <h2 className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-none tracking-tighter mb-6">
