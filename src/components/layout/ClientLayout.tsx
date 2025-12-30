@@ -2,6 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
+import ConsoleEasterEgg from '../effects/ConsoleEasterEgg';
 import MatrixRain from '../effects/MatrixRain';
 import { useHackerMode } from '../providers/HackerModeProvider';
 import Background from '../shared/background';
@@ -47,6 +48,7 @@ export default function ClientLayout({
 
   return (
     <>
+      <ConsoleEasterEgg />
       <CursorGlow />
       <Background width={windowSize.width} height={windowSize.height} />
       {isHackerMode && <MatrixRain />}
