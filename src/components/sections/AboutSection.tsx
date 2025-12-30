@@ -554,7 +554,7 @@ export default function AboutSection() {
     '$ cat skills.txt',
     'rust × wasm × full-stack × ml',
     '$ echo $EDUCATION',
-    'NIT, Ibaraki College',
+    'NIT Ibaraki College',
   ];
 
   return (

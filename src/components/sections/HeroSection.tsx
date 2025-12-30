@@ -329,7 +329,7 @@ export default function HeroSection() {
               </div>
               <div className="space-y-1 text-slate-300">
                 <div>
-                  <span className="text-purple-400">education:</span> NIT,
+                  <span className="text-purple-400">education:</span> NIT
                   Ibaraki College
                 </div>
                 <div>

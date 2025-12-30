@@ -1210,3 +1210,201 @@ body {
 .duration-300 {
   transition-duration: 300ms;
 }
+
+/* ============================================
+   HACKER MODE - Matrix/Terminal Theme
+   Activated via Konami Code Easter Egg
+   ============================================ */
+
+/* Hacker Mode Color Override */
+body.hacker-mode {
+  --primary: 0 255 0; /* Matrix green */
+  --accent: 0 200 0;
+  --foreground: 0 255 0;
+  --muted-foreground: 0 180 0;
+  --aurora-1: 0 255 0;
+  --aurora-2: 0 200 0;
+  --aurora-3: 50 255 50;
+  --aurora-4: 0 180 0;
+  --aurora-5: 100 255 100;
+  --border: 0 100 0;
+  --ring: 0 255 0;
+}
+
+/* Terminal-style font for hacker mode */
+body.hacker-mode {
+  font-family:
+    'Courier New', 'Fira Code', 'Source Code Pro', monospace !important;
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+}
+
+body.hacker-mode * {
+  font-family: inherit !important;
+}
+
+/* Scanline overlay effect */
+body.hacker-mode::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.1) 2px,
+    rgba(0, 0, 0, 0.1) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+  animation: scanline 10s linear infinite;
+}
+
+@keyframes scanline {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100vh;
+  }
+}
+
+/* CRT screen flicker */
+body.hacker-mode::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  pointer-events: none;
+  z-index: 9998;
+  animation: flicker 0.15s infinite;
+  opacity: 0.02;
+}
+
+@keyframes flicker {
+  0%,
+  100% {
+    opacity: 0.02;
+  }
+  50% {
+    opacity: 0.04;
+  }
+}
+
+/* Glitch effect for text in hacker mode */
+body.hacker-mode .gradient-text,
+body.hacker-mode h1,
+body.hacker-mode h2,
+body.hacker-mode h3 {
+  background: none !important;
+  -webkit-text-fill-color: #00ff00 !important;
+  color: #00ff00 !important;
+  animation: text-glitch 3s infinite;
+}
+
+@keyframes text-glitch {
+  0%,
+  100% {
+    text-shadow:
+      0 0 5px rgba(0, 255, 0, 0.8),
+      0 0 10px rgba(0, 255, 0, 0.5),
+      0 0 15px rgba(0, 255, 0, 0.3);
+  }
+  25% {
+    text-shadow:
+      -2px 0 #ff0000,
+      2px 0 #00ffff,
+      0 0 5px rgba(0, 255, 0, 0.8);
+  }
+  50% {
+    text-shadow:
+      0 0 5px rgba(0, 255, 0, 0.8),
+      0 0 10px rgba(0, 255, 0, 0.5);
+  }
+  75% {
+    text-shadow:
+      2px 0 #ff0000,
+      -2px 0 #00ffff,
+      0 0 5px rgba(0, 255, 0, 0.8);
+  }
+}
+
+/* Hacker mode button styles */
+body.hacker-mode .btn-primary,
+body.hacker-mode .btn-secondary {
+  background: transparent !important;
+  border: 1px solid #00ff00 !important;
+  color: #00ff00 !important;
+  box-shadow:
+    0 0 5px rgba(0, 255, 0, 0.5),
+    inset 0 0 5px rgba(0, 255, 0, 0.1) !important;
+}
+
+body.hacker-mode .btn-primary:hover,
+body.hacker-mode .btn-secondary:hover {
+  background: rgba(0, 255, 0, 0.1) !important;
+  box-shadow:
+    0 0 15px rgba(0, 255, 0, 0.8),
+    inset 0 0 10px rgba(0, 255, 0, 0.2) !important;
+}
+
+/* Glass card in hacker mode */
+body.hacker-mode .glass,
+body.hacker-mode .glass-card {
+  background: rgba(0, 20, 0, 0.8) !important;
+  border-color: rgba(0, 255, 0, 0.3) !important;
+  box-shadow:
+    0 0 10px rgba(0, 255, 0, 0.2),
+    inset 0 0 20px rgba(0, 255, 0, 0.05) !important;
+}
+
+/* Links in hacker mode */
+body.hacker-mode a {
+  color: #00ff00 !important;
+}
+
+body.hacker-mode a:hover {
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+}
+
+/* Scrollbar in hacker mode */
+body.hacker-mode::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #00ff00, #00aa00) !important;
+}
+
+/* Pulse animation for hacker mode */
+body.hacker-mode .pulse-glow {
+  animation: hacker-pulse 2s ease-in-out infinite;
+}
+
+@keyframes hacker-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.8);
+  }
+}
+
+/* Notification when hacker mode activates */
+body.hacker-mode {
+  animation: hacker-activate 0.5s ease-out;
+}
+
+@keyframes hacker-activate {
+  0% {
+    filter: brightness(2) hue-rotate(0deg);
+  }
+  50% {
+    filter: brightness(1.5) hue-rotate(45deg);
+  }
+  100% {
+    filter: brightness(1) hue-rotate(0deg);
+  }
+}

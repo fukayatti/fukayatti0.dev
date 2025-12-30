@@ -2,6 +2,7 @@ import { Analytics } from '@vercel/analytics/next';
 
 import ClientLayout from '../components/layout/ClientLayout';
 import NavigationHeader from '../components/layout/NavigationHeader';
+import { HackerModeProvider } from '../components/providers/HackerModeProvider';
 import { defaultMetadata } from '../lib/metadata-common';
 import './globals.css';
 
@@ -19,10 +20,12 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           メインコンテンツにスキップ
         </a>
-        <ClientLayout>
-          <NavigationHeader />
-          <main id="main-content">{children}</main>
-        </ClientLayout>
+        <HackerModeProvider>
+          <ClientLayout>
+            <NavigationHeader />
+            <main id="main-content">{children}</main>
+          </ClientLayout>
+        </HackerModeProvider>
       </body>
     </html>
   );

@@ -2,6 +2,8 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
+import MatrixRain from '../effects/MatrixRain';
+import { useHackerMode } from '../providers/HackerModeProvider';
 import Background from '../shared/background';
 import CursorGlow from '../shared/CursorGlow';
 
@@ -13,6 +15,7 @@ export default function ClientLayout({
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
   const [headerHeight, setHeaderHeight] = useState(0);
   const headerRef = useRef<HTMLDivElement>(null);
+  const { isHackerMode } = useHackerMode();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -46,6 +49,7 @@ export default function ClientLayout({
     <>
       <CursorGlow />
       <Background width={windowSize.width} height={windowSize.height} />
+      {isHackerMode && <MatrixRain />}
       <div ref={headerRef}>
         {/* ここにHeaderコンポーネントを配置 */}
         {/* <Header /> */}
