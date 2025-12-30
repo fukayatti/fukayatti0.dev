@@ -31,7 +31,12 @@ const nextConfig: NextConfig = {
   },
   // JavaScript最適化
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
+    // Production でも console.log と console.info は残す（easter egg用）
+    // console.debug と console.warn のみ削除
+    removeConsole:
+      process.env.NODE_ENV === 'production'
+        ? { exclude: ['log', 'info', 'error'] }
+        : false,
   },
   // バンドル解析（オプション）
   bundlePagesRouterDependencies: true,
