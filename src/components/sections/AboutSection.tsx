@@ -681,7 +681,7 @@ export default function AboutSection() {
             >
               <p>
                 <span className="text-white font-semibold">
-                  15-year-old student developer
+                  16-year-old student developer
                 </span>{' '}
                 at National Institute of Technology, passionate about open
                 source and cutting-edge technologies.

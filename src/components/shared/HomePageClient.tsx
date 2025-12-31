@@ -1,6 +1,5 @@
 import React from 'react';
 
-import FooterSection from '@/components/layout/FooterSection';
 import AboutSection from '@/components/sections/AboutSection';
 import CareerSection from '@/components/sections/CareerSection';
 import ContactSection from '@/components/sections/ContactSection';
@@ -21,7 +20,6 @@ const HomePageClient: React.FC<HomePageClientProps> = () => {
         <ProjectsSection />
         <CareerSection />
         <ContactSection />
-        <FooterSection />
       </main>
     </div>
   );
