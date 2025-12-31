@@ -27,6 +27,28 @@ const nextConfig: NextConfig = {
         hostname: 'raw.githubusercontent.com',
         pathname: '/**',
       },
+      // Notion S3 images
+      {
+        protocol: 'https',
+        hostname: 'prod-files-secure.s3.us-west-2.amazonaws.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 's3.us-west-2.amazonaws.com',
+        pathname: '/**',
+      },
+      // External news/media sites
+      {
+        protocol: 'https',
+        hostname: 'www.ibaraki-ct.ac.jp',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.keizai.biz',
+        pathname: '/**',
+      },
     ],
   },
   // JavaScript最適化

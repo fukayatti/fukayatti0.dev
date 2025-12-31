@@ -5,6 +5,8 @@ import { Building2, Calendar, ExternalLink, Trophy } from 'lucide-react';
 
 import { useEffect, useRef, useState } from 'react';
 
+import Image from 'next/image';
+
 interface Award {
   id: string;
   title: string;
@@ -13,6 +15,24 @@ interface Award {
   details?: string;
   imageUrl?: string;
 }
+
+// 全ての外部画像をプロキシ経由で取得するためのloader
+// これにより、どんなドメインの画像でもremotePatterns追加なしで表示可能
+const imageLoader = ({ src }: { src: string }) => {
+  // 相対パスやdata URIはそのまま返す
+  if (!src || src.startsWith('/') || src.startsWith('data:')) {
+    return src;
+  }
+  // すでにプロキシ経由の場合は二重にしない
+  if (src.startsWith('/api/image-proxy')) {
+    return src;
+  }
+  // 外部URL（http/https）は全てプロキシ経由で取得
+  if (src.startsWith('http://') || src.startsWith('https://')) {
+    return `/api/image-proxy?url=${encodeURIComponent(src)}`;
+  }
+  return src;
+};
 
 // Award Card with cyberpunk styling
 function AwardCard({ award, index }: { award: Award; index: number }) {
@@ -42,11 +62,15 @@ function AwardCard({ award, index }: { award: Award; index: number }) {
         {/* Image section */}
         {award.imageUrl && (
           <div className="md:w-1/3 relative overflow-hidden">
-            <div className="relative h-48 md:h-full">
-              <img
+            <div className="relative h-48 md:h-full min-h-[200px]">
+              <Image
                 src={award.imageUrl}
                 alt={award.title}
-                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                loader={imageLoader}
+                unoptimized
               />
               {/* Scanlines overlay */}
               <div

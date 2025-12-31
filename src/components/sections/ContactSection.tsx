@@ -218,13 +218,15 @@ function OrbitalLinks() {
 }
 
 export default function ContactSection() {
+  const [status, setStatus] = useState<
+    'idle' | 'submitting' | 'success' | 'error'
+  >('idle');
   const [formState, setFormState] = useState({
     name: '',
     email: '',
     subject: '',
     message: '',
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -235,11 +237,27 @@ export default function ContactSection() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    // Simulate submission
-    setTimeout(() => setIsSubmitting(false), 2000);
+    setStatus('submitting');
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formState),
+      });
+
+      if (!res.ok) throw new Error('Failed to send message');
+
+      setStatus('success');
+      setFormState({ name: '', email: '', subject: '', message: '' });
+      setTimeout(() => setStatus('idle'), 5000);
+    } catch (error) {
+      console.error(error);
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 5000);
+    }
   };
 
   return (
@@ -441,13 +459,13 @@ export default function ContactSection() {
 
                 <motion.button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={status === 'submitting' || status === 'success'}
                   className="group relative w-full px-8 py-4 bg-transparent border-2 border-cyan-500 text-cyan-500 font-mono text-sm uppercase tracking-widest overflow-hidden disabled:opacity-50"
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.99 }}
                 >
                   <span className="relative z-10 flex items-center justify-center gap-3 group-hover:text-black transition-colors duration-300">
-                    {isSubmitting ? (
+                    {status === 'submitting' ? (
                       <>
                         <motion.span
                           animate={{ rotate: 360 }}
@@ -460,6 +478,11 @@ export default function ContactSection() {
                           ⟳
                         </motion.span>
                         TRANSMITTING...
+                      </>
+                    ) : status === 'success' ? (
+                      <>
+                        <Send className="w-4 h-4" />
+                        SENT SUCCESSFULLY
                       </>
                     ) : (
                       <>
