@@ -183,41 +183,32 @@ function TerminalInput({
 // Discord Status Component - Detailed Activity Display
 function DiscordStatus() {
   const { data: lanyard } = useLanyard();
-  const [elapsed, setElapsed] = useState('');
 
-  // Get the primary activity (not Custom Status)
-  const activity = lanyard?.activities.find((a) => a.name !== 'Custom Status');
+  // Get all activities (not Custom Status)
+  const activities =
+    lanyard?.activities.filter((a) => a.name !== 'Custom Status') || [];
 
-  // Calculate elapsed time
-  useEffect(() => {
-    if (!activity?.timestamps?.start) {
-      setElapsed('');
-      return;
+  // Helper function to calculate elapsed time
+  const formatElapsed = (startTime?: number) => {
+    if (!startTime) return null;
+    const now = Date.now();
+    const diff = now - startTime;
+    const hours = Math.floor(diff / 3600000);
+    const minutes = Math.floor((diff % 3600000) / 60000);
+    const seconds = Math.floor((diff % 60000) / 1000);
+
+    if (hours > 0) {
+      return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  };
 
-    const updateElapsed = () => {
-      const start = activity.timestamps!.start;
-      const now = Date.now();
-      const diff = now - start;
-      const hours = Math.floor(diff / 3600000);
-      const minutes = Math.floor((diff % 3600000) / 60000);
-      const seconds = Math.floor((diff % 60000) / 1000);
-
-      if (hours > 0) {
-        setElapsed(
-          `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
-        );
-      } else {
-        setElapsed(
-          `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
-        );
-      }
-    };
-
-    updateElapsed();
-    const interval = setInterval(updateElapsed, 1000);
+  // Force re-render every second to update elapsed times
+  const [, setTick] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => setTick((t) => t + 1), 1000);
     return () => clearInterval(interval);
-  }, [activity?.timestamps?.start]);
+  }, []);
 
   if (!lanyard) return null;
 
@@ -256,22 +247,22 @@ function DiscordStatus() {
       offline: 'OFFLINE',
     }[lanyard.discord_status] || 'OFFLINE';
 
-  // Get activity image URL
-  const getAssetUrl = (assetId?: string) => {
+  // Get activity image URL - now takes activity as parameter
+  const getAssetUrl = (
+    assetId: string | undefined,
+    applicationId: string | undefined
+  ) => {
     if (!assetId) return null;
     if (assetId.startsWith('mp:external/')) {
       // External image (e.g., from PreMiD)
       const externalUrl = assetId.replace('mp:external/', '');
       return `https://media.discordapp.net/external/${externalUrl}`;
     }
-    if (activity?.application_id) {
-      return `https://cdn.discordapp.com/app-assets/${activity.application_id}/${assetId}.png`;
+    if (applicationId) {
+      return `https://cdn.discordapp.com/app-assets/${applicationId}/${assetId}.png`;
     }
     return null;
   };
-
-  const largeImage = getAssetUrl(activity?.assets?.large_image);
-  const smallImage = getAssetUrl(activity?.assets?.small_image);
 
   return (
     <motion.div
@@ -319,7 +310,7 @@ function DiscordStatus() {
                     src={`https://cdn.discordapp.com/avatars/${lanyard.discord_user.id}/${lanyard.discord_user.avatar}.png`}
                     alt="Discord Avatar"
                     fill
-                    className="rounded object-cover brightness-110 contrast-110 saturate-50 hue-rotate-[140deg]"
+                    className="rounded object-cover brightness-110 contrast-110 saturate-50 hue-rotate-140"
                   />
                   {/* Scanline overlay */}
                   <div
@@ -354,82 +345,102 @@ function DiscordStatus() {
           {/* Divider */}
           <div className="border-t border-slate-800 my-3" />
 
-          {/* Activity Section */}
-          {activity && (
+          {/* Activities Section */}
+          {activities.length > 0 && (
             <>
               <div className="flex items-center gap-3">
                 <span className="text-green-400">$</span>
-                <span className="text-slate-500">get_activity</span>
+                <span className="text-slate-500">get_activities</span>
+                <span className="text-slate-700">
+                  // {activities.length} active
+                </span>
               </div>
-              <div className="pl-4 flex items-start gap-4">
-                {/* Activity Image */}
-                {largeImage && (
-                  <div className="relative w-16 h-16 shrink-0 rounded overflow-hidden border border-cyan-500/30">
-                    <Image
-                      src={largeImage}
-                      alt={activity.assets?.large_text || activity.name}
-                      fill
-                      className="object-cover brightness-110 contrast-110 saturate-50 hue-rotate-[140deg]"
-                    />
-                    {/* Scanline overlay */}
-                    <div
-                      className="absolute inset-0 pointer-events-none opacity-30"
-                      style={{
-                        background:
-                          'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px)',
-                      }}
-                    />
-                    <div className="absolute inset-0 pointer-events-none bg-cyan-500/10" />
-                    {smallImage && (
-                      <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full border-2 border-black overflow-hidden">
+              {activities.map((act, index) => {
+                const largeImg = getAssetUrl(
+                  act.assets?.large_image,
+                  act.application_id
+                );
+                const smallImg = getAssetUrl(
+                  act.assets?.small_image,
+                  act.application_id
+                );
+                const elapsedTime = formatElapsed(act.timestamps?.start);
+
+                return (
+                  <div
+                    key={act.id || index}
+                    className="pl-4 flex items-start gap-4 mt-2"
+                  >
+                    {/* Activity Image */}
+                    {largeImg && (
+                      <div className="relative w-16 h-16 shrink-0 rounded overflow-hidden border border-cyan-500/30">
                         <Image
-                          src={smallImage}
-                          alt={activity.assets?.small_text || ''}
+                          src={largeImg}
+                          alt={act.assets?.large_text || act.name}
                           fill
-                          className="object-cover brightness-110 contrast-110 saturate-50 hue-rotate-[140deg]"
+                          className="object-cover brightness-110 contrast-110 saturate-50 hue-rotate-140"
                         />
-                        <div className="absolute inset-0 bg-cyan-500/10" />
+                        {/* Scanline overlay */}
+                        <div
+                          className="absolute inset-0 pointer-events-none opacity-30"
+                          style={{
+                            background:
+                              'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px)',
+                          }}
+                        />
+                        <div className="absolute inset-0 pointer-events-none bg-cyan-500/10" />
+                        {smallImg && (
+                          <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full border-2 border-black overflow-hidden">
+                            <Image
+                              src={smallImg}
+                              alt={act.assets?.small_text || ''}
+                              fill
+                              className="object-cover brightness-110 contrast-110 saturate-50 hue-rotate-140"
+                            />
+                            <div className="absolute inset-0 bg-cyan-500/10" />
+                          </div>
+                        )}
                       </div>
                     )}
-                  </div>
-                )}
 
-                {/* Activity Details */}
-                <div className="flex-1 space-y-1">
-                  <div className="flex items-center gap-2">
-                    <span className="text-purple-400 text-xs uppercase">
-                      {activity.type === 0
-                        ? '▶ PLAYING'
-                        : activity.type === 2
-                          ? '♫ LISTENING'
-                          : '● ACTIVITY'}
-                    </span>
+                    {/* Activity Details */}
+                    <div className="flex-1 space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-purple-400 text-xs uppercase">
+                          {act.type === 0
+                            ? '▶ PLAYING'
+                            : act.type === 2
+                              ? '♫ LISTENING'
+                              : '● ACTIVITY'}
+                        </span>
+                      </div>
+                      <p className="text-cyan-400 font-bold">{act.name}</p>
+                      {act.details && (
+                        <p className="text-slate-400 text-xs">
+                          <span className="text-slate-600">→</span>{' '}
+                          {act.details}
+                        </p>
+                      )}
+                      {act.state && (
+                        <p className="text-slate-500 text-xs">
+                          <span className="text-slate-600">→</span> {act.state}
+                        </p>
+                      )}
+                      {elapsedTime && (
+                        <p className="text-xs">
+                          <span className="text-slate-600">time:</span>{' '}
+                          <span className="text-green-400">{elapsedTime}</span>
+                        </p>
+                      )}
+                    </div>
                   </div>
-                  <p className="text-cyan-400 font-bold">{activity.name}</p>
-                  {activity.details && (
-                    <p className="text-slate-400 text-xs">
-                      <span className="text-slate-600">→</span>{' '}
-                      {activity.details}
-                    </p>
-                  )}
-                  {activity.state && (
-                    <p className="text-slate-500 text-xs">
-                      <span className="text-slate-600">→</span> {activity.state}
-                    </p>
-                  )}
-                  {elapsed && (
-                    <p className="text-xs">
-                      <span className="text-slate-600">time:</span>{' '}
-                      <span className="text-green-400">{elapsed}</span>
-                    </p>
-                  )}
-                </div>
-              </div>
+                );
+              })}
             </>
           )}
 
           {/* Spotify Section */}
-          {lanyard.spotify && !activity && (
+          {lanyard.spotify && activities.length === 0 && (
             <>
               <div className="flex items-center gap-3">
                 <span className="text-green-400">$</span>
@@ -463,11 +474,11 @@ function DiscordStatus() {
           )}
 
           {/* No Activity */}
-          {!activity && !lanyard.spotify && (
+          {activities.length === 0 && !lanyard.spotify && (
             <>
               <div className="flex items-center gap-3">
                 <span className="text-green-400">$</span>
-                <span className="text-slate-500">get_activity</span>
+                <span className="text-slate-500">get_activities</span>
               </div>
               <div className="pl-4">
                 <span className="text-slate-600">null</span>
