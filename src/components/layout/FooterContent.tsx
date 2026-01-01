@@ -59,7 +59,7 @@ export default function FooterContent() {
             viewport={{ once: true }}
           >
             {/* ASCII Art */}
-            <pre className="text-[8px] font-mono text-cyan-500/50 leading-none hidden md:block">
+            <pre className="text-[15px] font-mono text-cyan-500/50 leading-none hidden md:block">
               {asciiArt}
             </pre>
 

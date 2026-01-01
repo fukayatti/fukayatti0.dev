@@ -12,12 +12,22 @@ import {
 
 import { useEffect, useState } from 'react';
 
+import Image from 'next/image';
+
+import { useLanyard } from '@/hooks/useLanyard';
+
 const contactMethods = [
   {
     icon: Mail,
     title: 'EMAIL',
     contact: 'contact@fukayatti.dev',
     href: 'mailto:contact@fukayatti.dev',
+  },
+  {
+    icon: Twitter,
+    title: 'X (TWITTER)',
+    contact: '@fukayatti',
+    href: 'https://twitter.com/fukayatti',
   },
   {
     icon: Instagram,
@@ -170,50 +180,316 @@ function TerminalInput({
   );
 }
 
-// Orbital social links
-function OrbitalLinks() {
-  return (
-    <div className="relative w-48 h-48">
-      {/* Center */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <motion.div
-          className="w-16 h-16 border border-cyan-500/30 rounded-full flex items-center justify-center"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-        >
-          <div className="w-3 h-3 bg-cyan-500 rounded-full" />
-        </motion.div>
-      </div>
+// Discord Status Component - Detailed Activity Display
+function DiscordStatus() {
+  const { data: lanyard } = useLanyard();
+  const [elapsed, setElapsed] = useState('');
 
-      {/* Orbiting icons */}
-      {socialLinks.map((social, i) => {
-        const angle = (i / socialLinks.length) * 360;
-        return (
-          <motion.a
-            key={social.name}
-            href={social.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="absolute w-10 h-10 border border-slate-600 hover:border-cyan-500 bg-slate-900 flex items-center justify-center transition-colors duration-300 group"
-            style={{
-              top: '50%',
-              left: '50%',
-              transform: `rotate(${angle}deg) translateY(-70px) rotate(-${angle}deg)`,
-            }}
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <social.icon className="w-4 h-4 text-slate-400 group-hover:text-cyan-400 transition-colors" />
-          </motion.a>
+  // Get the primary activity (not Custom Status)
+  const activity = lanyard?.activities.find((a) => a.name !== 'Custom Status');
+
+  // Calculate elapsed time
+  useEffect(() => {
+    if (!activity?.timestamps?.start) {
+      setElapsed('');
+      return;
+    }
+
+    const updateElapsed = () => {
+      const start = activity.timestamps!.start;
+      const now = Date.now();
+      const diff = now - start;
+      const hours = Math.floor(diff / 3600000);
+      const minutes = Math.floor((diff % 3600000) / 60000);
+      const seconds = Math.floor((diff % 60000) / 1000);
+
+      if (hours > 0) {
+        setElapsed(
+          `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
         );
-      })}
+      } else {
+        setElapsed(
+          `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+        );
+      }
+    };
 
-      {/* Orbit ring */}
-      <div
-        className="absolute inset-0 border border-slate-700/30 rounded-full"
-        style={{ transform: 'scale(1.4)' }}
-      />
-    </div>
+    updateElapsed();
+    const interval = setInterval(updateElapsed, 1000);
+    return () => clearInterval(interval);
+  }, [activity?.timestamps?.start]);
+
+  if (!lanyard) return null;
+
+  const statusColors: Record<
+    string,
+    { bg: string; text: string; glow: string }
+  > = {
+    online: {
+      bg: 'bg-green-500',
+      text: 'text-green-400',
+      glow: 'shadow-[0_0_15px_rgba(34,197,94,0.5)]',
+    },
+    idle: {
+      bg: 'bg-yellow-500',
+      text: 'text-yellow-400',
+      glow: 'shadow-[0_0_15px_rgba(234,179,8,0.5)]',
+    },
+    dnd: {
+      bg: 'bg-red-500',
+      text: 'text-red-400',
+      glow: 'shadow-[0_0_15px_rgba(239,68,68,0.5)]',
+    },
+    offline: {
+      bg: 'bg-gray-500',
+      text: 'text-gray-400',
+      glow: 'shadow-[0_0_15px_rgba(107,114,128,0.5)]',
+    },
+  };
+
+  const status = statusColors[lanyard.discord_status] || statusColors.offline;
+  const statusLabel =
+    {
+      online: 'ONLINE',
+      idle: 'IDLE',
+      dnd: 'DO NOT DISTURB',
+      offline: 'OFFLINE',
+    }[lanyard.discord_status] || 'OFFLINE';
+
+  // Get activity image URL
+  const getAssetUrl = (assetId?: string) => {
+    if (!assetId) return null;
+    if (assetId.startsWith('mp:external/')) {
+      // External image (e.g., from PreMiD)
+      const externalUrl = assetId.replace('mp:external/', '');
+      return `https://media.discordapp.net/external/${externalUrl}`;
+    }
+    if (activity?.application_id) {
+      return `https://cdn.discordapp.com/app-assets/${activity.application_id}/${assetId}.png`;
+    }
+    return null;
+  };
+
+  const largeImage = getAssetUrl(activity?.assets?.large_image);
+  const smallImage = getAssetUrl(activity?.assets?.small_image);
+
+  return (
+    <motion.div
+      className="relative w-full font-mono text-sm overflow-hidden"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.3 }}
+    >
+      {/* Terminal Container */}
+      <div className="bg-black/90 border border-cyan-500/30 rounded-lg overflow-hidden">
+        {/* Terminal Header */}
+        <div className="flex items-center gap-2 px-4 py-2 bg-slate-900/80 border-b border-cyan-500/20">
+          <div className="flex gap-1.5">
+            <div className="w-3 h-3 rounded-full bg-red-500/80" />
+            <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+            <div className="w-3 h-3 rounded-full bg-green-500/80" />
+          </div>
+          <span className="text-cyan-500/70 text-xs ml-2">
+            discord_presence.sh
+          </span>
+          <div className="flex-1" />
+          <div className="flex items-center gap-2">
+            <motion.div
+              className={`w-2 h-2 rounded-full ${status.bg}`}
+              animate={{ opacity: [1, 0.5, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+            <span className={`text-xs ${status.text}`}>{statusLabel}</span>
+          </div>
+        </div>
+
+        {/* Terminal Content */}
+        <div className="p-4 space-y-2">
+          {/* User Info Line */}
+          <div className="flex items-center gap-3">
+            <span className="text-green-400">$</span>
+            <span className="text-slate-500">whoami</span>
+          </div>
+          <div className="flex items-center gap-3 pl-4">
+            {/* Avatar */}
+            <div className="relative w-16 h-16 shrink-0 group">
+              {lanyard.discord_user.avatar ? (
+                <>
+                  <Image
+                    src={`https://cdn.discordapp.com/avatars/${lanyard.discord_user.id}/${lanyard.discord_user.avatar}.png`}
+                    alt="Discord Avatar"
+                    fill
+                    className="rounded object-cover brightness-110 contrast-110 saturate-50 hue-rotate-[140deg]"
+                  />
+                  {/* Scanline overlay */}
+                  <div
+                    className="absolute inset-0 rounded pointer-events-none opacity-30"
+                    style={{
+                      background:
+                        'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px)',
+                    }}
+                  />
+                  <div className="absolute inset-0 rounded pointer-events-none bg-cyan-500/10" />
+                </>
+              ) : (
+                <div className="w-full h-full bg-slate-800 rounded flex items-center justify-center">
+                  <span className="text-xs text-slate-500">?</span>
+                </div>
+              )}
+              <div
+                className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-black ${status.bg}`}
+              />
+            </div>
+            <div className="space-y-0.5">
+              <p className="text-white">
+                {lanyard.discord_user.display_name ||
+                  lanyard.discord_user.global_name}
+              </p>
+              <p className="text-slate-500 text-xs">
+                @{lanyard.discord_user.username}
+              </p>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="border-t border-slate-800 my-3" />
+
+          {/* Activity Section */}
+          {activity && (
+            <>
+              <div className="flex items-center gap-3">
+                <span className="text-green-400">$</span>
+                <span className="text-slate-500">get_activity</span>
+              </div>
+              <div className="pl-4 flex items-start gap-4">
+                {/* Activity Image */}
+                {largeImage && (
+                  <div className="relative w-16 h-16 shrink-0 rounded overflow-hidden border border-cyan-500/30">
+                    <Image
+                      src={largeImage}
+                      alt={activity.assets?.large_text || activity.name}
+                      fill
+                      className="object-cover brightness-110 contrast-110 saturate-50 hue-rotate-[140deg]"
+                    />
+                    {/* Scanline overlay */}
+                    <div
+                      className="absolute inset-0 pointer-events-none opacity-30"
+                      style={{
+                        background:
+                          'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px)',
+                      }}
+                    />
+                    <div className="absolute inset-0 pointer-events-none bg-cyan-500/10" />
+                    {smallImage && (
+                      <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full border-2 border-black overflow-hidden">
+                        <Image
+                          src={smallImage}
+                          alt={activity.assets?.small_text || ''}
+                          fill
+                          className="object-cover brightness-110 contrast-110 saturate-50 hue-rotate-[140deg]"
+                        />
+                        <div className="absolute inset-0 bg-cyan-500/10" />
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Activity Details */}
+                <div className="flex-1 space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-purple-400 text-xs uppercase">
+                      {activity.type === 0
+                        ? '▶ PLAYING'
+                        : activity.type === 2
+                          ? '♫ LISTENING'
+                          : '● ACTIVITY'}
+                    </span>
+                  </div>
+                  <p className="text-cyan-400 font-bold">{activity.name}</p>
+                  {activity.details && (
+                    <p className="text-slate-400 text-xs">
+                      <span className="text-slate-600">→</span>{' '}
+                      {activity.details}
+                    </p>
+                  )}
+                  {activity.state && (
+                    <p className="text-slate-500 text-xs">
+                      <span className="text-slate-600">→</span> {activity.state}
+                    </p>
+                  )}
+                  {elapsed && (
+                    <p className="text-xs">
+                      <span className="text-slate-600">time:</span>{' '}
+                      <span className="text-green-400">{elapsed}</span>
+                    </p>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* Spotify Section */}
+          {lanyard.spotify && !activity && (
+            <>
+              <div className="flex items-center gap-3">
+                <span className="text-green-400">$</span>
+                <span className="text-slate-500">now_playing</span>
+              </div>
+              <div className="pl-4 flex items-start gap-4">
+                <div className="relative w-16 h-16 shrink-0 rounded overflow-hidden border border-green-500/30">
+                  <Image
+                    src={lanyard.spotify.album_art_url}
+                    alt={lanyard.spotify.album}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex-1 space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-green-500 text-xs">♫ SPOTIFY</span>
+                  </div>
+                  <p className="text-white font-bold">{lanyard.spotify.song}</p>
+                  <p className="text-slate-400 text-xs">
+                    <span className="text-slate-600">artist:</span>{' '}
+                    {lanyard.spotify.artist}
+                  </p>
+                  <p className="text-slate-500 text-xs">
+                    <span className="text-slate-600">album:</span>{' '}
+                    {lanyard.spotify.album}
+                  </p>
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* No Activity */}
+          {!activity && !lanyard.spotify && (
+            <>
+              <div className="flex items-center gap-3">
+                <span className="text-green-400">$</span>
+                <span className="text-slate-500">get_activity</span>
+              </div>
+              <div className="pl-4">
+                <span className="text-slate-600">null</span>
+                <span className="text-slate-700 ml-2">
+                  // no active session
+                </span>
+              </div>
+            </>
+          )}
+
+          {/* Blinking cursor */}
+          <div className="flex items-center gap-3 pt-2">
+            <span className="text-green-400">$</span>
+            <motion.span
+              className="w-2 h-4 bg-cyan-500"
+              animate={{ opacity: [1, 0] }}
+              transition={{ duration: 0.8, repeat: Infinity }}
+            />
+          </div>
+        </div>
+      </div>
+    </motion.div>
   );
 }
 
@@ -368,11 +644,6 @@ export default function ContactSection() {
               </p>
             </motion.div>
 
-            {/* Orbital social links - hidden on mobile */}
-            <div className="hidden lg:flex justify-center pt-8">
-              <OrbitalLinks />
-            </div>
-
             {/* Mobile social links */}
             <div className="flex flex-wrap gap-3 lg:hidden">
               {socialLinks.map((social) => (
@@ -502,6 +773,17 @@ export default function ContactSection() {
             </div>
           </motion.div>
         </div>
+
+        {/* Discord Activity Section - Centered below */}
+        <motion.div
+          className="mt-16 flex justify-center"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+        >
+          <DiscordStatus />
+        </motion.div>
       </div>
 
       {/* Decorative corners */}

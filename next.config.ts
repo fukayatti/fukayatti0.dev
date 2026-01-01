@@ -49,6 +49,24 @@ const nextConfig: NextConfig = {
         hostname: 'images.keizai.biz',
         pathname: '/**',
       },
+      // Discord CDN
+      {
+        protocol: 'https',
+        hostname: 'cdn.discordapp.com',
+        pathname: '/**',
+      },
+      // Discord media (for activity images)
+      {
+        protocol: 'https',
+        hostname: 'media.discordapp.net',
+        pathname: '/**',
+      },
+      // Spotify album art
+      {
+        protocol: 'https',
+        hostname: 'i.scdn.co',
+        pathname: '/**',
+      },
     ],
   },
   // JavaScript最適化
@@ -78,7 +96,7 @@ const nextConfig: NextConfig = {
           {
             key: 'Content-Security-Policy',
             value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'",
+              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: https://cdn.discordapp.com; font-src 'self' data:; connect-src 'self' https://api.lanyard.rest https://va.vercel-scripts.com",
           },
           {
             key: 'X-Frame-Options',
