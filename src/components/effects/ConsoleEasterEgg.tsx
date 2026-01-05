@@ -141,7 +141,7 @@ function showContact() {
   console.log('');
   console.log('%c📬 CONTACT', s.title);
   console.log('%c─────────────────────────────────────────', s.muted);
-  console.log('%cEmail:     %ccontact@fukayatti.dev', s.cyan, s.link);
+  console.log('%cEmail:     %ccontact@fukayatti0.dev', s.cyan, s.link);
   console.log('%cGitHub:    %cgithub.com/fukayatti', s.cyan, s.link);
   console.log('%cInstagram: %c@fukayatti0', s.cyan, s.text);
   console.log('%cTwitter:   %c@fukayatti', s.cyan, s.text);

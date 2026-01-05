@@ -20,8 +20,8 @@ const contactMethods = [
   {
     icon: Mail,
     title: 'EMAIL',
-    contact: 'contact@fukayatti.dev',
-    href: 'mailto:contact@fukayatti.dev',
+    contact: 'contact@fukayatti0.dev',
+    href: 'mailto:contact@fukayatti0.dev',
   },
   {
     icon: SiX,
