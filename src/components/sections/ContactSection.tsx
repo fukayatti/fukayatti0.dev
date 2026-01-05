@@ -1,14 +1,14 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import {
-  ExternalLink,
-  Github,
-  Instagram,
-  Mail,
-  Send,
-  Twitter,
-} from 'lucide-react';
+  SiGithub,
+  SiInstagram,
+  SiQiita,
+  SiX,
+  SiZenn,
+} from '@icons-pack/react-simple-icons';
+import { motion } from 'framer-motion';
+import { ExternalLink, Mail, Send } from 'lucide-react';
 
 import { useEffect, useState } from 'react';
 
@@ -24,19 +24,19 @@ const contactMethods = [
     href: 'mailto:contact@fukayatti.dev',
   },
   {
-    icon: Twitter,
+    icon: SiX,
     title: 'X (TWITTER)',
     contact: '@fukayatti',
     href: 'https://twitter.com/fukayatti',
   },
   {
-    icon: Instagram,
+    icon: SiInstagram,
     title: 'INSTAGRAM',
     contact: '@fukayatti0',
     href: 'https://instagram.com/fukayatti0',
   },
   {
-    icon: Github,
+    icon: SiGithub,
     title: 'GITHUB',
     contact: '@fukayatti',
     href: 'https://github.com/fukayatti',
@@ -44,24 +44,19 @@ const contactMethods = [
 ];
 
 const socialLinks = [
-  { name: 'GitHub', href: 'https://github.com/fukayatti', icon: Github },
+  { name: 'GitHub', href: 'https://github.com/fukayatti', icon: SiGithub },
   {
     name: 'X',
     href: 'https://twitter.com/fukayatti',
-    icon: Twitter,
+    icon: SiX,
   },
   {
     name: 'Instagram',
     href: 'https://instagram.com/fukayatti0',
-    icon: Instagram,
+    icon: SiInstagram,
   },
-];
-
-// External links for Qiita and Zenn (no lucide icons)
-const externalLinks = [
-  { name: 'Qiita', href: 'https://qiita.com/fukayatti' },
-  { name: 'Zenn', href: 'https://zenn.dev/fukayatti' },
-  { name: 'Instagram', href: 'https://instagram.com/fukayatti0' },
+  { name: 'Qiita', href: 'https://qiita.com/fukayatti', icon: SiQiita },
+  { name: 'Zenn', href: 'https://zenn.dev/fukayatti', icon: SiZenn },
 ];
 
 // Matrix-style falling characters
@@ -668,19 +663,6 @@ export default function ContactSection() {
                   whileTap={{ scale: 0.95 }}
                 >
                   <social.icon className="w-5 h-5 text-slate-400 group-hover:text-cyan-400 transition-colors" />
-                </motion.a>
-              ))}
-              {externalLinks.map((link) => (
-                <motion.a
-                  key={link.name}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="h-12 px-4 border border-slate-700 hover:border-cyan-500 flex items-center justify-center transition-colors duration-300 group font-mono text-xs text-slate-400 hover:text-cyan-400"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  {link.name}
                 </motion.a>
               ))}
             </div>

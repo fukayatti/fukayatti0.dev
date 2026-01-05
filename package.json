@@ -78,14 +78,5 @@
     "*.{json,css,md}": [
       "prettier --write"
     ]
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@tailwindcss/oxide",
-      "core-js-pure",
-      "esbuild",
-      "sharp",
-      "unrs-resolver"
-    ]
   }
 }
