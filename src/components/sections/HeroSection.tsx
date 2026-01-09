@@ -129,14 +129,11 @@ function DistortedProfile() {
   }, []);
 
   return (
-    <motion.div
+    <div
       ref={containerRef}
       className="relative w-48 h-48 md:w-64 md:h-64"
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setMousePos({ x: 0.5, y: 0.5 })}
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 0.5, duration: 0.8 }}
     >
       {/* RGB Split layers */}
       <motion.div
@@ -151,6 +148,7 @@ function DistortedProfile() {
           fill
           className="object-cover grayscale"
           style={{ filter: 'sepia(100%) hue-rotate(180deg)' }}
+          sizes="(max-width: 768px) 192px, 256px"
         />
       </motion.div>
       <motion.div
@@ -165,6 +163,7 @@ function DistortedProfile() {
           fill
           className="object-cover grayscale"
           style={{ filter: 'sepia(100%) hue-rotate(-60deg)' }}
+          sizes="(max-width: 768px) 192px, 256px"
         />
       </motion.div>
 
@@ -176,6 +175,7 @@ function DistortedProfile() {
           fill
           className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
           priority
+          sizes="(max-width: 768px) 192px, 256px"
         />
       </div>
 
@@ -195,7 +195,7 @@ function DistortedProfile() {
           ONLINE
         </span>
       </motion.div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -297,7 +297,7 @@ export default function HeroSection() {
               <span className="block text-5xl md:text-7xl lg:text-8xl font-black text-white leading-none tracking-tighter">
                 <GlitchText>FUKAYATTI</GlitchText>
               </span>
-              <span className="block text-3xl md:text-4xl lg:text-5xl font-light text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 mt-2 tracking-wider">
+              <span className="block text-3xl md:text-4xl lg:text-5xl font-light text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-purple-500 mt-2 tracking-wider">
                 .DEVELOPER
               </span>
             </motion.h1>
@@ -309,7 +309,7 @@ export default function HeroSection() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
             >
-              <p className="text-slate-400 text-lg leading-relaxed font-mono">
+              <p className="text-slate-400 text-lg leading-relaxed font-mono min-h-14">
                 <TypedText
                   text="Student developer passionate about Rust, WebAssembly & Open Source."
                   delay={1}

@@ -5,11 +5,8 @@ import { Menu, X } from 'lucide-react';
 
 import { useEffect, useState } from 'react';
 
-import { Orbitron } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
-
-const orbitron = Orbitron({ subsets: ['latin'], weight: ['400', '700'] });
 
 const navLinks = [
   { href: '/', label: 'HOME', code: '01' },
@@ -29,20 +26,20 @@ function GlitchLogo() {
       onHoverStart={() => setIsGlitching(true)}
       onHoverEnd={() => setIsGlitching(false)}
     >
-      <span className={`font-bold text-lg text-white ${orbitron.className}`}>
+      <span className="font-bold text-lg text-white font-display">
         FUKAYATTI0
       </span>
       {isGlitching && (
         <>
           <motion.span
-            className={`absolute inset-0 text-cyan-500 ${orbitron.className} font-bold text-lg`}
+            className="absolute inset-0 text-cyan-500 font-display font-bold text-lg"
             animate={{ x: [0, 2, -2, 0] }}
             transition={{ duration: 0.1, repeat: 3 }}
           >
             FUKAYATTI0
           </motion.span>
           <motion.span
-            className={`absolute inset-0 text-red-500 ${orbitron.className} font-bold text-lg`}
+            className="absolute inset-0 text-red-500 font-display font-bold text-lg"
             animate={{ x: [0, -2, 2, 0] }}
             transition={{ duration: 0.1, repeat: 3 }}
           >
@@ -83,7 +80,7 @@ function NavLink({
 
       {/* Underline animation */}
       <motion.div
-        className="absolute bottom-0 left-4 right-4 h-[1px] bg-cyan-500"
+        className="absolute bottom-0 left-4 right-4 h-px bg-cyan-500"
         initial={{ scaleX: 0 }}
         animate={{ scaleX: isHovered ? 1 : 0 }}
         transition={{ duration: 0.2 }}
@@ -158,6 +155,7 @@ const NavigationHeader = () => {
             <div className="flex items-center gap-4 md:hidden">
               <motion.button
                 onClick={() => setIsOpen(!isOpen)}
+                aria-label="Toggle menu"
                 className="w-10 h-10 border border-slate-700 hover:border-cyan-500 flex items-center justify-center transition-colors duration-300"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -175,12 +173,12 @@ const NavigationHeader = () => {
         {/* Decorative scan line */}
         {isScrolled && (
           <motion.div
-            className="absolute bottom-0 left-0 right-0 h-[1px] overflow-hidden"
+            className="absolute bottom-0 left-0 right-0 h-px overflow-hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
             <motion.div
-              className="h-full bg-gradient-to-r from-transparent via-cyan-500 to-transparent"
+              className="h-full bg-linear-to-r from-transparent via-cyan-500 to-transparent"
               animate={{ x: ['-100%', '100%'] }}
               transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
             />

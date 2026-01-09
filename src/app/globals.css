@@ -66,7 +66,7 @@
 body {
   background: rgb(var(--background));
   color: rgb(var(--foreground));
-  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -795,8 +795,10 @@ body {
 .text-amber-300 {
   color: #fcd34d;
 }
-.text-amber-400 {
-  color: #fbbf24;
+
+/* Font families */
+.font-orbitron {
+  font-family: var(--font-orbitron), sans-serif;
 }
 .text-amber-500 {
   color: #f59e0b;

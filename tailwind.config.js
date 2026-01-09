@@ -81,7 +81,7 @@ module.exports = {
         sm: 'calc(var(--radius) - 4px)',
       },
       fontFamily: {
-        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         mono: [
           'Fira Code',
           'ui-monospace',
@@ -90,7 +90,12 @@ module.exports = {
           'Consolas',
           'monospace',
         ],
-        display: ['Clash Display', 'Inter', 'sans-serif'],
+        display: [
+          'var(--font-orbitron)',
+          'Clash Display',
+          'Inter',
+          'sans-serif',
+        ],
       },
       spacing: {
         18: '4.5rem',

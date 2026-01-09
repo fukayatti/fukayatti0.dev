@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://fukayatti0.dev
+
+# Sitemaps
+Sitemap: https://fukayatti0.dev/sitemap.xml

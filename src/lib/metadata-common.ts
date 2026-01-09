@@ -128,6 +128,7 @@ export const defaultMetadata: Metadata = {
       },
     ],
   },
+  manifest: '/manifest.json',
   robots: {
     index: true,
     follow: true,

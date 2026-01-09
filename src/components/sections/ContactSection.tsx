@@ -27,7 +27,7 @@ const contactMethods = [
     icon: SiX,
     title: 'X (TWITTER)',
     contact: '@fukayatti',
-    href: 'https://twitter.com/fukayatti',
+    href: 'https://twitter.com/fukayatti0_dev',
   },
   {
     icon: SiInstagram,
@@ -47,7 +47,7 @@ const socialLinks = [
   { name: 'GitHub', href: 'https://github.com/fukayatti', icon: SiGithub },
   {
     name: 'X',
-    href: 'https://twitter.com/fukayatti',
+    href: 'https://twitter.com/fukayatti0_dev',
     icon: SiX,
   },
   {
@@ -55,8 +55,8 @@ const socialLinks = [
     href: 'https://instagram.com/fukayatti0',
     icon: SiInstagram,
   },
-  { name: 'Qiita', href: 'https://qiita.com/fukayatti', icon: SiQiita },
-  { name: 'Zenn', href: 'https://zenn.dev/fukayatti', icon: SiZenn },
+  { name: 'Qiita', href: 'https://qiita.com/fukayatti0', icon: SiQiita },
+  { name: 'Zenn', href: 'https://zenn.dev/fukayatti0', icon: SiZenn },
 ];
 
 // Matrix-style falling characters

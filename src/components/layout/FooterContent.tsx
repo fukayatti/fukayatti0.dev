@@ -120,6 +120,7 @@ export default function FooterContent() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={social.name}
                   className="w-10 h-10 border border-slate-700 hover:border-cyan-500 flex items-center justify-center transition-all duration-300 group"
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
