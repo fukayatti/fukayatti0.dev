@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import ConsoleEasterEgg from '../effects/ConsoleEasterEgg';
 import MatrixRain from '../effects/MatrixRain';
@@ -14,8 +14,6 @@ export default function ClientLayout({
   children: React.ReactNode;
 }) {
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
-  const [headerHeight, setHeaderHeight] = useState(0);
-  const headerRef = useRef<HTMLDivElement>(null);
   const { isHackerMode } = useHackerMode();
 
   useEffect(() => {
@@ -40,23 +38,13 @@ export default function ClientLayout({
     }
   }, []);
 
-  useLayoutEffect(() => {
-    if (headerRef.current) {
-      setHeaderHeight(headerRef.current.offsetHeight);
-    }
-  }, [windowSize]);
-
   return (
     <>
       <ConsoleEasterEgg />
       <CursorGlow />
       <Background width={windowSize.width} height={windowSize.height} />
       {isHackerMode && <MatrixRain />}
-      <div ref={headerRef}>
-        {/* ここにHeaderコンポーネントを配置 */}
-        {/* <Header /> */}
-      </div>
-      <div style={{ marginTop: headerHeight }}>{children}</div>
+      {children}
     </>
   );
 }

@@ -149,6 +149,7 @@ function DistortedProfile() {
           className="object-cover grayscale"
           style={{ filter: 'sepia(100%) hue-rotate(180deg)' }}
           sizes="(max-width: 768px) 192px, 256px"
+          priority
         />
       </motion.div>
       <motion.div
@@ -164,6 +165,7 @@ function DistortedProfile() {
           className="object-cover grayscale"
           style={{ filter: 'sepia(100%) hue-rotate(-60deg)' }}
           sizes="(max-width: 768px) 192px, 256px"
+          priority
         />
       </motion.div>
 
