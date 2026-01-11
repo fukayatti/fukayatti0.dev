@@ -7,6 +7,10 @@ import { useEffect, useRef, useState } from 'react';
 
 import Image from 'next/image';
 
+import { useSemanticSearch } from '@/hooks/useSemanticSearch';
+
+import ProjectSearch from '../ui/ProjectSearch';
+
 // Projects data
 interface Project {
   title: string;
@@ -139,7 +143,7 @@ function GlitchImage({ src, alt }: { src: string; alt: string }) {
 
       {/* Horizontal scan animation */}
       <motion.div
-        className="absolute inset-x-0 h-[3px] bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent pointer-events-none"
+        className="absolute inset-x-0 h-[3px] bg-linear-to-r from-transparent via-cyan-500/40 to-transparent pointer-events-none"
         animate={{ top: ['0%', '100%'] }}
         transition={{ duration: 2.5, repeat: Infinity, ease: 'linear' }}
       />
@@ -289,8 +293,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         </div>
       </div>
 
-      {/* Decorative corner */}
-      <div className="absolute bottom-0 right-0 w-0 h-0 border-l-[20px] border-l-transparent border-b-[20px] border-b-cyan-500/20 group-hover:border-b-cyan-500/60 transition-colors duration-300" />
+      <div className="absolute bottom-0 right-0 w-0 h-0 border-l-20 border-l-transparent border-b-20 border-b-cyan-500/20 group-hover:border-b-cyan-500/60 transition-colors duration-300" />
     </motion.div>
   );
 }
@@ -301,6 +304,18 @@ export default function ProjectsSection() {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const {
+    status,
+    progress,
+    results,
+    isSearching,
+    error,
+    initializeModel,
+    search,
+  } = useSemanticSearch(projects);
+
+  const displayedProjects = results ? results.map((r) => r.project) : projects;
 
   return (
     <section id="projects" className="relative py-32 bg-black overflow-hidden">
@@ -334,7 +349,7 @@ export default function ProjectsSection() {
 
           <h2 className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-none tracking-tighter mb-6">
             SELECTED
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500">
+            <span className="block text-transparent bg-clip-text bg-linear-to-r from-cyan-400 via-purple-500 to-pink-500">
               PROJECTS
             </span>
           </h2>
@@ -345,10 +360,33 @@ export default function ProjectsSection() {
           </p>
         </motion.div>
 
+        {/* Search Module */}
+        <ProjectSearch
+          onSearch={search}
+          status={status}
+          progress={progress}
+          isSearching={isSearching}
+          onFocus={initializeModel}
+        />
+
         {/* Projects grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, index) => (
-            <ProjectCard key={project.title} project={project} index={index} />
+          {displayedProjects.map((project, index) => (
+            <div key={project.title} className="relative">
+              <ProjectCard project={project} index={index} />
+              {results && (
+                <div className="absolute -top-3 -right-3 z-30 bg-black/80 backdrop-blur border border-cyan-500/50 rounded-full px-3 py-1">
+                  <div className="text-[10px] font-mono text-cyan-400">
+                    MATCH:{' '}
+                    {Math.round(
+                      (results.find((r) => r.project.title === project.title)
+                        ?.score || 0) * 100
+                    )}
+                    %
+                  </div>
+                </div>
+              )}
+            </div>
           ))}
         </div>
 

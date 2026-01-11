@@ -5,6 +5,19 @@ const nextConfig: NextConfig = {
   experimental: {
     mdxRs: true,
   },
+  // Webpack configuration for Transformers.js
+  webpack: (config) => {
+    // Handle ONNX model files
+    if (!config.resolve) config.resolve = {};
+    if (!config.resolve.alias) config.resolve.alias = {};
+
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      sharp$: false,
+      'onnxruntime-node$': false,
+    };
+    return config;
+  },
   // 画像最適化
   images: {
     formats: ['image/webp', 'image/avif'],
@@ -96,7 +109,7 @@ const nextConfig: NextConfig = {
           {
             key: 'Content-Security-Policy',
             value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: https://cdn.discordapp.com; font-src 'self' data:; connect-src 'self' https://api.lanyard.rest https://va.vercel-scripts.com",
+              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: https://cdn.discordapp.com; font-src 'self' data:; connect-src 'self' https://api.lanyard.rest https://va.vercel-scripts.com https://huggingface.co https://cdn-lfs.huggingface.co https://cdn-lfs-us-1.huggingface.co https://cas-bridge.xethub.hf.co https://cdn.jsdelivr.net blob:; worker-src 'self' blob:",
           },
           {
             key: 'X-Frame-Options',

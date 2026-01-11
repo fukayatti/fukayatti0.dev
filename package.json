@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
+    "dev": "next dev --webpack",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky",
@@ -20,6 +20,7 @@
     "@radix-ui/react-dropdown-menu": "^2.1.16",
     "@types/three": "^0.175.0",
     "@vercel/analytics": "^1.6.1",
+    "@xenova/transformers": "^2.17.2",
     "framer-motion": "^12.23.26",
     "hono": "^4.11.3",
     "lucide-react": "^0.487.0",
