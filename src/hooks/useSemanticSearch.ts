@@ -75,9 +75,7 @@ export function useSemanticSearch(projects: Project[]) {
 
     try {
       console.log('Loading transformers module...');
-      const transformers = await import('@xenova/transformers');
-
-      const { pipeline, env } = transformers;
+      const { pipeline, env } = await import('@huggingface/transformers');
 
       if (!env) {
         throw new Error('Transformers env is undefined');
@@ -92,10 +90,11 @@ export function useSemanticSearch(projects: Project[]) {
       console.log('Starting pipeline loading...');
       const extractor = await pipeline(
         'feature-extraction',
-        'Xenova/multilingual-e5-small',
+        'onnx-community/embeddinggemma-300m-ONNX',
         {
-          progress_callback: (progressData: { progress?: number }) => {
-            if (progressData.progress) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          progress_callback: (progressData: any) => {
+            if (progressData?.progress) {
               setProgress(Math.round(progressData.progress));
             }
           },
