@@ -92,6 +92,7 @@ export function useSemanticSearch(projects: Project[]) {
         'feature-extraction',
         'onnx-community/embeddinggemma-300m-ONNX',
         {
+          dtype: 'q4',
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           progress_callback: (progressData: any) => {
             if (progressData?.progress) {
