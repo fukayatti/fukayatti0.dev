@@ -3,7 +3,9 @@
 import { useEffect, useState } from 'react';
 
 import ConsoleEasterEgg from '../effects/ConsoleEasterEgg';
-import MatrixRain from '../effects/MatrixRain';
+import FightingCommandSystem from '../effects/FightingCommandSystem';
+import WasmLoadingScreen from '../effects/WasmLoadingScreen';
+import WasmMatrixRain from '../effects/WasmMatrixRain';
 import { useHackerMode } from '../providers/HackerModeProvider';
 import Background from '../shared/background';
 import CursorGlow from '../shared/CursorGlow';
@@ -40,10 +42,16 @@ export default function ClientLayout({
 
   return (
     <>
+      {/* WASM ブート画面 — モジュールロード完了まで表示 */}
+      <WasmLoadingScreen />
+
+      {/* 格ゲー風隠しコマンドシステム */}
+      <FightingCommandSystem />
+
       <ConsoleEasterEgg />
       <CursorGlow />
       <Background width={windowSize.width} height={windowSize.height} />
-      {isHackerMode && <MatrixRain />}
+      {isHackerMode && <WasmMatrixRain />}
       {children}
     </>
   );

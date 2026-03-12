@@ -2,11 +2,13 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import Image from 'next/image';
+import WasmGradientOrb from '@/components/effects/WasmGradientOrb';
+import WasmParticles from '@/components/effects/WasmParticles';
+import WasmRgbSplit from '@/components/effects/WasmRgbSplit';
 
-// Noise texture SVG filter
+// ── Noise texture SVG filter ───────────────────────────────────────────────────
 const NoiseFilter = () => (
   <svg className="hidden">
     <defs>
@@ -23,7 +25,7 @@ const NoiseFilter = () => (
   </svg>
 );
 
-// Glitch Text Effect
+// ── Glitch Text Effect ─────────────────────────────────────────────────────────
 function GlitchText({
   children,
   className,
@@ -37,7 +39,7 @@ function GlitchText({
     const interval = setInterval(() => {
       setIsGlitching(true);
       setTimeout(() => setIsGlitching(false), 200);
-    }, 3000);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 
@@ -47,19 +49,19 @@ function GlitchText({
       {isGlitching && (
         <>
           <span
-            className="absolute inset-0 text-cyan-500 z-0"
+            className="absolute inset-0 text-cyan-500"
             style={{
-              clipPath: 'polygon(0 0, 100% 0, 100% 45%, 0 45%)',
-              transform: 'translate(-2px, 0)',
+              clipPath: 'polygon(0 0, 100% 0, 100% 40%, 0 40%)',
+              transform: 'translate(-4px, 0)',
             }}
           >
             {children}
           </span>
           <span
-            className="absolute inset-0 text-red-500 z-0"
+            className="absolute inset-0 text-red-500"
             style={{
-              clipPath: 'polygon(0 55%, 100% 55%, 100% 100%, 0 100%)',
-              transform: 'translate(2px, 0)',
+              clipPath: 'polygon(0 60%, 100% 60%, 100% 100%, 0 100%)',
+              transform: 'translate(4px, 0)',
             }}
           >
             {children}
@@ -70,104 +72,7 @@ function GlitchText({
   );
 }
 
-// Cyberpunk Grid Background
-function CyberGrid() {
-  // Pre-defined particle positions to avoid hydration mismatch
-  const particles = [
-    { left: 3, top: 12, duration: 3.2, delay: 0.4 },
-    { left: 12, top: 35, duration: 4.1, delay: 1.1 },
-    { left: 22, top: 58, duration: 3.8, delay: 1.9 },
-    { left: 32, top: 22, duration: 4.5, delay: 0.6 },
-    { left: 42, top: 78, duration: 3.5, delay: 1.3 },
-    { left: 52, top: 42, duration: 4.8, delay: 2.4 },
-    { left: 62, top: 68, duration: 3.3, delay: 0.2 },
-    { left: 72, top: 18, duration: 4.6, delay: 1.7 },
-    { left: 82, top: 52, duration: 3.6, delay: 2.0 },
-    { left: 90, top: 82, duration: 4.2, delay: 0.9 },
-    { left: 7, top: 48, duration: 3.9, delay: 1.5 },
-    { left: 27, top: 88, duration: 4.4, delay: 2.6 },
-    { left: 47, top: 28, duration: 3.4, delay: 0.1 },
-    { left: 67, top: 58, duration: 4.7, delay: 1.2 },
-    { left: 87, top: 38, duration: 3.7, delay: 2.3 },
-    { left: 17, top: 72, duration: 4.0, delay: 0.7 },
-    { left: 37, top: 15, duration: 3.1, delay: 1.8 },
-    { left: 57, top: 92, duration: 4.3, delay: 2.7 },
-    { left: 77, top: 32, duration: 3.0, delay: 0.5 },
-    { left: 95, top: 62, duration: 4.9, delay: 1.6 },
-  ];
-
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {/* Perspective grid */}
-      <div
-        className="absolute inset-0 opacity-[0.08]"
-        style={{
-          background: `
-            linear-gradient(90deg, transparent 0%, transparent 49%, rgba(0,255,255,0.3) 50%, transparent 51%, transparent 100%),
-            linear-gradient(0deg, transparent 0%, transparent 49%, rgba(0,255,255,0.3) 50%, transparent 51%, transparent 100%)
-          `,
-          backgroundSize: '80px 80px',
-          transform: 'perspective(500px) rotateX(60deg) translateY(-50%)',
-          transformOrigin: 'center top',
-        }}
-      />
-
-      {/* Scanlines */}
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          background:
-            'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px)',
-        }}
-      />
-
-      {/* Floating particles */}
-      {particles.map((p, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 bg-cyan-400/60 rounded-full"
-          style={{
-            left: `${p.left}%`,
-            top: `${p.top}%`,
-          }}
-          animate={{
-            y: [0, -100, 0],
-            opacity: [0, 1, 0],
-          }}
-          transition={{
-            duration: p.duration,
-            repeat: Infinity,
-            delay: p.delay,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
-// Morphing Blob
-function MorphingBlob({ className }: { className?: string }) {
-  return (
-    <motion.div
-      className={`absolute rounded-full blur-3xl ${className}`}
-      animate={{
-        borderRadius: [
-          '60% 40% 30% 70%/60% 30% 70% 40%',
-          '30% 60% 70% 40%/50% 60% 30% 60%',
-          '60% 40% 30% 70%/60% 30% 70% 40%',
-        ],
-        scale: [1, 1.1, 1],
-      }}
-      transition={{
-        duration: 8,
-        repeat: Infinity,
-        ease: 'easeInOut',
-      }}
-    />
-  );
-}
-
-// ASCII Art Profile
+// ── ASCII Art Profile ──────────────────────────────────────────────────────────
 function ASCIIProfile() {
   const ascii = `
     ╔══════════════════╗
@@ -192,7 +97,7 @@ function ASCIIProfile() {
   );
 }
 
-// Terminal-style typing effect - now scroll-triggered
+// ── Terminal-style typing effect (scroll-triggered) ────────────────────────────
 function TerminalText({ lines }: { lines: string[] }) {
   const [displayedLines, setDisplayedLines] = useState<string[]>([]);
   const [currentLine, setCurrentLine] = useState(0);
@@ -200,7 +105,6 @@ function TerminalText({ lines }: { lines: string[] }) {
   const [isVisible, setIsVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Intersection Observer for scroll trigger
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -214,7 +118,6 @@ function TerminalText({ lines }: { lines: string[] }) {
     return () => observer.disconnect();
   }, [isVisible]);
 
-  // Typing effect - only starts when visible
   useEffect(() => {
     if (!isVisible || currentLine >= lines.length) return;
 
@@ -227,7 +130,7 @@ function TerminalText({ lines }: { lines: string[] }) {
           return newLines;
         });
         setCurrentChar((c) => c + 1);
-      }, 40); // Slightly slower for more dramatic effect
+      }, 40);
       return () => clearTimeout(timeout);
     } else {
       const timeout = setTimeout(() => {
@@ -240,7 +143,6 @@ function TerminalText({ lines }: { lines: string[] }) {
 
   return (
     <div ref={containerRef} className="font-mono text-sm space-y-2">
-      {/* Only show fully completed lines */}
       {displayedLines.slice(0, currentLine).map((line, i) => (
         <motion.div
           key={i}
@@ -257,7 +159,6 @@ function TerminalText({ lines }: { lines: string[] }) {
           </span>
         </motion.div>
       ))}
-      {/* Current line being typed with cursor */}
       {currentLine < lines.length && isVisible && (
         <div className="flex items-start gap-2">
           <span className="text-cyan-500 select-none">❯</span>
@@ -277,7 +178,7 @@ function TerminalText({ lines }: { lines: string[] }) {
   );
 }
 
-// Skill Pill with hover explosion
+// ── Skill Pill with hover explosion ───────────────────────────────────────────
 function SkillPill({ name, delay }: { name: string; delay: number }) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -291,7 +192,6 @@ function SkillPill({ name, delay }: { name: string; delay: number }) {
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
     >
-      {/* Explosion particles */}
       {isHovered &&
         [...Array(8)].map((_, i) => (
           <motion.div
@@ -329,7 +229,7 @@ function SkillPill({ name, delay }: { name: string; delay: number }) {
   );
 }
 
-// Stats with dramatic reveal
+// ── Stats with dramatic reveal ─────────────────────────────────────────────────
 function DramaticStat({
   value,
   label,
@@ -381,113 +281,31 @@ function DramaticStat({
   );
 }
 
-// Distortion Image Effect with enhanced scanlines
-function DistortedImage({ src }: { src: string }) {
-  const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
+// ── Profile image with WASM distortion ────────────────────────────────────────
+function DistortedImageWasm({ src }: { src: string }) {
   const [isHovered, setIsHovered] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    setMousePos({
-      x: (e.clientX - rect.left) / rect.width,
-      y: (e.clientY - rect.top) / rect.height,
-    });
-  }, []);
 
   return (
-    <motion.div
-      ref={containerRef}
-      className="relative w-full aspect-square overflow-hidden"
-      onMouseMove={handleMouseMove}
+    <div
+      className="relative w-full aspect-square"
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => {
-        setMousePos({ x: 0.5, y: 0.5 });
-        setIsHovered(false);
-      }}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Main image with distortion */}
-      <motion.div
-        className="absolute inset-0"
-        style={{
-          filter: `blur(${Math.abs(mousePos.x - 0.5) * 2}px)`,
-        }}
-      >
-        <Image
-          src={src}
-          alt="Profile"
-          fill
-          className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
-          style={{
-            transform: `scale(1.1) translate(${(mousePos.x - 0.5) * 10}px, ${(mousePos.y - 0.5) * 10}px)`,
-          }}
-        />
-      </motion.div>
-
-      {/* RGB Split layers on hover */}
-      {isHovered && (
-        <>
-          <motion.div
-            className="absolute inset-0 mix-blend-screen opacity-60"
-            initial={{ x: 0 }}
-            animate={{ x: [0, 3, -3, 0] }}
-            transition={{ duration: 0.15, repeat: 2 }}
-          >
-            <Image
-              src={src}
-              alt=""
-              fill
-              className="object-cover"
-              style={{ filter: 'hue-rotate(90deg) saturate(200%)' }}
-            />
-          </motion.div>
-          <motion.div
-            className="absolute inset-0 mix-blend-multiply opacity-60"
-            initial={{ x: 0 }}
-            animate={{ x: [0, -3, 3, 0] }}
-            transition={{ duration: 0.15, repeat: 2 }}
-          >
-            <Image
-              src={src}
-              alt=""
-              fill
-              className="object-cover"
-              style={{ filter: 'hue-rotate(-90deg) saturate(200%)' }}
-            />
-          </motion.div>
-        </>
-      )}
-
-      {/* CRT Scanlines overlay */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-30"
-        style={{
-          background:
-            'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.4) 2px, rgba(0,0,0,0.4) 4px)',
-        }}
+      {/* GPU-accelerated distort + CRT scanline shader */}
+      <WasmRgbSplit
+        src={src}
+        alt="Profile"
+        mode="distort"
+        splitIntensity={0.7}
+        colorStrength={isHovered ? 0.8 : 0}
+        glitchAmount={isHovered ? 0.3 : 0}
+        trackMouse
+        className="w-full h-full"
       />
 
-      {/* Horizontal scan animation */}
+      {/* Corner decorations overlaid on top of the WASM canvas */}
       <motion.div
-        className="absolute inset-x-0 h-[2px] bg-cyan-500/30 pointer-events-none"
-        animate={{ top: ['0%', '100%'] }}
-        transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-      />
-
-      {/* Vignette effect */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            'radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.8) 100%)',
-        }}
-      />
-
-      {/* Corner decorations - animated */}
-      <motion.div
-        className="absolute top-0 left-0 w-16 h-16 border-l-2 border-t-2 border-cyan-500/50"
+        className="absolute top-0 left-0 w-16 h-16 border-l-2 border-t-2 border-cyan-500/50 pointer-events-none z-10"
         animate={{
           borderColor: isHovered
             ? 'rgba(0, 255, 255, 1)'
@@ -495,7 +313,7 @@ function DistortedImage({ src }: { src: string }) {
         }}
       />
       <motion.div
-        className="absolute bottom-0 right-0 w-16 h-16 border-r-2 border-b-2 border-cyan-500/50"
+        className="absolute bottom-0 right-0 w-16 h-16 border-r-2 border-b-2 border-cyan-500/50 pointer-events-none z-10"
         animate={{
           borderColor: isHovered
             ? 'rgba(0, 255, 255, 1)'
@@ -503,7 +321,7 @@ function DistortedImage({ src }: { src: string }) {
         }}
       />
       <motion.div
-        className="absolute top-0 right-0 w-8 h-8 border-r-2 border-t-2 border-purple-500/30"
+        className="absolute top-0 right-0 w-8 h-8 border-r-2 border-t-2 border-purple-500/30 pointer-events-none z-10"
         animate={{
           borderColor: isHovered
             ? 'rgba(139, 92, 246, 0.8)'
@@ -511,18 +329,18 @@ function DistortedImage({ src }: { src: string }) {
         }}
       />
       <motion.div
-        className="absolute bottom-0 left-0 w-8 h-8 border-l-2 border-b-2 border-purple-500/30"
+        className="absolute bottom-0 left-0 w-8 h-8 border-l-2 border-b-2 border-purple-500/30 pointer-events-none z-10"
         animate={{
           borderColor: isHovered
             ? 'rgba(139, 92, 246, 0.8)'
             : 'rgba(139, 92, 246, 0.3)',
         }}
       />
-    </motion.div>
+    </div>
   );
 }
 
-// Main Component
+// ── Main Section ───────────────────────────────────────────────────────────────
 export default function AboutSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -564,15 +382,41 @@ export default function AboutSection() {
       className="relative min-h-screen py-32 bg-black overflow-hidden"
     >
       <NoiseFilter />
-      <CyberGrid />
 
-      {/* Morphing blobs */}
-      <MorphingBlob className="w-[600px] h-[600px] bg-cyan-500/10 -top-32 -left-32" />
-      <MorphingBlob className="w-[400px] h-[400px] bg-purple-500/10 bottom-0 right-0" />
+      {/* ── WASM: GPU-accelerated particle background ── */}
+      <WasmParticles mode="cyber" className="absolute inset-0 z-0" />
+
+      {/* ── WASM: Morphing orb – top-left cyan ── */}
+      <div className="absolute w-[600px] h-[600px] -top-32 -left-32 pointer-events-none z-0">
+        <WasmGradientOrb
+          mode={1}
+          colorA="#00ffff"
+          colorB="#000000"
+          glowColor="#00e5ff"
+          glowStrength={0.3}
+          opacity={0.1}
+          morphSpeed={0.8}
+          shapeScale={0.9}
+        />
+      </div>
+
+      {/* ── WASM: Morphing orb – bottom-right purple ── */}
+      <div className="absolute w-[400px] h-[400px] bottom-0 right-0 pointer-events-none z-0">
+        <WasmGradientOrb
+          mode={1}
+          colorA="#8b5cf6"
+          colorB="#000000"
+          glowColor="#a78bfa"
+          glowStrength={0.3}
+          opacity={0.1}
+          morphSpeed={0.6}
+          shapeScale={0.85}
+        />
+      </div>
 
       {/* Noise overlay */}
       <div
-        className="absolute inset-0 opacity-[0.03] pointer-events-none"
+        className="absolute inset-0 opacity-[0.03] pointer-events-none z-0"
         style={{ filter: 'url(#noise)' }}
       />
 
@@ -580,7 +424,7 @@ export default function AboutSection() {
         className="max-w-7xl mx-auto px-6 relative z-10"
         style={{ y, opacity }}
       >
-        {/* Header - Brutalist Style */}
+        {/* Header */}
         <motion.div
           className="mb-24"
           initial={{ opacity: 0 }}
@@ -618,9 +462,9 @@ export default function AboutSection() {
           </h2>
         </motion.div>
 
-        {/* Main Content - Asymmetric Layout */}
+        {/* Main Content – Asymmetric Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-6 mb-24">
-          {/* Left Column - Profile */}
+          {/* Left Column – WASM-powered profile image */}
           <motion.div
             className="lg:col-span-5"
             initial={{ x: -100, opacity: 0 }}
@@ -629,7 +473,7 @@ export default function AboutSection() {
             transition={{ duration: 0.8 }}
           >
             <div className="relative">
-              <DistortedImage src="/profile.png" />
+              <DistortedImageWasm src="/profile.png" />
 
               {/* Floating badge */}
               <motion.div
@@ -650,7 +494,7 @@ export default function AboutSection() {
             </div>
           </motion.div>
 
-          {/* Right Column - Info */}
+          {/* Right Column – Info */}
           <motion.div
             className="lg:col-span-7 lg:pl-12"
             initial={{ x: 100, opacity: 0 }}
@@ -709,7 +553,7 @@ export default function AboutSection() {
           </motion.div>
         </div>
 
-        {/* Stats - Horizontal Strip */}
+        {/* Stats – Horizontal Strip */}
         <motion.div
           className="grid grid-cols-3 border-t border-b border-cyan-500/20 py-8"
           initial={{ opacity: 0, y: 50 }}
@@ -766,10 +610,10 @@ export default function AboutSection() {
       </motion.div>
 
       {/* Decorative Elements */}
-      <div className="absolute bottom-8 left-8 text-[10px] font-mono text-slate-600 tracking-wider">
+      <div className="absolute bottom-8 left-8 text-[10px] font-mono text-slate-600 tracking-wider z-10">
         NODE: JP-EAST-01 — STATUS: ACTIVE
       </div>
-      <div className="absolute bottom-8 right-8 text-[10px] font-mono text-slate-600 tracking-wider">
+      <div className="absolute bottom-8 right-8 text-[10px] font-mono text-slate-600 tracking-wider z-10">
         © 2025 FUKAYATTI0
       </div>
     </section>

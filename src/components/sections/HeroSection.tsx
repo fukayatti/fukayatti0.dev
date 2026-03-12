@@ -2,11 +2,13 @@
 
 import { motion } from 'framer-motion';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import Image from 'next/image';
+import WasmGradientOrb from '@/components/effects/WasmGradientOrb';
+import WasmParticles from '@/components/effects/WasmParticles';
+import WasmRgbSplit from '@/components/effects/WasmRgbSplit';
 
-// Glitch Text Effect
+// ── Glitch Text Effect ─────────────────────────────────────────────────────────
 function GlitchText({
   children,
   className,
@@ -53,155 +55,7 @@ function GlitchText({
   );
 }
 
-// Cyber Grid Background
-function CyberGrid() {
-  // Pre-defined particle positions to avoid hydration mismatch
-  const particles = [
-    { left: 5, top: 10, duration: 4.2, delay: 0.5 },
-    { left: 15, top: 30, duration: 5.1, delay: 1.2 },
-    { left: 25, top: 60, duration: 4.8, delay: 2.0 },
-    { left: 35, top: 20, duration: 5.5, delay: 0.8 },
-    { left: 45, top: 80, duration: 4.0, delay: 1.5 },
-    { left: 55, top: 40, duration: 6.0, delay: 2.5 },
-    { left: 65, top: 70, duration: 4.5, delay: 0.3 },
-    { left: 75, top: 15, duration: 5.8, delay: 1.8 },
-    { left: 85, top: 50, duration: 4.3, delay: 2.2 },
-    { left: 92, top: 85, duration: 5.2, delay: 0.7 },
-    { left: 8, top: 45, duration: 4.6, delay: 1.0 },
-    { left: 28, top: 90, duration: 5.4, delay: 2.8 },
-    { left: 48, top: 25, duration: 4.1, delay: 0.2 },
-    { left: 68, top: 55, duration: 5.7, delay: 1.4 },
-    { left: 88, top: 35, duration: 4.9, delay: 2.1 },
-  ];
-
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      <div
-        className="absolute inset-0 opacity-[0.08]"
-        style={{
-          background: `
-            linear-gradient(90deg, transparent 0%, transparent 49%, rgba(0,255,255,0.4) 50%, transparent 51%, transparent 100%),
-            linear-gradient(0deg, transparent 0%, transparent 49%, rgba(0,255,255,0.4) 50%, transparent 51%, transparent 100%)
-          `,
-          backgroundSize: '100px 100px',
-          transform: 'perspective(500px) rotateX(60deg)',
-          transformOrigin: 'center top',
-          height: '200%',
-        }}
-      />
-
-      {/* Floating particles */}
-      {particles.map((p, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 bg-cyan-400/50 rounded-full"
-          style={{
-            left: `${p.left}%`,
-            top: `${p.top}%`,
-          }}
-          animate={{
-            y: [0, -80, 0],
-            opacity: [0, 1, 0],
-          }}
-          transition={{
-            duration: p.duration,
-            repeat: Infinity,
-            delay: p.delay,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
-// Distorted Profile Image with RGB Split
-function DistortedProfile() {
-  const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    setMousePos({
-      x: (e.clientX - rect.left) / rect.width,
-      y: (e.clientY - rect.top) / rect.height,
-    });
-  }, []);
-
-  return (
-    <div
-      ref={containerRef}
-      className="relative w-48 h-48 md:w-64 md:h-64"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={() => setMousePos({ x: 0.5, y: 0.5 })}
-    >
-      {/* RGB Split layers */}
-      <motion.div
-        className="absolute inset-0 opacity-50"
-        style={{
-          transform: `translate(${(mousePos.x - 0.5) * 8}px, ${(mousePos.y - 0.5) * 8}px)`,
-        }}
-      >
-        <Image
-          src="/profile.png"
-          alt=""
-          fill
-          className="object-cover grayscale"
-          style={{ filter: 'sepia(100%) hue-rotate(180deg)' }}
-          sizes="(max-width: 768px) 192px, 256px"
-          priority
-        />
-      </motion.div>
-      <motion.div
-        className="absolute inset-0 opacity-50"
-        style={{
-          transform: `translate(${(mousePos.x - 0.5) * -8}px, ${(mousePos.y - 0.5) * -8}px)`,
-        }}
-      >
-        <Image
-          src="/profile.png"
-          alt=""
-          fill
-          className="object-cover grayscale"
-          style={{ filter: 'sepia(100%) hue-rotate(-60deg)' }}
-          sizes="(max-width: 768px) 192px, 256px"
-          priority
-        />
-      </motion.div>
-
-      {/* Main image */}
-      <div className="relative w-full h-full overflow-hidden">
-        <Image
-          src="/profile.png"
-          alt="Profile"
-          fill
-          className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
-          priority
-          sizes="(max-width: 768px) 192px, 256px"
-        />
-      </div>
-
-      {/* Corner decorations */}
-      <div className="absolute -top-2 -left-2 w-8 h-8 border-l-2 border-t-2 border-cyan-500" />
-      <div className="absolute -bottom-2 -right-2 w-8 h-8 border-r-2 border-b-2 border-cyan-500" />
-
-      {/* Status badge */}
-      <motion.div
-        className="absolute -bottom-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-cyan-500 text-black font-mono text-xs font-bold whitespace-nowrap"
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ delay: 1, type: 'spring' }}
-      >
-        <span className="relative flex items-center gap-2">
-          <span className="w-2 h-2 bg-black rounded-full animate-pulse" />
-          ONLINE
-        </span>
-      </motion.div>
-    </div>
-  );
-}
-
-// Typing effect
+// ── Typing Effect ──────────────────────────────────────────────────────────────
 function TypedText({ text, delay = 0 }: { text: string; delay?: number }) {
   const [displayed, setDisplayed] = useState('');
   const [started, setStarted] = useState(false);
@@ -235,6 +89,48 @@ function TypedText({ text, delay = 0 }: { text: string; delay?: number }) {
   );
 }
 
+// ── Profile with WASM RGB-split ────────────────────────────────────────────────
+function ProfileSection() {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <div
+      className="relative w-48 h-48 md:w-64 md:h-64"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* GPU-accelerated RGB-split / lens-warp shader */}
+      <WasmRgbSplit
+        src="/profile.png"
+        alt="Profile"
+        mode="profile"
+        splitIntensity={0.85}
+        colorStrength={isHovered ? 1 : 0}
+        trackMouse
+        className="w-full h-full"
+      />
+
+      {/* Corner decorations (overlaid on top of the WASM canvas) */}
+      <div className="absolute -top-2 -left-2 w-8 h-8 border-l-2 border-t-2 border-cyan-500 pointer-events-none z-10" />
+      <div className="absolute -bottom-2 -right-2 w-8 h-8 border-r-2 border-b-2 border-cyan-500 pointer-events-none z-10" />
+
+      {/* Status badge */}
+      <motion.div
+        className="absolute -bottom-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-cyan-500 text-black font-mono text-xs font-bold whitespace-nowrap z-10"
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ delay: 1, type: 'spring' }}
+      >
+        <span className="relative flex items-center gap-2">
+          <span className="w-2 h-2 bg-black rounded-full animate-pulse" />
+          ONLINE
+        </span>
+      </motion.div>
+    </div>
+  );
+}
+
+// ── Main Section ───────────────────────────────────────────────────────────────
 export default function HeroSection() {
   const [mounted, setMounted] = useState(false);
 
@@ -244,7 +140,34 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
-      <CyberGrid />
+      {/* ── WASM: GPU-accelerated particle background ── */}
+      <WasmParticles mode="cyber" className="absolute inset-0 z-0" />
+
+      {/* ── WASM: Gradient orb – top-left cyan ── */}
+      <div className="absolute top-0 left-0 w-[600px] h-[600px] pointer-events-none z-0">
+        <WasmGradientOrb
+          mode={0}
+          colorA="#00ffff"
+          colorB="#000000"
+          glowColor="#00e5ff"
+          glowStrength={0.5}
+          opacity={0.22}
+          morphSpeed={0.4}
+        />
+      </div>
+
+      {/* ── WASM: Gradient orb – bottom-right purple ── */}
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] pointer-events-none z-0">
+        <WasmGradientOrb
+          mode={0}
+          colorA="#8b5cf6"
+          colorB="#000000"
+          glowColor="#a78bfa"
+          glowStrength={0.5}
+          opacity={0.22}
+          morphSpeed={0.35}
+        />
+      </div>
 
       {/* Scanlines overlay */}
       <div
@@ -255,26 +178,7 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Gradient blobs */}
-      <motion.div
-        className="absolute top-0 left-0 w-[600px] h-[600px] opacity-20 blur-3xl"
-        style={{
-          background:
-            'radial-gradient(circle, rgba(0, 255, 255, 0.3), transparent 60%)',
-        }}
-        animate={{ x: [0, 50, 0], y: [0, 30, 0] }}
-        transition={{ duration: 12, repeat: Infinity }}
-      />
-      <motion.div
-        className="absolute bottom-0 right-0 w-[500px] h-[500px] opacity-20 blur-3xl"
-        style={{
-          background:
-            'radial-gradient(circle, rgba(139, 92, 246, 0.3), transparent 60%)',
-        }}
-        animate={{ x: [0, -40, 0], y: [0, -30, 0] }}
-        transition={{ duration: 15, repeat: Infinity }}
-      />
-
+      {/* Main content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Left: Text Content */}
@@ -337,7 +241,7 @@ export default function HeroSection() {
                 <div>
                   <span className="text-purple-400">role:</span>{' '}
                   <span className="text-green-400">
-                    Student & OSS Contributor
+                    Student &amp; OSS Contributor
                   </span>
                 </div>
                 <div>
@@ -382,9 +286,9 @@ export default function HeroSection() {
             </motion.div>
           </div>
 
-          {/* Right: Profile Image */}
+          {/* Right: WASM-powered profile image */}
           <div className="order-1 lg:order-2 flex justify-center">
-            <DistortedProfile />
+            {mounted && <ProfileSection />}
           </div>
         </div>
       </div>

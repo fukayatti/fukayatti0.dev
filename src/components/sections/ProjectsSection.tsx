@@ -5,8 +5,7 @@ import { ExternalLink, Github } from 'lucide-react';
 
 import { useEffect, useRef, useState } from 'react';
 
-import Image from 'next/image';
-
+import WasmRgbSplit from '@/components/effects/WasmRgbSplit';
 import { useSemanticSearch } from '@/hooks/useSemanticSearch';
 
 import ProjectSearch from '../ui/ProjectSearch';
@@ -83,82 +82,47 @@ const projects: Project[] = [
   // },
 ];
 
-// Glitch effect for images with enhanced CRT effect
+// ── GPU-accelerated glitch image (WASM WebGL2) ─────────────────────────────────
 function GlitchImage({ src, alt }: { src: string; alt: string }) {
-  const [isGlitching, setIsGlitching] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div
-      className="relative w-full h-full overflow-hidden"
-      onMouseEnter={() => setIsGlitching(true)}
-      onMouseLeave={() => setIsGlitching(false)}
+      className="relative w-full h-full"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      <Image
+      {/* WASM: GPU glitch / band-slice shader */}
+      <WasmRgbSplit
         src={src}
         alt={alt}
-        fill
-        className={`object-cover transition-all duration-500 ${isGlitching ? 'grayscale-0 scale-110' : 'grayscale'}`}
+        mode="glitch"
+        glitchAmount={isHovered ? 1 : 0}
+        colorStrength={isHovered ? 1 : 0}
+        splitIntensity={0.8}
+        trackMouse={false}
+        className="absolute inset-0 w-full h-full"
       />
 
-      {/* Glitch layers */}
-      {isGlitching && (
-        <>
-          <motion.div
-            className="absolute inset-0 mix-blend-screen"
-            animate={{ x: [0, 5, -5, 0] }}
-            transition={{ duration: 0.2, repeat: 3 }}
-          >
-            <Image
-              src={src}
-              alt=""
-              fill
-              className="object-cover"
-              style={{ filter: 'hue-rotate(90deg) saturate(150%)' }}
-            />
-          </motion.div>
-          <motion.div
-            className="absolute inset-0 mix-blend-multiply opacity-50"
-            animate={{ x: [0, -3, 3, 0] }}
-            transition={{ duration: 0.15, repeat: 3 }}
-          >
-            <Image
-              src={src}
-              alt=""
-              fill
-              className="object-cover"
-              style={{ filter: 'hue-rotate(-90deg) saturate(150%)' }}
-            />
-          </motion.div>
-        </>
-      )}
-
-      {/* CRT Scanlines - stronger effect */}
+      {/* CRT scanlines overlay (CSS, cheap) */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-40"
+        className="absolute inset-0 pointer-events-none opacity-40 z-10"
         style={{
           background:
             'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.5) 2px, rgba(0,0,0,0.5) 4px)',
         }}
       />
 
-      {/* Horizontal scan animation */}
+      {/* Horizontal scan beam */}
       <motion.div
-        className="absolute inset-x-0 h-[3px] bg-linear-to-r from-transparent via-cyan-500/40 to-transparent pointer-events-none"
+        className="absolute inset-x-0 h-[3px] bg-linear-to-r from-transparent via-cyan-500/40 to-transparent pointer-events-none z-10"
         animate={{ top: ['0%', '100%'] }}
         transition={{ duration: 2.5, repeat: Infinity, ease: 'linear' }}
       />
 
-      {/* Noise texture overlay */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.08]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-        }}
-      />
-
       {/* Vignette */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none z-10"
         style={{
           background:
             'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%)',
@@ -166,16 +130,16 @@ function GlitchImage({ src, alt }: { src: string; alt: string }) {
       />
 
       {/* Corner accents on hover */}
-      {isGlitching && (
+      {isHovered && (
         <>
           <motion.div
-            className="absolute top-0 left-0 w-6 h-6 border-l-2 border-t-2 border-cyan-400"
+            className="absolute top-0 left-0 w-6 h-6 border-l-2 border-t-2 border-cyan-400 z-20"
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.2 }}
           />
           <motion.div
-            className="absolute bottom-0 right-0 w-6 h-6 border-r-2 border-b-2 border-cyan-400"
+            className="absolute bottom-0 right-0 w-6 h-6 border-r-2 border-b-2 border-cyan-400 z-20"
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.2 }}

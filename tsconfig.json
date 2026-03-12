@@ -25,6 +25,9 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "portfolio-fx": [
+        "./public/pkg/portfolio_fx"
       ]
     }
   },

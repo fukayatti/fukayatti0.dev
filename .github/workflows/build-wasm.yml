@@ -1,0 +1,89 @@
+name: Build WASM
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "crates/**"
+      - "Cargo.toml"
+      - "Cargo.lock"
+  workflow_dispatch:
+
+concurrency:
+  group: build-wasm-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build & Commit WASM Artifacts
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # Rust toolchain (wasm32 target)
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      # Cache Rust registry + build artifacts
+      - name: Cache Cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+
+      # Install wasm-pack
+      - name: Install wasm-pack
+        run: |
+          curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+
+      # Install wasm-opt for extra size reduction
+      - name: Install wasm-opt (binaryen)
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -q -y binaryen
+
+      # Build WASM in release mode
+      - name: Build portfolio-fx WASM
+        run: |
+          wasm-pack build crates/portfolio-fx \
+            --target web \
+            --out-dir ../../public/pkg \
+            --out-name portfolio_fx \
+            --release
+          # Remove the .gitignore that wasm-pack injects so artifacts are tracked
+          rm -f public/pkg/.gitignore
+
+      # Show artifact sizes for review
+      - name: Show artifact sizes
+        run: |
+          echo "=== WASM Package Artifacts ==="
+          ls -lh public/pkg/
+          echo ""
+          echo "WASM binary size:"
+          wc -c < public/pkg/portfolio_fx_bg.wasm | awk '{printf "  %.1f KB\n", $1/1024}'
+
+      # Cargo check (catches any Rust compile errors even if wasm-pack succeeded)
+      - name: Cargo check
+        run: |
+          cargo check --target wasm32-unknown-unknown --manifest-path crates/portfolio-fx/Cargo.toml
+
+      # Commit updated artifacts back to the branch
+      - name: Commit WASM artifacts
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(wasm): rebuild portfolio-fx WASM artifacts [skip ci]"
+          file_pattern: "public/pkg/*"
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "github-actions[bot]@users.noreply.github.com"
+          commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"

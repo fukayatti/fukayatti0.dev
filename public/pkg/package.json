@@ -1,0 +1,15 @@
+{
+  "name": "portfolio-fx",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "portfolio_fx_bg.wasm",
+    "portfolio_fx.js",
+    "portfolio_fx.d.ts"
+  ],
+  "main": "portfolio_fx.js",
+  "types": "portfolio_fx.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

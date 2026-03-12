@@ -4,7 +4,10 @@ const nextConfig: NextConfig = {
   /* config options here */
   experimental: {
     mdxRs: true,
+    optimizePackageImports: ['@mui/material', 'lucide-react', 'lodash'],
   },
+  // Empty turbopack config to silence the webpack/turbopack mismatch warning in Next.js 16
+  turbopack: {},
   // Webpack configuration for Transformers.js
   webpack: (config) => {
     // Handle ONNX model files

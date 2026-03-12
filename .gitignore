@@ -47,3 +47,9 @@ logs
 
 #unlighthouse
 .unlighthouse
+
+# Rust / wasm-pack build artifacts
+/target
+crates/*/target
+**/*.rs.bk
+wasm-pack.log
