@@ -60,20 +60,20 @@ const projects: Project[] = [
     repoUrl: 'https://github.com/fukayatti/Bus-Vision',
     featured: true,
   },
-  // {
-  //   title: 'DIY Particle Detector App',
-  //   description:
-  //     'Interactive weather dashboard with forecasts and data visualizations.',
-  //   tags: ['JavaScript', 'Chart.js', 'API'],
-  //   repoUrl: 'https://github.com/fukayatti/diy-particle-detector-app',
-  // },
-  // {
-  //   title: 'Portfolio Website',
-  //   description: "This portfolio you're viewing, built with cutting-edge tech.",
-  //   tags: ['Next.js 15', 'React 19', 'Framer'],
-  //   liveUrl: 'https://fukayatti0.dev',
-  //   repoUrl: 'https://github.com/fukayatti0/my-portfolio',
-  // },
+  {
+    title: 'ChokerEcho-PoC',
+    description:
+      'A Prototype for Silent Speech Recognition using Active Acoustic Sensing',
+    tags: ['TypeScript', 'Active Acoustic Sensing', 'ultrasound'],
+    repoUrl: 'https://github.com/ChokerEcho/ChokerEcho-PoC',
+  },
+  {
+    title: 'fukayatti0.dev',
+    description: "This portfolio you're viewing, built with cutting-edge tech.",
+    tags: ['Next.js 16', 'WebAssembly', 'Framer Motion'],
+    liveUrl: 'https://fukayatti0.dev',
+    repoUrl: 'https://github.com/fukayatti0/fukayatti0.dev',
+  },
   // {
   //   title: 'Blog Platform',
   //   description: 'Markdown-based blog with syntax highlighting and SEO.',
